@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frise Chronologique — Histoire de l'Immunologie</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0e17;
+    --bg-card: #111827;
+    --bg-card-hover: #1a2236;
+    --gold: #d4a853;
+    --gold-light: #f0d48a;
+    --gold-dim: #8a7036;
+    --teal: #2dd4bf;
+    --teal-dim: #134e4a;
+    --rose: #f43f5e;
+    --rose-dim: #4c1220;
+    --blue: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --purple: #a78bfa;
+    --purple-dim: #3b2570;
+    --amber: #fbbf24;
+    --amber-dim: #5c4510;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --line: #1e293b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 30% 40%, rgba(212,168,83,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 500px at 70% 60%, rgba(45,212,191,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-badge {
+    margin-top: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(212,168,83,0.1);
+    border: 1px solid rgba(212,168,83,0.25);
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .hero-scroll a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s;
+  }
+
+  .hero-scroll a:hover { color: var(--gold); }
+
+  .hero-scroll .arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    animation: bounce 2s ease infinite;
+  }
+
+  /* ===== ERA NAV ===== */
+  .era-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,14,23,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 0 2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .era-nav::-webkit-scrollbar { display: none; }
+
+  .era-nav-inner {
+    display: flex;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .era-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.2rem;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .era-nav a:hover { color: var(--text); }
+  .era-nav a .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ===== MAIN TIMELINE ===== */
+  .timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+    position: relative;
+  }
+
+  /* Vertical line */
+  .timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--line) 5%, var(--line) 95%, transparent);
+    transform: translateX(-50%);
+  }
+
+  /* ===== ERA HEADER ===== */
+  .era-header {
+    text-align: center;
+    margin: 5rem 0 3rem;
+    position: relative;
+    scroll-margin-top: 80px;
+  }
+
+  .era-header:first-child { margin-top: 0; }
+
+  .era-header .era-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+  }
+
+  .era-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    color: var(--text);
+  }
+
+  .era-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ===== EVENT CARD ===== */
+  .event {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .event.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .event.left .event-content { margin-right: auto; padding-right: 4rem; text-align: right; }
+  .event.right .event-content { margin-left: auto; padding-left: 4rem; text-align: left; }
+
+  .event-content {
+    width: 50%;
+    position: relative;
+  }
+
+  /* Node on the line */
+  .event .node {
+    position: absolute;
+    left: 50%;
+    top: 0.5rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    border: 3px solid var(--bg-deep);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .event:hover .node {
+    transform: translateX(-50%) scale(1.3);
+  }
+
+  /* Connector line from card to node */
+  .event.left .event-content::after,
+  .event.right .event-content::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    height: 1px;
+    width: 3rem;
+    opacity: 0.3;
+  }
+
+  .event.left .event-content::after { right: 0.5rem; }
+  .event.right .event-content::after { left: 0.5rem; }
+
+  /* Date badge */
+  .event-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .event-date-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  /* Card */
+  .event-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .event:hover .event-card {
+    background: var(--bg-card-hover);
+    border-color: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .event-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .event-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .event-card .figure-tag {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+  }
+
+  .event-card .exam-tip {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    background: rgba(212,168,83,0.07);
+    border-left: 3px solid var(--gold);
+    font-size: 0.82rem;
+    color: var(--gold-light);
+  }
+
+  .event-card .exam-tip strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--gold);
+  }
+
+  /* ===== COLOR THEMES PER ERA ===== */
+  .era-antiquity .era-label { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.25); }
+  .era-antiquity .event-date { color: var(--purple); }
+  .era-antiquity .node { background: var(--purple); box-shadow: 0 0 12px rgba(167,139,250,0.4); }
+  .era-antiquity .event-content::after { background: var(--purple); }
+  .era-antiquity .figure-tag { background: rgba(167,139,250,0.12); color: var(--purple); }
+
+  .era-pasteur .era-label { background: rgba(45,212,191,0.12); color: var(--teal); border: 1px solid rgba(45,212,191,0.25); }
+  .era-pasteur .event-date { color: var(--teal); }
+  .era-pasteur .node { background: var(--teal); box-shadow: 0 0 12px rgba(45,212,191,0.4); }
+  .era-pasteur .event-content::after { background: var(--teal); }
+  .era-pasteur .figure-tag { background: rgba(45,212,191,0.12); color: var(--teal); }
+
+  .era-serum .era-label { background: rgba(96,165,250,0.12); color: var(--blue); border: 1px solid rgba(96,165,250,0.25); }
+  .era-serum .event-date { color: var(--blue); }
+  .era-serum .node { background: var(--blue); box-shadow: 0 0 12px rgba(96,165,250,0.4); }
+  .era-serum .event-content::after { background: var(--blue); }
+  .era-serum .figure-tag { background: rgba(96,165,250,0.12); color: var(--blue); }
+
+  .era-wars .era-label { background: rgba(244,63,94,0.12); color: var(--rose); border: 1px solid rgba(244,63,94,0.25); }
+  .era-wars .event-date { color: var(--rose); }
+  .era-wars .node { background: var(--rose); box-shadow: 0 0 12px rgba(244,63,94,0.4); }
+  .era-wars .event-content::after { background: var(--rose); }
+  .era-wars .figure-tag { background: rgba(244,63,94,0.12); color: var(--rose); }
+
+  .era-modern .era-label { background: rgba(251,191,36,0.12); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
+  .era-modern .event-date { color: var(--amber); }
+  .era-modern .node { background: var(--amber); box-shadow: 0 0 12px rgba(251,191,36,0.4); }
+  .era-modern .event-content::after { background: var(--amber); }
+  .era-modern .figure-tag { background: rgba(251,191,36,0.12); color: var(--amber); }
+
+  .era-contemp .era-label { background: rgba(212,168,83,0.12); color: var(--gold); border: 1px solid rgba(212,168,83,0.25); }
+  .era-contemp .event-date { color: var(--gold); }
+  .era-contemp .node { background: var(--gold); box-shadow: 0 0 12px rgba(212,168,83,0.4); }
+  .era-contemp .event-content::after { background: var(--gold); }
+  .era-contemp .figure-tag { background: rgba(212,168,83,0.12); color: var(--gold); }
+
+  /* ===== QUIZ SECTION ===== */
+  .quiz-section {
+    max-width: 700px;
+    margin: 4rem auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .quiz-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .quiz-section > p {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .quiz-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+  }
+
+  .quiz-card:hover {
+    border-color: rgba(255,255,255,0.1);
+  }
+
+  .quiz-card .q-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .quiz-card .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-card .q-answer {
+    display: none;
+    padding: 1rem;
+    background: rgba(212,168,83,0.06);
+    border: 1px solid rgba(212,168,83,0.15);
+    border-radius: 8px;
+    font-size: 0.88rem;
+    color: var(--gold-light);
+    line-height: 1.6;
+  }
+
+  .quiz-card.open .q-answer { display: block; }
+
+  .quiz-card .q-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .quiz-card.open .q-hint { display: none; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--line);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .timeline-container::before { left: 1.5rem; }
+    .event .node { left: 1.5rem; }
+    .event.left .event-content,
+    .event.right .event-content {
+      width: 100%;
+      padding-left: 3.5rem;
+      padding-right: 0;
+      text-align: left;
+      margin-left: 0;
+    }
+    .event.left .event-content::after,
+    .event.right .event-content::after {
+      left: 2rem;
+      right: auto;
+      width: 1rem;
+    }
+    .era-nav-inner { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-subtitle">Préparation EDN — Immunologie</div>
+  <h1>Histoire de <span>l'Immunologie</span></h1>
+  <p class="hero-desc">Du XVIIIe siècle à nos jours — Chaque date, chaque découverte, chaque figure clé. La frise chronologique complète pour maîtriser l'histoire de l'immunologie aux examens.</p>
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    XVIIIe siècle → XXIe siècle — 30+ dates clés
+  </div>
+  <div class="hero-scroll">
+    <a href="#timeline">
+      Défiler pour explorer
+      <div class="arrow"></div>
+    </a>
+  </div>
+</section>
+
+<!-- ===== ERA NAV ===== -->
+<nav class="era-nav">
+  <div class="era-nav-inner">
+    <a href="#era-antiquity"><span class="dot" style="background:var(--purple)"></span>Prémices</a>
+    <a href="#era-pasteur"><span class="dot" style="background:var(--teal)"></span>Ère pasteurienne</a>
+    <a href="#era-serum"><span class="dot" style="background:var(--blue)"></span>Sérothérapie</a>
+    <a href="#era-wars"><span class="dot" style="background:var(--rose)"></span>Guerres mondiales</a>
+    <a href="#era-modern"><span class="dot" style="background:var(--amber)"></span>Révolutions</a>
+    <a href="#era-contemp"><span class="dot" style="background:var(--gold)"></span>Ère moderne</a>
+    <a href="#quiz">🎯 Quiz</a>
+  </div>
+</nav>
+
+<!-- ===== TIMELINE ===== -->
+<div class="timeline-container" id="timeline">
+
+  <!-- ═══════════════ ERA 1 : PRÉMICES ═══════════════ -->
+  <div class="era-header era-antiquity" id="era-antiquity">
+    <div class="era-label">⚗️ Ère I</div>
+    <h2>Prémices & Naissance de la Vaccination</h2>
+    <p>De l'observation empirique à l'intuition scientifique</p>
+  </div>
+
+  <div class="event left era-antiquity">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">XVIIIe s.</div>
+      <div class="event-date-sub">Début du siècle — Turquie / Asie</div>
+      <div class="event-card">
+        <h3>La Variolisation</h3>
+        <p>Pratique venue de Turquie et d'Asie : on inocule du pus de variole bénigne à des sujets sains. C'est une « roulette russe » — risque de mort pour l'individu et d'épidémie pour la population. Mais le concept d'immunité croisée émerge.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-antiquity">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1796</div>
+      <div class="event-date-sub">Angleterre — Berkeley</div>
+      <div class="event-card">
+        <span class="figure-tag">Edward Jenner</span>
+        <h3>Première inoculation de la Vaccine</h3>
+        <p>Jenner observe que les fermières trayant les vaches (contractant le <em>Cowpox</em>) sont protégées contre la variole. Il inocule la vaccine au jeune James Phipps. Le mot <strong>vaccination</strong> vient du latin <em>vacca</em> (vache).</p>
+        <div class="exam-tip">
+          <strong>📌 Piège QCM</strong>
+          Variolisation ≠ Vaccination. La vaccination remplace la variolisation (plus sûre). Jenner utilise le Cowpox, pas la variole.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-antiquity">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1798</div>
+      <div class="event-date-sub">Publication majeure</div>
+      <div class="event-card">
+        <span class="figure-tag">Edward Jenner</span>
+        <h3>Publication de l'<em>Inquiry</em></h3>
+        <p>Jenner publie ses résultats. La diffusion mondiale commence. La vaccination arrive en <strong>France en 1801</strong> malgré la guerre franco-anglaise (via les émigrés nobles).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-antiquity">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1820</div>
+      <div class="event-date-sub">Tours, France — Ère napoléonienne</div>
+      <div class="event-card">
+        <span class="figure-tag">Pierre-Fidèle Bretonneau</span>
+        <h3>Spécificité des maladies & tube Bretonneau</h3>
+        <p>Pré-pasteurien. Il décrit la <strong>diphtérie</strong> et la fièvre <strong>typhoïde</strong>. Invente le « tube Bretonneau » pour conserver et transporter le fluide vaccinal. Intuition du concept de « germe ». Ses élèves : <strong>Trousseau</strong> (trachéotomie), <strong>Velpeau</strong> (chirurgien).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ERA 2 : PASTEUR ═══════════════ -->
+  <div class="era-header era-pasteur" id="era-pasteur">
+    <div class="era-label">🔬 Ère II</div>
+    <h2>L'ère pasteurienne</h2>
+    <p>La doctrine microbienne bouleverse la médecine</p>
+  </div>
+
+  <div class="event left era-pasteur">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1860</div>
+      <div class="event-date-sub">France</div>
+      <div class="event-card">
+        <span class="figure-tag">Louis Pasteur (1822–1895)</span>
+        <h3>Fermentation, génération spontanée & doctrine microbienne</h3>
+        <p><strong>Chimiste</strong> (pas médecin !). Réfute la génération spontanée. Découvre le rôle des micro-organismes dans la fermentation. Fonde la <strong>doctrine microbienne</strong> : les maladies sont causées par des germes spécifiques. Stérilisation, pasteurisation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-pasteur">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1878</div>
+      <div class="event-date-sub">France</div>
+      <div class="event-card">
+        <span class="figure-tag">Louis Pasteur</span>
+        <h3>Concept d'atténuation & vaccins animaux</h3>
+        <p>Pasteur cultive des microbes pour les <strong>atténuer</strong> (choléra des poules, rouget du porc, pébrine). L'inoculation de microbes atténués protège les animaux. En hommage à Jenner, il <strong>généralise le terme « vaccination »</strong> à toute immunisation par microbe atténué.</p>
+        <div class="exam-tip">
+          <strong>📌 Point examen</strong>
+          Avant Pasteur, « vaccination » = uniquement la vaccine anti-variolique. Après Pasteur → tout vaccin.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-pasteur">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1885</div>
+      <div class="event-date-sub">Paris — Joseph Meister</div>
+      <div class="event-card">
+        <span class="figure-tag">Louis Pasteur</span>
+        <h3>Vaccin contre la Rage</h3>
+        <p>Premier vaccin humain issu de l'atténuation. Pasteur vaccine le jeune Joseph Meister mordu par un chien enragé. Succès mondial retentissant.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-pasteur">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1884</div>
+      <div class="event-date-sub">Institut Pasteur, Paris</div>
+      <div class="event-card">
+        <span class="figure-tag">Élie Metchnikoff</span>
+        <h3>Découverte de la phagocytose</h3>
+        <p>Zoologiste russe à l'Institut Pasteur. Il observe que les globules blancs « mangent » les bactéries : c'est la <strong>phagocytose</strong>. Naissance du concept d'<strong>immunité cellulaire</strong> (considérée alors comme « innée »). Conflit avec les partisans de l'immunité humorale.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-pasteur">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1885</div>
+      <div class="event-date-sub">Institut Pasteur</div>
+      <div class="event-card">
+        <span class="figure-tag">Charles Chamberland</span>
+        <h3>Le filtre Chamberland</h3>
+        <p>Élève de Pasteur. Son filtre en porcelaine retient les bactéries → stérilisation de l'eau. <strong>Conséquence majeure</strong> : les agents « ultra-filtrables » qui passent à travers = découverte indirecte des <strong>virus</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-pasteur">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1888</div>
+      <div class="event-date-sub">France</div>
+      <div class="event-card">
+        <span class="figure-tag">Richet & Héricourt</span>
+        <h3>Transfert de sérum protecteur</h3>
+        <p>Charles Richet (physiologiste, élève de Claude Bernard) et Jules Héricourt transfèrent du sang de chiens immunisés contre le staphylocoque à des lapins → protection. Preuve qu'un « élément » du sérum confère l'immunité. Échec de la sérothérapie de la tuberculose.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ERA 3 : SÉROTHÉRAPIE ═══════════════ -->
+  <div class="era-header era-serum" id="era-serum">
+    <div class="era-label">💉 Ère III</div>
+    <h2>Naissance de la sérothérapie</h2>
+    <p>L'anticorps passe du concept à l'arme thérapeutique</p>
+  </div>
+
+  <div class="event left era-serum">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1890</div>
+      <div class="event-date-sub">Berlin, Allemagne</div>
+      <div class="event-card">
+        <span class="figure-tag">Von Behring & Kitasato</span>
+        <h3>Invention de la sérothérapie</h3>
+        <p>Emil von Behring (élève de Koch) et Kitasato injectent des doses sublétales de toxine (diphtérique, tétanique) à des animaux. Leur sérum contient des <strong>anti-toxines</strong> capables de protéger des animaux naïfs. Production à l'échelle industrielle sur des <strong>chevaux</strong>.</p>
+        <div class="exam-tip">
+          <strong>📌 Point examen crucial</strong>
+          Sérothérapie = immunité PASSIVE, IMMÉDIATE, TEMPORAIRE (~3 semaines). Ce n'est PAS un vaccin (à l'époque, vaccin = microbe vivant atténué).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-serum">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1894</div>
+      <div class="event-date-sub">Congrès de Budapest — Hôpital Necker, Paris</div>
+      <div class="event-card">
+        <span class="figure-tag">Émile Roux, Martin & Chaillou</span>
+        <h3>Triomphe de la sérothérapie antidiphtérique</h3>
+        <p>Roux (Institut Pasteur) présente les résultats sur <strong>300 enfants</strong> traités par sérum anti-diphtérique à l'hôpital Necker. Succès considérable. Roux devient un héros national (« Saint Émile Roux »). <strong>Première sérothérapie humaine en France.</strong></p>
+        <div class="exam-tip">
+          <strong>📌 Date tombable</strong>
+          1894 = Sérothérapie antidiphtérique chez l'homme en France. À ne PAS confondre avec 1890 (expériences animales de Behring/Kitasato).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-serum">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1897</div>
+      <div class="event-date-sub">Allemagne</div>
+      <div class="event-card">
+        <span class="figure-tag">Paul Ehrlich</span>
+        <h3>Création du terme « Anticorps »</h3>
+        <p>Ehrlich (élève de Koch) forge le mot <strong>Antikörper</strong> (anticorps) : des « corps » du sérum capables de s'opposer à n'importe quel « corps étranger » (antigène).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-serum">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1901</div>
+      <div class="event-date-sub">Allemagne</div>
+      <div class="event-card">
+        <span class="figure-tag">Paul Ehrlich</span>
+        <h3>Théorie des chaînes latérales</h3>
+        <p>Ehrlich imagine des cellules portant des <strong>récepteurs multiples</strong>. Quand une toxine se fixe sur un récepteur, cela induit la prolifération et la libération massive de ces récepteurs solubles = les anticorps. Vision <strong>précurseur de la sélection clonale</strong>.</p>
+        <div class="exam-tip">
+          <strong>📌 Concept fondateur</strong>
+          Ehrlich anticipe de 50 ans la théorie de la sélection clonale de Burnet (1957). C'est la première modélisation du BCR → anticorps sécrété.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-serum">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1903</div>
+      <div class="event-date-sub">Angleterre</div>
+      <div class="event-card">
+        <span class="figure-tag">Almroth Wright</span>
+        <h3>L'Opsonisation : réconciliation</h3>
+        <p>Wright montre que les anticorps <strong>recouvrent</strong> les bactéries (opsonisation) pour <strong>faciliter la phagocytose</strong> par les globules blancs. Il réconcilie immunité humorale (anticorps) et immunité cellulaire (phagocytose) : les deux coopèrent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-serum">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1913</div>
+      <div class="event-date-sub">Prix Nobel — Expériences sur le yacht du Prince de Monaco</div>
+      <div class="event-card">
+        <span class="figure-tag">Charles Richet — Prix Nobel 🏆</span>
+        <h3>Découverte de l'Anaphylaxie</h3>
+        <p>En ré-inoculant une toxine de physalie (méduse) à un chien déjà immunisé, Richet provoque un <strong>choc mortel</strong> au lieu de le protéger. L'immunité peut tuer par excès de réaction. Il nomme cela <strong>anaphylaxie</strong> (contraire de phylaxie = protection).</p>
+        <div class="exam-tip">
+          <strong>📌 Piège QCM classique</strong>
+          Richet = anaphylaxie (Prix Nobel 1913), PAS Ramon. Anaphylaxie = contraire de protection. C'est le fondement de l'allergie (hypersensibilité type I).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ERA 4 : GUERRES ═══════════════ -->
+  <div class="era-header era-wars" id="era-wars">
+    <div class="era-label">⚔️ Ère IV</div>
+    <h2>Les Guerres mondiales</h2>
+    <p>Le conflit comme accélérateur de la science</p>
+  </div>
+
+  <div class="event left era-wars">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1914–18</div>
+      <div class="event-date-sub">Première Guerre mondiale — Tranchées</div>
+      <div class="event-card">
+        <h3>Le drame du tétanos</h3>
+        <p>Les plaies des tranchées (terre souillée) causent le tétanos. Le sérum antitétanique <strong>échoue en curatif</strong> (la toxine est déjà fixée sur le SNC, les anticorps ne passent pas la BHE). Mais il fonctionne en <strong>préventif</strong> (injection dès la blessure). Généralisation de la <strong>prophylaxie antitétanique</strong>.</p>
+        <div class="exam-tip">
+          <strong>📌 Point capital</strong>
+          À cette époque : PAS de vaccin antitétanique ni antidiphtérique ! Seul le sérum est disponible. Les vaccins viendront avec Ramon (1924-27).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ERA 5 : ENTRE-DEUX-GUERRES ═══════════════ -->
+  <div class="era-header era-modern" id="era-modern">
+    <div class="era-label">⚡ Ère V</div>
+    <h2>Les révolutions de l'entre-deux-guerres</h2>
+    <p>Anatoxines, adjuvants et naissance de la vaccinologie moderne</p>
+  </div>
+
+  <div class="event right era-modern">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1924–27</div>
+      <div class="event-date-sub">Institut Pasteur</div>
+      <div class="event-card">
+        <span class="figure-tag">Gaston Ramon</span>
+        <h3>Invention de l'Anatoxine</h3>
+        <p>Ramon traite les toxines (diphtérique, tétanique) par <strong>chaleur + formol</strong>. Résultat : perte de la <strong>toxicité</strong> mais conservation du pouvoir <strong>immunogène</strong>. C'est l'<strong>anatoxine</strong>. Révolution : le vaccin n'est plus forcément un microbe vivant, ça peut être une protéine inerte.</p>
+        <div class="exam-tip">
+          <strong>📌 Piège QCM — Ne pas confondre !</strong>
+          Anatoxine = toxine détoxifiée (immunogène). ≠ Antitoxine = l'anticorps qui neutralise la toxine. Ramon ≠ Richet.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-modern">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1926</div>
+      <div class="event-date-sub">Institut Pasteur</div>
+      <div class="event-card">
+        <span class="figure-tag">Gaston Ramon</span>
+        <h3>Découverte des Adjuvants</h3>
+        <p>Ramon observe que l'immunité est meilleure s'il y a une <strong>inflammation locale</strong> (abcès au point d'injection). Il introduit les <strong>adjuvants</strong> (tapioca, puis sels d'aluminium) pour potentialiser la réponse immunitaire.</p>
+        <div class="exam-tip">
+          <strong>📌 Concepts de Ramon à retenir</strong>
+          <strong>Antigène</strong> = molécule reconnue par un anticorps (pas forcément immunogène seul).<br>
+          <strong>Immunogène</strong> = capable de générer une réponse immune (nécessite souvent un adjuvant).<br>
+          L'anatoxine tétanique seule = pas immunogène sans adjuvant !
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ERA 6 : WWII + MODERNE ═══════════════ -->
+  <div class="era-header era-contemp" id="era-contemp">
+    <div class="era-label">🧬 Ère VI</div>
+    <h2>Seconde Guerre mondiale & Ère moderne</h2>
+    <p>Des immunoglobulines à la structure moléculaire des anticorps</p>
+  </div>
+
+  <div class="event right era-contemp">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1940</div>
+      <div class="event-date-sub">États-Unis — Harvard</div>
+      <div class="event-card">
+        <span class="figure-tag">Edwin Cohn</span>
+        <h3>Fractionnement du plasma & naissance des immunoglobulines</h3>
+        <p>L'armée US a besoin de protéger ses troupes (rougeole, jaunisse) sans antibiotiques. Cohn fractionne le plasma (pas le sérum !) par précipitation à l'éthanol froid. Il isole les <strong>gamma-globulines</strong> à l'EPS = les <strong>immunoglobulines</strong>.</p>
+        <div class="exam-tip">
+          <strong>📌 Terminologie essentielle</strong>
+          « Immunoglobuline » = protéine de la fraction gamma. On ne dit « anticorps » QUE si on connaît la cible antigénique. IgG = gamma-globulines (d'où le G).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event left era-contemp">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">~1960</div>
+      <div class="event-date-sub">Prix Nobel</div>
+      <div class="event-card">
+        <span class="figure-tag">Porter & Edelman — Prix Nobel 🏆</span>
+        <h3>Structure biochimique des anticorps</h3>
+        <p>Rodney Porter et Gerald Edelman décrivent la structure de l'IgG : <strong>2 chaînes lourdes + 2 chaînes légères</strong>, reliées par des ponts disulfures. Ils utilisent la <strong>papaïne</strong> (→ 2 Fab + 1 Fc) et la <strong>pepsine</strong> (→ F(ab')₂) pour fragmenter la molécule.</p>
+        <div class="exam-tip">
+          <strong>📌 Structure — Incontournable</strong>
+          Papaïne (3 syllabes) → 3 fragments (2 Fab + 1 Fc).<br>
+          Pepsine (2 syllabes) → 2 fragments (F(ab')₂ + pFc' dégradé).<br>
+          Fab = antigen binding. Fc = cristallisable (≠ fragment constant !).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="event right era-contemp">
+    <div class="node"></div>
+    <div class="event-content">
+      <div class="event-date">1980</div>
+      <div class="event-date-sub">Éradication</div>
+      <div class="event-card">
+        <h3>Éradication mondiale de la variole</h3>
+        <p>L'OMS déclare la variole éradiquée. Seule maladie infectieuse humaine jamais éradiquée. Possible car le virus est <strong>strictement humain</strong> (pas de réservoir animal). Les stocks de vaccin anti-variolique sont conservés et ressortis pour le <strong>Monkeypox</strong> (immunité croisée Orthopoxvirus).</p>
+        <div class="exam-tip">
+          <strong>📌 Point examen</strong>
+          Éradication possible car PAS de réservoir animal. L'immunité anti-tétanos, elle, ne permet PAS d'immunité de groupe (réservoir tellurique) → couverture 100% nécessaire.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== QUIZ ===== -->
+<section class="quiz-section" id="quiz">
+  <h2>🎯 Teste-toi — Dates & Figures</h2>
+  <p>Clique sur chaque question pour révéler la réponse</p>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 1</div>
+    <div class="q-text">Quelle est la différence entre variolisation et vaccination ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer"><strong>Variolisation</strong> = inoculer la VARIOLE humaine (dangereux, « roulette russe »). <strong>Vaccination</strong> (Jenner, 1796-1798) = inoculer la VACCINE bovine (Cowpox, bénigne) pour protéger contre la variole. Beaucoup plus sûr.</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 2</div>
+    <div class="q-text">1890 vs 1894 : que s'est-il passé à chacune de ces dates ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer"><strong>1890</strong> = Behring & Kitasato inventent la sérothérapie (expériences ANIMALES, anti-toxines diphtérique/tétanique).<br><strong>1894</strong> = Roux, Martin & Chaillou présentent les résultats sur 300 enfants (Necker) au Congrès de Budapest. Première sérothérapie HUMAINE en France.</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 3</div>
+    <div class="q-text">Charles Richet : quelles sont ses deux contributions majeures ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer">1) Précurseur de la sérothérapie (~1888, transfert de sérum de chiens immunisés → lapins, avec Héricourt).<br>2) Découverte de l'<strong>anaphylaxie</strong> (choc mortel par ré-injection de toxine de physalie chez un chien immunisé). <strong>Prix Nobel 1913</strong>.</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 4</div>
+    <div class="q-text">Anatoxine vs Antitoxine : quelle est la différence ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer"><strong>Anatoxine</strong> (Ramon, 1924-27) = toxine traitée par chaleur + formol → perd sa toxicité, garde son immunogénicité → c'est le VACCIN.<br><strong>Antitoxine</strong> = l'ANTICORPS qui neutralise la toxine → c'est le produit de la réponse immune (contenu dans le sérum).</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 5</div>
+    <div class="q-text">Pourquoi le sérum antitétanique échoue-t-il en curatif pendant la WWI ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer">La toxine tétanique est déjà fixée sur le système nerveux central. Les anticorps du sérum ne traversent pas la <strong>barrière hémato-encéphalique</strong>. Le sérum ne fonctionne qu'en PRÉVENTIF (injection dès la blessure, avant fixation de la toxine).</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 6</div>
+    <div class="q-text">Pourquoi les IgG s'appellent-elles « G » ? Qui les a isolées ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer"><strong>G = gamma-globulines</strong>. À l'électrophorèse des protéines sériques, les immunoglobulines migrent dans la zone γ. <strong>Cohn</strong> (années 1940) les a isolées par fractionnement du plasma à l'éthanol froid.</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 7</div>
+    <div class="q-text">Porter & Edelman : papaïne vs pepsine, quels fragments ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer"><strong>Papaïne</strong> (3 syllabes) → 3 fragments : 2 Fab + 1 Fc.<br><strong>Pepsine</strong> (2 syllabes) → 2 fragments : 1 F(ab')₂ + pFc' dégradé.<br>Fab = fragment antigen binding. Fc = fragment cristallisable (PAS « fragment constant »).</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 8</div>
+    <div class="q-text">Pourquoi la variole a-t-elle pu être éradiquée mais pas le tétanos ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer"><strong>Variole</strong> : virus STRICTEMENT humain, pas de réservoir animal → vaccination mondiale → éradication (1980).<br><strong>Tétanos</strong> : réservoir TELLURIQUE (sol), le bacille n'est pas humain → pas d'immunité de groupe possible → couverture vaccinale 100% nécessaire, éradication impossible.</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 9</div>
+    <div class="q-text">Pasteur était-il médecin ? Quel terme a-t-il généralisé et en hommage à qui ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer">NON, Pasteur était <strong>chimiste</strong> (pas médecin). Il a généralisé le terme « <strong>vaccination</strong> » (initialement réservé à la vaccine anti-variolique) pour désigner toute immunisation par microbe atténué, <strong>en hommage à Jenner</strong>.</div>
+  </div>
+
+  <div class="quiz-card" onclick="this.classList.toggle('open')">
+    <div class="q-label">Question 10</div>
+    <div class="q-text">Quel rôle a joué le filtre Chamberland dans l'histoire de la virologie ?</div>
+    <div class="q-hint">Cliquer pour voir la réponse</div>
+    <div class="q-answer">Le filtre en porcelaine de <strong>Chamberland</strong> (élève de Pasteur) retenait les bactéries mais laissait passer des agents infectieux plus petits = les « ultra-filtrables ». C'est ainsi qu'on a découvert indirectement les <strong>virus</strong>.</div>
+  </div>
+
+</section>
+
+<footer>
+  Frise chronologique — Histoire de l'Immunologie — Préparation EDN<br>
+  Source : Cours du Pr Watier, Collège ASSIM
+</footer>
+
+<!-- ===== SCROLL ANIMATIONS ===== -->
+<script>
+  // Intersection Observer for scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.event').forEach(el => observer.observe(el));
+
+  // Active nav highlighting
+  const sections = document.querySelectorAll('.era-header');
+  const navLinks = document.querySelectorAll('.era-nav a');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + id ? 'var(--text)' : '';
+          link.style.borderBottomColor = link.getAttribute('href') === '#' + id ? 'var(--gold)' : 'transparent';
+        });
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -60% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
+
+</body>
+</html>
