@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas d'Immunologie — BCR/TCR & Système HLA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #1a2035;
+  --bg-card-hover: #1f2847;
+  --text-primary: #e8edf5;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-teal: #14b8a6;
+  --accent-gold: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-purple: #a78bfa;
+  --accent-green: #22c55e;
+  --border-subtle: rgba(148,163,184,0.1);
+  --border-accent: rgba(59,130,246,0.3);
+  --glow-blue: 0 0 30px rgba(59,130,246,0.15);
+  --glow-cyan: 0 0 30px rgba(6,182,212,0.15);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Fira Sans', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(59,130,246,0.3);
+  color: #fff;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 3px; }
+
+/* ===== HEADER / NAV ===== */
+.main-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,14,23,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: -0.5px;
+}
+
+.nav-logo span { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; margin-left: 8px; }
+
+.nav-links { display: flex; gap: 4px; }
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  transition: var(--transition);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--accent-cyan);
+  background: rgba(6,182,212,0.1);
+}
+
+.nav-progress {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-teal));
+  transition: width 0.15s ease;
+  width: 0%;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 100px 24px 60px;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(6,182,212,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(59,130,246,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(167,139,250,0.04) 0%, transparent 60%);
+}
+
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(148,163,184,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148,163,184,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-content {
+  position: relative; z-index: 1;
+  max-width: 900px; text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(6,182,212,0.1);
+  border: 1px solid rgba(6,182,212,0.2);
+  border-radius: 30px;
+  padding: 6px 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 32px;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s 0.1s ease both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 40px;
+  animation: fadeInUp 0.8s 0.2s ease both;
+}
+
+.hero-items {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  animation: fadeInUp 0.8s 0.3s ease both;
+}
+
+.hero-items span {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hero-items span strong { color: var(--accent-gold); }
+
+.hero-scroll {
+  margin-top: 50px;
+  animation: fadeInUp 0.8s 0.5s ease both;
+}
+
+.hero-scroll a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: var(--transition);
+}
+
+.hero-scroll a:hover { color: var(--accent-cyan); }
+
+.hero-scroll .arrow {
+  width: 24px; height: 40px;
+  border: 2px solid var(--text-muted);
+  border-radius: 12px;
+  position: relative;
+  transition: var(--transition);
+}
+
+.hero-scroll a:hover .arrow { border-color: var(--accent-cyan); }
+
+.hero-scroll .arrow::after {
+  content: '';
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 8px; border-radius: 2px;
+  background: var(--text-muted);
+  animation: scroll-indicator 2s infinite;
+}
+
+@keyframes scroll-indicator {
+  0% { top: 8px; opacity: 1; }
+  100% { top: 22px; opacity: 0; }
+}
+
+/* ===== CONTENT SECTIONS ===== */
+.content-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* Part Header */
+.part-header {
+  padding: 80px 0 40px;
+  position: relative;
+}
+
+.part-number {
+  font-family: var(--font-display);
+  font-size: 6rem;
+  font-weight: 700;
+  color: rgba(59,130,246,0.07);
+  position: absolute;
+  top: 40px; left: -20px;
+  line-height: 1;
+  user-select: none;
+}
+
+.part-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  position: relative;
+}
+
+.part-header h2::after {
+  content: '';
+  display: block;
+  width: 60px; height: 3px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+  margin-top: 16px;
+  border-radius: 2px;
+}
+
+.part-header .part-desc {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  margin-top: 16px;
+  max-width: 700px;
+}
+
+/* Section cards */
+.section-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: var(--transition);
+  opacity: 0; transform: translateY(20px);
+}
+
+.section-card.visible {
+  opacity: 1; transform: translateY(0);
+}
+
+.section-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--glow-blue);
+}
+
+.section-toggle {
+  width: 100%;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 28px;
+  text-align: left;
+  transition: var(--transition);
+}
+
+.section-toggle:hover { background: rgba(59,130,246,0.03); }
+
+.section-toggle h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex; align-items: center; gap: 14px;
+}
+
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.section-chevron {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(148,163,184,0.08);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.section-card.open .section-chevron {
+  transform: rotate(180deg);
+  background: rgba(6,182,212,0.15);
+  color: var(--accent-cyan);
+}
+
+.section-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-card.open .section-body { max-height: 8000px; }
+
+.section-content {
+  padding: 0 28px 28px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.section-content p {
+  margin: 16px 0;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+.section-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ===== DEFINITION BOXES ===== */
+.def-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.def-box {
+  background: rgba(6,182,212,0.04);
+  border: 1px solid rgba(6,182,212,0.12);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  transition: var(--transition);
+}
+
+.def-box:hover {
+  border-color: rgba(6,182,212,0.3);
+  background: rgba(6,182,212,0.07);
+}
+
+.def-box .def-term {
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.def-box .def-text {
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+/* ===== COMPARISON TABLE ===== */
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 24px 0;
+  font-size: 0.88rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.comparison-table thead th {
+  background: rgba(59,130,246,0.08);
+  color: var(--accent-blue);
+  font-weight: 600;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.comparison-table tbody td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.comparison-table tbody tr:last-child td { border-bottom: none; }
+
+.comparison-table tbody tr:hover td {
+  background: rgba(59,130,246,0.03);
+}
+
+.comparison-table tbody td:first-child {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ===== EDN BOX (exam tips) ===== */
+.edn-box {
+  background: linear-gradient(135deg, rgba(244,63,94,0.06), rgba(244,63,94,0.02));
+  border: 1px solid rgba(244,63,94,0.2);
+  border-left: 4px solid var(--accent-rose);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.edn-box .edn-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-rose);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.edn-box p {
+  color: var(--text-secondary) !important;
+  font-size: 0.92rem;
+  margin: 0 !important;
+  line-height: 1.7;
+}
+
+.edn-box strong { color: #fda4af !important; }
+
+/* ===== CONCEPT KEY BOX ===== */
+.concept-box {
+  background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,182,212,0.04));
+  border: 1px solid rgba(59,130,246,0.2);
+  border-left: 4px solid var(--accent-blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.concept-box .concept-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-blue);
+  margin-bottom: 10px;
+}
+
+.concept-box p {
+  color: var(--text-secondary) !important;
+  font-size: 0.92rem;
+  margin: 0 !important;
+  line-height: 1.7;
+}
+
+.concept-box strong { color: #93c5fd !important; }
+
+/* ===== CLINICAL BOX ===== */
+.clinical-box {
+  background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+  border: 1px solid rgba(34,197,94,0.2);
+  border-left: 4px solid var(--accent-green);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.clinical-box .clinical-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-green);
+  margin-bottom: 10px;
+}
+
+.clinical-box p, .clinical-box li {
+  color: var(--text-secondary) !important;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.clinical-box strong { color: #86efac !important; }
+
+/* ===== INTERACTIVE DIAGRAMS ===== */
+.diagram-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin: 28px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.diagram-container::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(6,182,212,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(59,130,246,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.diagram-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.diagram-svg {
+  width: 100%; max-width: 700px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* ===== INTERACTIVE HLA DIAGRAM ===== */
+.hla-interactive {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 28px 0;
+}
+
+.hla-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 28px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.hla-card::after {
+  content: 'Cliquer pour détails';
+  position: absolute; bottom: 12px; right: 16px;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.hla-card:hover::after { opacity: 1; }
+
+.hla-card.class1 { border-color: rgba(59,130,246,0.2); }
+.hla-card.class1:hover { border-color: rgba(59,130,246,0.5); box-shadow: var(--glow-blue); }
+.hla-card.class2 { border-color: rgba(167,139,250,0.2); }
+.hla-card.class2:hover { border-color: rgba(167,139,250,0.5); box-shadow: 0 0 30px rgba(167,139,250,0.15); }
+
+.hla-card .hla-class-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.hla-card.class1 .hla-class-tag { color: var(--accent-blue); }
+.hla-card.class2 .hla-class-tag { color: var(--accent-purple); }
+
+.hla-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.hla-detail {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.hla-detail:last-child { border-bottom: none; }
+
+.hla-detail .label { color: var(--text-muted); min-width: 90px; font-weight: 500; }
+
+.hla-detail .value { font-weight: 600; color: var(--text-primary); }
+
+.hla-expanded {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease;
+  margin-top: 0;
+}
+
+.hla-card.expanded .hla-expanded {
+  max-height: 500px;
+  margin-top: 16px;
+}
+
+.hla-expanded p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ===== PATHWAY DIAGRAM ===== */
+.pathway-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 28px 0;
+}
+
+.pathway {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+}
+
+.pathway .pathway-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+}
+
+.pathway.cyto .pathway-tag { color: var(--accent-blue); }
+.pathway.endo .pathway-tag { color: var(--accent-purple); }
+
+.pathway h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.step {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 10px 0;
+  position: relative;
+}
+
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.pathway.cyto .step-num { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+.pathway.endo .step-num { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
+
+.step-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.step-text strong {
+  color: var(--text-primary);
+}
+
+.step-arrow {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 4px 0;
+  margin-left: 7px;
+}
+
+/* ===== QUIZ SECTION ===== */
+.quiz-section {
+  padding: 80px 0;
+}
+
+.quiz-section h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.quiz-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+.quiz-score {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.quiz-score .score-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.quiz-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.quiz-question {
+  padding: 20px 24px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 16px;
+  transition: var(--transition);
+}
+
+.quiz-question:hover { background: rgba(59,130,246,0.03); }
+
+.quiz-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(6,182,212,0.1);
+  color: var(--accent-cyan);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.quiz-card.correct .quiz-num {
+  background: rgba(34,197,94,0.2);
+  color: var(--accent-green);
+}
+
+.quiz-card.wrong .quiz-num {
+  background: rgba(244,63,94,0.2);
+  color: var(--accent-rose);
+}
+
+.quiz-q-text {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.quiz-reveal-btn {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.quiz-question:hover .quiz-reveal-btn { color: var(--accent-cyan); }
+
+.quiz-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.quiz-card.open .quiz-answer { max-height: 400px; }
+
+.quiz-answer-inner {
+  padding: 0 24px 20px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+
+.quiz-answer-inner p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.quiz-answer-inner strong { color: var(--accent-cyan); }
+
+.quiz-buttons {
+  display: flex; gap: 8px;
+  margin-top: 12px;
+}
+
+.quiz-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  background: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+
+.quiz-btn.correct-btn {
+  color: var(--accent-green);
+  border-color: rgba(34,197,94,0.3);
+}
+
+.quiz-btn.correct-btn:hover {
+  background: rgba(34,197,94,0.15);
+}
+
+.quiz-btn.wrong-btn {
+  color: var(--accent-rose);
+  border-color: rgba(244,63,94,0.3);
+}
+
+.quiz-btn.wrong-btn:hover {
+  background: rgba(244,63,94,0.15);
+}
+
+/* ===== CODE / FORMULA ===== */
+.formula {
+  font-family: var(--font-mono);
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.15);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 0.88rem;
+  color: var(--accent-cyan);
+  overflow-x: auto;
+}
+
+.locus-display {
+  font-family: var(--font-mono);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  letter-spacing: 1px;
+  overflow-x: auto;
+}
+
+.locus-display .gene-v { color: var(--accent-teal); }
+.locus-display .gene-d { color: var(--accent-gold); }
+.locus-display .gene-j { color: var(--accent-rose); }
+.locus-display .gene-c { color: var(--accent-purple); }
+.locus-display .arrow { color: var(--text-muted); margin: 0 4px; }
+
+/* ===== MNEMO BOX ===== */
+.mnemo-box {
+  background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02));
+  border: 1px solid rgba(245,158,11,0.2);
+  border-left: 4px solid var(--accent-gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 24px;
+  margin: 20px 0;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.mnemo-box .mnemo-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-gold);
+  margin-bottom: 6px;
+}
+
+.mnemo-box strong { color: #fcd34d; }
+
+/* ===== FOOTER ===== */
+.site-footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.site-footer a { color: var(--accent-cyan); text-decoration: none; }
+
+/* ===== UTILITIES ===== */
+.mt-sm { margin-top: 12px; }
+.mt-md { margin-top: 24px; }
+.mt-lg { margin-top: 40px; }
+.mb-sm { margin-bottom: 12px; }
+.mb-md { margin-bottom: 24px; }
+
+.highlight { color: var(--accent-cyan); }
+.highlight-blue { color: var(--accent-blue); }
+.highlight-gold { color: var(--accent-gold); }
+.highlight-rose { color: var(--accent-rose); }
+.highlight-purple { color: var(--accent-purple); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hla-interactive, .pathway-container { grid-template-columns: 1fr; }
+  .def-grid { grid-template-columns: 1fr; }
+  .part-number { font-size: 4rem; }
+  .section-toggle { padding: 18px 20px; }
+  .section-content { padding: 0 20px 20px; }
+  .hero { padding: 80px 20px 40px; }
+}
+
+/* ===== SEARCH ===== */
+.search-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(10,14,23,0.9);
+  backdrop-filter: blur(10px);
+  display: none; align-items: flex-start; justify-content: center;
+  padding-top: 15vh;
+}
+
+.search-overlay.active { display: flex; }
+
+.search-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  width: 90%; max-width: 600px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.search-input {
+  width: 100%;
+  padding: 20px 24px;
+  background: none; border: none;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-family: var(--font-body);
+  outline: none;
+}
+
+.search-input::placeholder { color: var(--text-muted); }
+
+.search-results {
+  max-height: 50vh;
+  overflow-y: auto;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.search-result-item {
+  padding: 14px 24px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+
+.search-result-item:hover { background: rgba(59,130,246,0.05); }
+
+.search-result-item .sr-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.search-result-item .sr-context {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.search-result-item .sr-context mark {
+  background: rgba(6,182,212,0.3);
+  color: var(--accent-cyan);
+  border-radius: 2px;
+  padding: 0 3px;
+}
+
+.search-hint {
+  padding: 16px 24px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.nav-search-btn {
+  background: none; border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-family: var(--font-body);
+  display: flex; align-items: center; gap: 6px;
+  transition: var(--transition);
+}
+
+.nav-search-btn:hover {
+  border-color: var(--border-accent);
+  color: var(--accent-cyan);
+}
+
+.nav-search-btn kbd {
+  background: rgba(148,163,184,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Atlas Immuno <span>EDN 2026</span></div>
+    <div class="nav-links">
+      <a href="#part1">BCR / TCR</a>
+      <a href="#part2">Reconnaissance</a>
+      <a href="#part3">HLA / CMH</a>
+      <a href="#quiz">Quiz</a>
+    </div>
+    <button class="nav-search-btn" onclick="toggleSearch()">
+      🔍 Rechercher <kbd>⌘K</kbd>
+    </button>
+  </div>
+  <div class="nav-progress" id="navProgress"></div>
+</nav>
+
+<!-- ===== SEARCH OVERLAY ===== -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un concept, une molécule, un mécanisme…" oninput="performSearch(this.value)">
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">Tapez pour rechercher dans tout le cours</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Cours interactif — Immunologie fondamentale</div>
+    <h1>Récepteurs de l'antigène <br>&amp; Système <em>HLA</em></h1>
+    <p class="hero-subtitle">
+      Recombinaison V(D)J, diversité du répertoire, structure comparée BCR/TCR,
+      et Complexe Majeur d'Histocompatibilité — un cours complet et interactif pour les EDN.
+    </p>
+    <div class="hero-items">
+      <span><strong>Item 189</strong> — Déficits immunitaires</span>
+      <span><strong>Item 185</strong> — Hypersensibilités</span>
+      <span><strong>Item 191</strong> — Réaction inflammatoire</span>
+      <span><strong>Item 192</strong> — Auto-immunité</span>
+      <span><strong>Item 197</strong> — Transplantation</span>
+    </div>
+    <div class="hero-scroll">
+      <a href="#part1">
+        Commencer le cours
+        <div class="arrow"></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="content-wrap">
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 1 — BCR & TCR
+     ████████████████████████████████████████████████████ -->
+<div class="part-header" id="part1">
+  <div class="part-number">01</div>
+  <h2>Les récepteurs de l'antigène : BCR et TCR</h2>
+  <p class="part-desc">Comment un génome de 20 000 gènes engendre 10⁹ à 10¹¹ récepteurs différents — la recombinaison V(D)J et ses acteurs moléculaires.</p>
+</div>
+
+<!-- 1.1 Vocabulaire -->
+<div class="section-card" data-section="vocab">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(6,182,212,0.1); color:var(--accent-cyan)">📖</span>
+      1.1 — Vocabulaire essentiel
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+      <p>Avant d'aborder les mécanismes moléculaires, il faut maîtriser un vocabulaire précis qui revient constamment en immunologie clinique et aux EDN.</p>
+
+      <div class="def-grid">
+        <div class="def-box">
+          <div class="def-term">🎯 Épitope</div>
+          <div class="def-text">= déterminant antigénique. Portion de l'antigène reconnue par le récepteur immunitaire. Séquence de <strong>7 à 13 acides aminés</strong> pour les épitopes protéiques. Un antigène porte plusieurs épitopes différents. Les épitopes peuvent aussi être <strong>glucidiques ou lipidiques</strong> (présentés par <strong>CD1</strong>, non par les HLA classiques).</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">🔑 Paratope</div>
+          <div class="def-text">Zone du récepteur (BCR ou TCR) qui entre en contact avec l'épitope. Formé par les <strong>régions hypervariables CDR</strong> des chaînes du récepteur. C'est la complémentarité physico-chimique paratope–épitope qui détermine la spécificité et l'affinité.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">🧬 Clone</div>
+          <div class="def-text">Ensemble de lymphocytes B ou T descendant d'une même cellule-mère, exprimant <strong>tous le même récepteur</strong>. Fondement de la <strong>théorie de la sélection clonale</strong> (Burnet, 1957) : l'antigène « sélectionne » le clone portant le récepteur complémentaire.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">📚 Répertoire immunologique</div>
+          <div class="def-text">Ensemble de toutes les spécificités antigéniques portées par l'ensemble des clones lymphocytaires B et T d'un individu. La juxtaposition de toutes les « clés » immunologiques dont dispose l'organisme.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.2 Structure comparée BCR/TCR -->
+<div class="section-card" data-section="bcr-tcr">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(59,130,246,0.1); color:var(--accent-blue)">⚖️</span>
+      1.2 — Structure comparée du BCR et du TCR
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <p>Le <strong>BCR</strong> (B-Cell Receptor) et le <strong>TCR</strong> (T-Cell Receptor) partagent des mécanismes de diversification communs, mais leurs structures et modes de fonctionnement diffèrent fondamentalement.</p>
+
+      <h4 style="font-family:var(--font-display); font-size:1.15rem; color:#fff; margin:20px 0 12px;">Le BCR : une immunoglobuline membranaire</h4>
+      <p>Le BCR est structurellement une <strong>immunoglobuline (Ig) ancrée dans la membrane</strong> du lymphocyte B. Il est composé de <strong>2 chaînes lourdes (H)</strong> identiques + <strong>2 chaînes légères (L)</strong> identiques de type <strong>κ</strong> ou <strong>λ</strong>. Chaque chaîne possède une <strong>région variable (V)</strong> portant le paratope et une <strong>région constante (C)</strong> définissant l'isotype. Le BCR est <strong>bivalent</strong> (2 paratopes). Sa forme sécrétée = l'<strong>anticorps</strong>.</p>
+
+      <h4 style="font-family:var(--font-display); font-size:1.15rem; color:#fff; margin:20px 0 12px;">Le TCR : un demi-BCR sans vie propre sécrétée</h4>
+      <p>Le TCR ressemble à un seul « bras » (Fab) du BCR. C'est un <strong>hétérodimère</strong> de 2 chaînes différentes : <strong>TCR αβ</strong> (≈90%) ou <strong>TCR γδ</strong> (≈10%). Il est <strong>monovalent</strong> (1 seul paratope), <strong>pas de forme sécrétée</strong>, <strong>pas de fonctions effectrices propres</strong>.</p>
+
+      <table class="comparison-table">
+        <thead>
+          <tr><th>Caractéristique</th><th>BCR</th><th>TCR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Paratopes</td><td>2 (bivalent)</td><td>1 (monovalent)</td></tr>
+          <tr><td>Forme sécrétée</td><td>Oui (= anticorps)</td><td><strong style="color:var(--accent-rose)">Non</strong></td></tr>
+          <tr><td>Fonctions effectrices</td><td>Oui (complément, ADCC…)</td><td><strong style="color:var(--accent-rose)">Non</strong></td></tr>
+          <tr><td>Reconnaissance</td><td>Antigène <strong>natif</strong> (3D)</td><td>Peptide <strong>apprêté</strong> + CMH</td></tr>
+          <tr><td>Gènes codants</td><td>Gènes des Ig</td><td>Gènes du TCR (≠ Ig)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="edn-box">
+        <div class="edn-label">⚠️ Piège EDN</div>
+        <p>Les gènes du BCR et du TCR sont des gènes <strong>différents</strong>, sur des chromosomes <strong>différents</strong>. Ne pas confondre « recombinaison des gènes d'Ig » avec « recombinaison des gènes du TCR ».</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.3 Recombinaison V(D)J -->
+<div class="section-card" data-section="vdj">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(20,184,166,0.1); color:var(--accent-teal)">🧬</span>
+      1.3 — La recombinaison V(D)J
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <p><strong>Susumu Tonegawa</strong> (Nobel 1987) a démontré qu'un nombre limité de <strong>segments géniques</strong> sont assemblés de façon combinatoire par <strong>recombinaison somatique</strong>, unique aux lymphocytes.</p>
+
+      <h4 style="font-family:var(--font-display); font-size:1.1rem; color:#fff; margin:20px 0 12px;">Organisation des locus</h4>
+
+      <table class="comparison-table">
+        <thead><tr><th>Chaîne</th><th>Chromosome</th><th>Segments géniques</th></tr></thead>
+        <tbody>
+          <tr><td>Chaîne lourde (IgH)</td><td><strong style="color:var(--accent-cyan)">14</strong></td><td><span class="highlight-teal">V</span> – <span class="highlight-gold">D</span> – <span class="highlight-rose">J</span> – C</td></tr>
+          <tr><td>Chaîne légère κ (Igκ)</td><td><strong style="color:var(--accent-cyan)">2</strong></td><td><span class="highlight-teal">V</span> – <span class="highlight-rose">J</span> – C</td></tr>
+          <tr><td>Chaîne légère λ (Igλ)</td><td><strong style="color:var(--accent-cyan)">22</strong></td><td><span class="highlight-teal">V</span> – <span class="highlight-rose">J</span> – C</td></tr>
+        </tbody>
+      </table>
+
+      <div class="concept-box">
+        <div class="concept-label">💡 Concept-clé</div>
+        <p>Le <strong>CDR3</strong> est le CDR le plus hypervariable car il est codé à la jonction V-D-J, zone où se concentrent les mécanismes de diversification (N-nucléotides, imprécision de coupure).</p>
+      </div>
+
+      <h4 style="font-family:var(--font-display); font-size:1.1rem; color:#fff; margin:20px 0 12px;">5 propriétés fondamentales</h4>
+
+      <p><strong>1. Intra-chromosomique</strong> — L'assemblage V-D-J se fait au sein du même locus. On n'assemble jamais un segment V du locus κ (chr 2) avec un J du locus IgH (chr 14).</p>
+      <p><strong>2. Aléatoire</strong> — Le choix du segment V, D et J est en principe aléatoire, générant une diversité combinatoire immense. Des biais existent dans certaines pathologies (PR, sclérodermie).</p>
+      <p><strong>3. Ordonnée</strong> — Chaîne lourde : <strong>D→J</strong> puis <strong>V→DJ</strong>. Chaînes légères (pas de D) : <strong>V→J</strong> directement.</p>
+      <p><strong>4. Spécifique des lymphocytes</strong> — Seuls les gènes d'Ig sont réarrangés dans les B, et seuls les gènes du TCR dans les T. Conséquence : <strong>un lymphocyte B et une cellule de la peau n'ont pas exactement le même ADN</strong>.</p>
+      <p><strong>5. Indépendante de l'antigène</strong> — Les réarrangements V(D)J ont lieu dans les <strong>organes lymphoïdes primaires</strong> (moelle osseuse pour B, thymus pour T), en l'absence d'antigène.</p>
+
+      <h4 style="font-family:var(--font-display); font-size:1.1rem; color:#fff; margin:24px 0 12px;">Acteurs moléculaires essentiels</h4>
+
+      <div class="def-grid">
+        <div class="def-box">
+          <div class="def-term">✂️ RAG1 / RAG2</div>
+          <div class="def-text"><em>Recombination Activating Genes</em>. Enzymes pivots qui reconnaissent les <strong>RSS</strong> (séquences signal de recombinaison). Règle 12/23 : recombinaison uniquement entre RSS-12 et RSS-23. <strong>Mutation RAG → DICS T⁻B⁻NK⁺</strong>.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">🔧 Hélicase Ku</div>
+          <div class="def-text">Ku70/Ku80. Réparation par NHEJ (Non-Homologous End Joining). Aussi <strong>cible d'auto-anticorps</strong> dans le lupus et la sclérodermie.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">➕ TdT</div>
+          <div class="def-text"><em>Terminal deoxynucleotidyl Transferase</em>. Ajoute aléatoirement 1 à 20 <strong>N-nucléotides</strong> aux jonctions. Exprimée au stade <strong>pro-B/pro-T</strong>. Marqueur diagnostique des <strong>LAL</strong>.</div>
+        </div>
+      </div>
+
+      <div class="clinical-box">
+        <div class="clinical-label">🏥 Application clinique — DICS et TREC</div>
+        <p>L'ADN excisé lors de la recombinaison forme des cercles épisomiques : <strong>TREC</strong> (T-cell Receptor Excision Circles). Depuis <strong>2023 en France</strong>, le dépistage néonatal du DICS est <strong>obligatoire</strong> sur le buvard de Guthrie par <strong>PCR quantitative des TREC</strong>. Un taux effondré signe un DICS → greffe de CSH urgente.</p>
+        <p style="margin-top:8px;font-size:0.82rem;color:var(--text-muted)!important"><em>Réf. : HAS, Avis du 15 décembre 2022</em></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.4 Sources de diversité -->
+<div class="section-card" data-section="diversite">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(245,158,11,0.1); color:var(--accent-gold)">🎲</span>
+      1.4 — Sources de diversité du répertoire
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <table class="comparison-table">
+        <thead><tr><th>Source</th><th>Mécanisme</th><th>Ordre de grandeur</th></tr></thead>
+        <tbody>
+          <tr><td>Germinale</td><td>Multiplicité des segments V, D, J</td><td>—</td></tr>
+          <tr><td>Combinatoire</td><td>Assemblage V(D)J + assortiment H/L</td><td>≈ 3 × 10⁶</td></tr>
+          <tr><td>Jonctionnelle</td><td>Imprécision, N-nucléotides (TdT), cadre de lecture</td><td>× 10³</td></tr>
+          <tr><td><strong>TOTAL (pré-immun)</strong></td><td></td><td><strong style="color:var(--accent-cyan)">≈ 10⁹ à 10¹¹</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="formula">
+        Chaîne lourde : V × D × J ≈ 50 × 27 × 6 = <strong>≈ 9 000</strong> combinaisons<br>
+        Chaîne κ : V × J ≈ 40 × 5 = <strong>200</strong> combinaisons<br>
+        Total combinatoire : 9 000 × (200κ + 120λ) = <strong>≈ 2,9 × 10⁶</strong>
+      </div>
+
+      <p>La <strong>diversité jonctionnelle</strong> est le facteur multiplicateur majeur : imprécision de coupure par RAG, ajout de <strong>N-nucléotides par la TdT</strong> (non codés par le génome germinal), et décalage du cadre de lecture. C'est pourquoi le <strong>CDR3 est le CDR le plus hypervariable</strong>.</p>
+
+      <div class="mnemo-box">
+        <div class="mnemo-label">🧠 À retenir</div>
+        Il existe une 5e source : les <strong>hypermutations somatiques</strong>, qui interviennent <strong>après</strong> la rencontre avec l'antigène (centres germinatifs). Elles ne participent pas au répertoire pré-immun.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.5 Exclusion allélique -->
+<div class="section-card" data-section="exclusion">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(244,63,94,0.1); color:var(--accent-rose)">🔒</span>
+      1.5 — Réarrangement productif et exclusion allélique
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+      <p>Environ <strong>2/3 des réarrangements sont non productifs</strong> (codon stop prématuré, décalage du cadre de lecture). Si le 1er allèle échoue, le 2nd est tenté. Si tout échoue → apoptose.</p>
+
+      <p>L'<strong>exclusion allélique</strong> garantit qu'un lymphocyte B n'exprime <strong>qu'un seul BCR</strong> : dès qu'un réarrangement productif est obtenu, le second allèle est <strong>inhibé en trans</strong>. C'est le fondement de la <strong>clonalité</strong>.</p>
+
+      <h4 style="font-family:var(--font-display); font-size:1.05rem; color:#fff; margin:20px 0 10px;">Hiérarchie de réarrangement</h4>
+      <p>1. <strong>Chaîne lourde</strong> (chr 14) : D-J → V-DJ<br>
+      2. Si productif → pré-BCR (chaîne μ + pseudo-chaîne légère)<br>
+      3. <strong>Chaîne κ</strong> (chr 2) : un allèle, puis l'autre<br>
+      4. Si κ échoue → <strong>chaîne λ</strong> (chr 22)<br>
+      5. Si tout échoue → apoptose</p>
+
+      <p>Résultat : ≈ <strong>2/3 des lymphocytes B matures portent un BCR κ</strong>, 1/3 un BCR λ. Un ratio κ/λ anormal = argument pour une <strong>prolifération clonale</strong> (lymphome, myélome).</p>
+
+      <div class="clinical-box">
+        <div class="clinical-label">🏥 Pertinence clinique</div>
+        <p>L'analyse du <strong>ratio κ/λ par cytométrie en flux</strong> est un outil diagnostique clé des hémopathies lymphoïdes B. <em>(Réf. : Collège d'Hématologie)</em></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.6 Ontogenèse B -->
+<div class="section-card" data-section="ontogenese">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(167,139,250,0.1); color:var(--accent-purple)">🔬</span>
+      1.6 — Ontogenèse du lymphocyte B
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+      <p>La différenciation se fait dans la <strong>moelle osseuse</strong> et passe par des stades successifs :</p>
+
+      <table class="comparison-table">
+        <thead><tr><th>Stade</th><th>Réarrangement</th><th>Marqueurs</th><th>Enzymes</th></tr></thead>
+        <tbody>
+          <tr><td>CSH</td><td>Aucun (germinal)</td><td>CD34⁺</td><td>—</td></tr>
+          <tr><td>Pro-B</td><td>D-J (chaîne lourde)</td><td>CD19⁺, CD10⁺</td><td><strong>RAG, TdT</strong></td></tr>
+          <tr><td>Pré-B</td><td>V-DJ → chaîne μ</td><td>CD19⁺, pré-BCR</td><td>RAG</td></tr>
+          <tr><td>B immature</td><td>V-J (légère) → IgM</td><td>CD19⁺, IgM surface</td><td>—</td></tr>
+          <tr><td>B mature naïf</td><td>BCR complet</td><td>CD19⁺, IgM⁺, IgD⁺</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="clinical-box">
+        <div class="clinical-label">🏥 Pertinence clinique — LAL-B</div>
+        <p>La détection de RAG, <strong>TdT</strong>, CD10 permet de classifier les <strong>leucémies aiguës lymphoblastiques (LAL-B)</strong>. Une LAL au stade pro-B exprime TdT et CD10 (LAL B « common »).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1.7 TCR particularités -->
+<div class="section-card" data-section="tcr-details">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(34,197,94,0.1); color:var(--accent-green)">🧪</span>
+      1.7 — Le TCR : particularités et répertoire
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <table class="comparison-table">
+        <thead><tr><th>Chaîne TCR</th><th>Chromosome</th><th>Segments</th><th>Parallèle Ig</th></tr></thead>
+        <tbody>
+          <tr><td>TCR β</td><td><strong>7</strong></td><td>V – D – J – C</td><td>≈ chaîne lourde</td></tr>
+          <tr><td>TCR α</td><td><strong>14</strong></td><td>V – J – C</td><td>≈ chaîne légère</td></tr>
+          <tr><td>TCR δ</td><td>14 (au sein du locus α)</td><td>V – D – J – C</td><td>—</td></tr>
+          <tr><td>TCR γ</td><td>7</td><td>V – J – C</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <p>Réarrangement ordonné analogue : d'abord <strong>chaîne β</strong> (Dβ-Jβ puis Vβ-DβJβ), puis <strong>chaîne α</strong> (Vα-Jα). Exclusion allélique pour TCR β. Réarrangement dans le <strong>thymus</strong>.</p>
+
+      <h4 style="font-family:var(--font-display); font-size:1.05rem; color:#fff; margin:20px 0 10px;">Le répertoire immunologique</h4>
+      <p><strong>Répertoire pré-immun</strong> (naïf) : spécificités générées par V(D)J avant tout contact antigénique. <strong>Répertoire immun</strong> : après exposition (vaccination, infection), modifié par expansion clonale et maturation d'affinité.</p>
+
+      <p>Le répertoire subit des contraintes : <strong>sélection positive et négative</strong> (≈95% des thymocytes meurent), contraintes stériques d'association, « trous » dans le répertoire propres à chaque individu. Même des jumeaux monozygotes auront des répertoires immuns différents.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 2 — RECONNAISSANCE ANTIGÉNIQUE
+     ████████████████████████████████████████████████████ -->
+<div class="part-header" id="part2">
+  <div class="part-number">02</div>
+  <h2>La reconnaissance antigénique : BCR vs TCR</h2>
+  <p class="part-desc">Deux modes de reconnaissance fondamentalement différents — antigène natif vs peptide apprêté + CMH.</p>
+</div>
+
+<div class="section-card" data-section="reco">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(245,158,11,0.1); color:var(--accent-gold)">🎯</span>
+      2.1 — Deux modes de reconnaissance
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <div class="hla-interactive">
+        <div class="hla-card class1" onclick="this.classList.toggle('expanded')">
+          <div class="hla-class-tag">BCR / Anticorps</div>
+          <h4>Antigène natif (3D)</h4>
+          <div class="hla-detail"><span class="label">Cible</span><span class="value">Conformation native</span></div>
+          <div class="hla-detail"><span class="label">Épitopes</span><span class="value">Conformationnels, linéaires, non protéiques</span></div>
+          <div class="hla-detail"><span class="label">Restriction</span><span class="value">Aucune</span></div>
+          <div class="hla-detail"><span class="label">Efficacité</span><span class="value">Bactéries extracellulaires +++</span></div>
+          <div class="hla-expanded">
+            <p>Le BCR reconnaît l'antigène dans sa conformation native telle qu'elle existe à la surface d'une bactérie, d'un virus, ou dans un fluide biologique. Il peut reconnaître des <strong>épitopes conformationnels</strong> (3D), <strong>linéaires</strong>, et même des <strong>sucres ou lipides</strong>. Pas besoin de « préparation » de l'antigène.</p>
+          </div>
+        </div>
+        <div class="hla-card class2" onclick="this.classList.toggle('expanded')">
+          <div class="hla-class-tag">TCR</div>
+          <h4>Peptide apprêté + CMH</h4>
+          <div class="hla-detail"><span class="label">Cible</span><span class="value">Fragment peptidique dégradé</span></div>
+          <div class="hla-detail"><span class="label">Restriction</span><span class="value">CMH obligatoire</span></div>
+          <div class="hla-detail"><span class="label">CDR3</span><span class="value">Contacte le peptide</span></div>
+          <div class="hla-detail"><span class="label">CDR1/2</span><span class="value">Contactent les parois du sillon CMH</span></div>
+          <div class="hla-expanded">
+            <p>Le TCR est <strong>incapable</strong> de reconnaître un antigène natif. Il ne reconnaît que de petits fragments peptidiques présentés par une molécule du CMH. C'est la <strong>restriction par le CMH</strong> : le TCR reconnaît simultanément le peptide ET la molécule CMH. Si l'on change l'un OU l'autre, la reconnaissance est perdue.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <div class="concept-label">💡 Dichotomie fondamentale</div>
+        <p>Cette différence BCR (antigène natif) / TCR (peptide + CMH) conditionne les deux grandes voies de la réponse immunitaire : <strong>humorale</strong> (B / anticorps) et <strong>cellulaire</strong> (T). C'est le socle de toute l'immunologie adaptative.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 3 — SYSTÈME HLA / CMH
+     ████████████████████████████████████████████████████ -->
+<div class="part-header" id="part3">
+  <div class="part-number">03</div>
+  <h2>Le Complexe Majeur d'Histocompatibilité — Système HLA</h2>
+  <p class="part-desc">Jean Dausset, Prix Nobel 1980 — La région la plus polymorphe du génome humain, clé de la transplantation et de la présentation antigénique.</p>
+</div>
+
+<!-- 3.1 Organisation génétique -->
+<div class="section-card" data-section="hla-gen">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(6,182,212,0.1); color:var(--accent-cyan)">🧬</span>
+      3.1 — Organisation génétique du CMH
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <p>Les gènes du CMH sont regroupés sur le <strong>bras court du chromosome 6 (6p21.3)</strong> — c'est la <strong>région la plus polymorphe</strong> du génome humain.</p>
+
+      <table class="comparison-table">
+        <thead><tr><th>Région</th><th>Gènes principaux</th><th>Produits</th></tr></thead>
+        <tbody>
+          <tr><td>Classe I</td><td>HLA-<strong>A</strong>, <strong>B</strong>, <strong>C</strong></td><td>Présentation aux LT CD8⁺</td></tr>
+          <tr><td>Classe III</td><td>C2, C4, Bf, TNFα</td><td>Protéines immunitaires (pas des molécules HLA)</td></tr>
+          <tr><td>Classe II</td><td>HLA-<strong>DP</strong>, <strong>DQ</strong>, <strong>DR</strong></td><td>Présentation aux LT CD4⁺</td></tr>
+        </tbody>
+      </table>
+
+      <div class="mnemo-box">
+        <div class="mnemo-label">🧠 Mnémotechnique</div>
+        <strong>Classe I</strong> = <strong>une seule lettre</strong> (A, B, C) — <strong>Classe II</strong> = <strong>deux lettres</strong> (DP, DQ, DR)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.2 Propriétés fondamentales -->
+<div class="section-card" data-section="hla-prop">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(59,130,246,0.1); color:var(--accent-blue)">⚙️</span>
+      3.2 — Propriétés fondamentales du HLA
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <div class="def-grid">
+        <div class="def-box">
+          <div class="def-term">📊 Polygénisme</div>
+          <div class="def-text">Plusieurs gènes distincts (A, B, C ; DP, DQ, DR), chacun codant une molécule HLA différente → multiplie les possibilités de présentation.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">🔀 Polymorphisme</div>
+          <div class="def-text">Chaque gène existe sous de <strong>très nombreux allèles</strong> (>35 000 allèles HLA répertoriés). Système le plus polymorphe de l'espèce humaine. Concentré sur les <strong>résidus du sillon peptidique</strong>.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">👥 Co-dominance</div>
+          <div class="def-text">Les <strong>deux allèles</strong> (paternel ET maternel) sont exprimés simultanément. Classe I : 3 gènes × 2 allèles = <strong>6 molécules</strong>. Classe II : au minimum 6, plus en réalité (associations trans α/β).</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">📦 Haplotype</div>
+          <div class="def-text">Transmis <strong>en bloc</strong> de parent à enfant. Probabilité que 2 frères/sœurs soient HLA-identiques = <strong>25%</strong> (1/4). Déséquilibre de liaison : ex. <strong>HLA-A1, B8, DR3</strong>.</div>
+        </div>
+      </div>
+
+      <table class="comparison-table mt-md">
+        <thead><tr><th>Propriété</th><th>BCR</th><th>HLA</th></tr></thead>
+        <tbody>
+          <tr><td>Expression allélique</td><td><strong>Exclusion allélique</strong> (1 seul allèle)</td><td><strong>Co-dominance</strong> (les 2 allèles)</td></tr>
+          <tr><td>But</td><td>Garantir la clonalité</td><td>Maximiser la diversité de présentation</td></tr>
+        </tbody>
+      </table>
+
+      <div class="clinical-box">
+        <div class="clinical-label">🏥 Transplantation</div>
+        <p>L'énorme diversité HLA explique la difficulté de trouver un <strong>donneur HLA-compatible</strong> pour les greffes de CSH. Probabilité de compatibilité entre non-apparentés extrêmement faible → registres internationaux (France Greffe de Moelle / Agence de la Biomédecine). La <strong>réaction allogénique</strong> dirigée contre les molécules HLA étrangères est la cause principale du <strong>rejet de greffe</strong>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.3 Structure comparée Classe I vs II -->
+<div class="section-card" data-section="hla-structure">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(167,139,250,0.1); color:var(--accent-purple)">🏗️</span>
+      3.3 — Structure comparée : Classe I vs Classe II
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <div class="hla-interactive">
+        <div class="hla-card class1" onclick="this.classList.toggle('expanded')">
+          <div class="hla-class-tag">HLA Classe I</div>
+          <h4>HLA-A, B, C</h4>
+          <div class="hla-detail"><span class="label">Structure</span><span class="value">Chaîne α + β2-microglobuline</span></div>
+          <div class="hla-detail"><span class="label">β2m</span><span class="value">Monomorphe (chr 15)</span></div>
+          <div class="hla-detail"><span class="label">Sillon</span><span class="value">α1 + α2 → FERMÉ</span></div>
+          <div class="hla-detail"><span class="label">Peptides</span><span class="value" style="color:var(--accent-blue)">8-10 aa (courts)</span></div>
+          <div class="hla-detail"><span class="label">Présente à</span><span class="value">LT CD8⁺ (cytotoxiques)</span></div>
+          <div class="hla-detail"><span class="label">Co-récepteur</span><span class="value">CD8 se lie à α3</span></div>
+          <div class="hla-detail"><span class="label">Expression</span><span class="value">Toutes cellules nucléées</span></div>
+          <div class="hla-expanded">
+            <p>La chaîne lourde α possède 3 domaines extracellulaires (α1, α2, α3). Le sillon est formé par α1 + α2 de la <strong>même chaîne</strong> : 2 hélices α latérales + plancher de feuillets β. Le sillon <strong>fermé</strong> aux extrémités contraint la taille à 8-10 aa. Le polymorphisme se concentre sur les résidus du sillon (poches d'ancrage). Le HLA-I est la <strong>« carte d'identité »</strong> de la cellule : surveillance du contenu intracellulaire.</p>
+          </div>
+        </div>
+        <div class="hla-card class2" onclick="this.classList.toggle('expanded')">
+          <div class="hla-class-tag">HLA Classe II</div>
+          <h4>HLA-DP, DQ, DR</h4>
+          <div class="hla-detail"><span class="label">Structure</span><span class="value">Chaîne α + chaîne β</span></div>
+          <div class="hla-detail"><span class="label">Polymorphisme</span><span class="value">Les DEUX chaînes</span></div>
+          <div class="hla-detail"><span class="label">Sillon</span><span class="value">α1 + β1 → OUVERT</span></div>
+          <div class="hla-detail"><span class="label">Peptides</span><span class="value" style="color:var(--accent-purple)">13-18 aa (longs)</span></div>
+          <div class="hla-detail"><span class="label">Présente à</span><span class="value">LT CD4⁺ (auxiliaires)</span></div>
+          <div class="hla-detail"><span class="label">Co-récepteur</span><span class="value">CD4 se lie à β2</span></div>
+          <div class="hla-detail"><span class="label">Expression</span><span class="value">CPA professionnelles</span></div>
+          <div class="hla-expanded">
+            <p>Le sillon est formé par α1 + β1 de <strong>deux chaînes différentes</strong>. Le sillon <strong>ouvert</strong> aux extrémités permet au peptide de « dépasser ». Le polymorphisme est porté par les <strong>deux chaînes</strong>, et les chaînes α et β paternelles/maternelles peuvent s'associer en <strong>trans</strong>, multipliant encore la diversité combinatoire. CPA : cellules dendritiques, macrophages, lymphocytes B. Expression inductible par l'IFN-γ.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mnemo-box">
+        <div class="mnemo-label">🧠 Astuce EDN</div>
+        Classe I = peptide <strong>Petit</strong> + CD<strong>8</strong> — Classe II = peptide <strong>Grand</strong> + CD<strong>4</strong>. Si un QCM inverse la taille des peptides ou les co-récepteurs → c'est un piège classique.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.4 Présentation antigénique -->
+<div class="section-card" data-section="presentation">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(34,197,94,0.1); color:var(--accent-green)">🛤️</span>
+      3.4 — Voies de présentation antigénique
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <div class="pathway-container">
+        <div class="pathway cyto">
+          <div class="pathway-tag">Voie cytosolique → Classe I</div>
+          <h4>Antigènes endogènes</h4>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Protéines cytosoliques (virales, mutées, du soi) dégradées par le <strong>protéasome</strong> → peptides 8-10 aa</div>
+          </div>
+          <div class="step-arrow">↓</div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">Transport dans le <strong>RE</strong> par les transporteurs <strong>TAP1/TAP2</strong></div>
+          </div>
+          <div class="step-arrow">↓</div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">Chargement sur HLA-I (chaperonnes : calnexine, calréticuline, tapasine, ERp57)</div>
+          </div>
+          <div class="step-arrow">↓</div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">Export via <strong>Golgi</strong> → surface cellulaire → reconnaissance par <strong>LT CD8⁺</strong></div>
+          </div>
+        </div>
+        <div class="pathway endo">
+          <div class="pathway-tag">Voie endocytaire → Classe II</div>
+          <h4>Antigènes exogènes</h4>
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">Antigène internalisé (phagocytose, endocytose) → endosome/phagosome</div>
+          </div>
+          <div class="step-arrow">↓</div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Cathepsines</strong> dégradent l'Ag en peptides 13-18 aa (pH acide)</div>
+          </div>
+          <div class="step-arrow">↓</div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">HLA-II + <strong>chaîne invariante Ii</strong> (bloque le sillon) → endosome tardif. Ii dégradée → résidu <strong>CLIP</strong></div>
+          </div>
+          <div class="step-arrow">↓</div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text"><strong>HLA-DM</strong> échange CLIP contre peptide Ag → export surface → reconnaissance par <strong>LT CD4⁺</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="concept-box">
+        <div class="concept-label">💡 Présentation croisée (cross-presentation)</div>
+        <p>Certaines <strong>cellules dendritiques</strong> peuvent charger des antigènes exogènes sur des molécules de <strong>classe I</strong>. Crucial pour initier les réponses T CD8⁺ contre des virus qui n'infectent pas directement les DC, ou contre des cellules tumorales. De plus en plus abordé aux EDN dans le contexte de l'<strong>immunothérapie anti-tumorale</strong>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.5 Molécules non classiques -->
+<div class="section-card" data-section="non-classiques">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3>
+      <span class="section-icon" style="background:rgba(244,63,94,0.1); color:var(--accent-rose)">🌟</span>
+      3.5 — HLA non classiques, FcRn et CD1
+    </h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body">
+    <div class="section-content">
+
+      <div class="def-grid">
+        <div class="def-box">
+          <div class="def-term">🤰 HLA-G</div>
+          <div class="def-text">Exprimé par le <strong>trophoblaste</strong>. Rôle majeur dans la <strong>tolérance materno-fœtale</strong> en inhibant la cytotoxicité des NK utérins.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">🛡️ HLA-E</div>
+          <div class="def-text">Interagit avec les récepteurs <strong>NKG2A/CD94</strong> des cellules NK. Rôle dans l'immunosurveillance par les NK.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">🔄 FcRn</div>
+          <div class="def-text">Structurellement apparenté au HLA-I (associé à β2m). <strong>Deux fonctions</strong> : transfert transplacentaire des IgG (immunité passive du nouveau-né) + protection des IgG contre le catabolisme (demi-vie <strong>21 jours</strong>). Exploité en pharmacologie des anticorps thérapeutiques.</div>
+        </div>
+        <div class="def-box">
+          <div class="def-term">💡 Molécules CD1</div>
+          <div class="def-text">CD1a, b, c, d. Apparentées au HLA-I mais présentent des <strong>antigènes lipidiques et glycolipidiques</strong> (pas des peptides). Reconnues par les lymphocytes <strong>NKT</strong>. Cruciales pour la réponse anti-<strong>mycobactéries</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     QUIZ
+     ████████████████████████████████████████████████████ -->
+<div class="quiz-section" id="quiz">
+  <h2>Auto-évaluation EDN</h2>
+  <p class="quiz-subtitle">15 questions-clés — Clique pour révéler la réponse, puis évalue-toi</p>
+  <div class="quiz-score">
+    Score : <span class="score-num" id="scoreDisplay">0</span> / <span id="totalQ">15</span>
+  </div>
+
+  <div class="quiz-grid" id="quizGrid">
+    <!-- Filled by JS -->
+  </div>
+</div>
+
+</div><!-- end content-wrap -->
+
+<footer class="site-footer">
+  <p>Atlas d'Immunologie — Préparation EDN 2026<br>
+  Référentiel : Collège ASSIM · HAS · Collège d'Hématologie<br>
+  Créé avec <a href="https://claude.ai" target="_blank">Claude</a></p>
+</footer>
+
+<script>
+// ===== QUIZ DATA =====
+const quizData = [
+  {
+    q: "Quels sont les 3 segments géniques assemblés lors de la recombinaison V(D)J de la chaîne lourde ?",
+    a: "<strong>V (Variable)</strong>, <strong>D (Diversité)</strong> et <strong>J (Jonction)</strong>. L'ordre est strict : D→J d'abord, puis V→DJ. Les chaînes légères n'ont pas de segment D (V→J seulement)."
+  },
+  {
+    q: "Quelle conséquence clinique entraîne une mutation RAG1 ou RAG2 ?",
+    a: "Un <strong>Déficit Immunitaire Combiné Sévère (DICS) de type T⁻B⁻NK⁺</strong>. Sans recombinases RAG, aucun réarrangement V(D)J → aucun BCR ni TCR fonctionnel → absence de lymphocytes B ET T. Les cellules NK sont préservées car elles n'ont pas besoin de RAG."
+  },
+  {
+    q: "Le CDR3 est le CDR le plus hypervariable. Pourquoi ?",
+    a: "Parce qu'il est codé à la <strong>jonction V-D-J</strong>, zone où se concentrent les mécanismes de diversification : <strong>imprécision de coupure</strong> par RAG, ajout de <strong>N-nucléotides par la TdT</strong> (non codés dans le génome germinal), et <strong>décalage du cadre de lecture</strong>."
+  },
+  {
+    q: "Qu'est-ce que l'exclusion allélique et quel est son rôle ?",
+    a: "Dès qu'un réarrangement productif est obtenu sur un allèle de la chaîne lourde, le second allèle est <strong>inhibé en trans</strong>. Cela garantit la <strong>clonalité</strong> : 1 lymphocyte = 1 BCR = 1 spécificité antigénique. C'est le fondement de la théorie de la sélection clonale."
+  },
+  {
+    q: "Que sont les TREC et quelle est leur utilité en dépistage néonatal ?",
+    a: "<strong>T-cell Receptor Excision Circles</strong> : cercles d'ADN épisomiques formés lors du réarrangement du TCR dans le thymus. Depuis <strong>2023 en France</strong>, leur dosage par PCR quantitative sur le buvard de Guthrie est <strong>obligatoire</strong> pour le dépistage néonatal du DICS."
+  },
+  {
+    q: "Citez 3 différences fondamentales entre le BCR et le TCR.",
+    a: "1) BCR = <strong>bivalent</strong> (2 paratopes), TCR = <strong>monovalent</strong>. 2) Le BCR a une <strong>forme sécrétée</strong> (anticorps), le TCR <strong>non</strong>. 3) Le BCR reconnaît l'antigène <strong>natif</strong> (3D), le TCR reconnaît un <strong>peptide apprêté + CMH</strong>. Les gènes sont sur des chromosomes différents."
+  },
+  {
+    q: "Sur quel chromosome se situe le locus HLA ? Quelle est sa particularité ?",
+    a: "<strong>Chromosome 6, bras court (6p21.3)</strong>. C'est la <strong>région la plus polymorphe</strong> du génome humain, avec plus de 35 000 allèles HLA répertoriés."
+  },
+  {
+    q: "Classe I : sillon fermé ou ouvert ? Taille des peptides ? Présente à quel LT ?",
+    a: "Sillon <strong>FERMÉ</strong> (formé par α1 + α2 de la même chaîne) → peptides <strong>courts : 8-10 aa</strong> → présente aux lymphocytes T <strong>CD8⁺</strong> (cytotoxiques). Co-récepteur CD8 se lie au domaine α3."
+  },
+  {
+    q: "Classe II : sillon fermé ou ouvert ? Taille des peptides ? Présente à quel LT ?",
+    a: "Sillon <strong>OUVERT</strong> (formé par α1 + β1 de deux chaînes différentes) → peptides <strong>longs : 13-18 aa</strong> (le peptide « dépasse ») → présente aux lymphocytes T <strong>CD4⁺</strong> (auxiliaires). Co-récepteur CD4 se lie au domaine β2."
+  },
+  {
+    q: "Quelle propriété du HLA le distingue fondamentalement du BCR en termes d'expression allélique ?",
+    a: "Le HLA est exprimé en <strong>co-dominance</strong> (les 2 allèles parentaux sont exprimés simultanément), alors que le BCR suit l'<strong>exclusion allélique</strong> (1 seul allèle exprimé). But : maximiser la diversité de présentation peptidique pour le HLA ; garantir la clonalité pour le BCR."
+  },
+  {
+    q: "Décrivez la voie cytosolique de présentation antigénique en 4 étapes.",
+    a: "1) <strong>Protéasome</strong> dégrade les protéines cytosoliques → peptides 8-10 aa. 2) Transport dans le RE par <strong>TAP1/TAP2</strong>. 3) Chargement sur HLA-I (chaperonnes). 4) Export via Golgi → surface → reconnaissance par <strong>LT CD8⁺</strong>."
+  },
+  {
+    q: "Quel est le rôle de CLIP et de HLA-DM dans la voie endocytaire ?",
+    a: "<strong>CLIP</strong> (Class II-associated Invariant chain Peptide) est le fragment résiduel de la chaîne invariante Ii qui bloque le sillon de la classe II, empêchant le chargement de peptides endogènes. <strong>HLA-DM</strong> est l'échangeur qui remplace CLIP par un peptide antigénique dans l'endosome tardif."
+  },
+  {
+    q: "Qu'est-ce que la cross-présentation et pourquoi est-elle importante ?",
+    a: "Certaines <strong>cellules dendritiques</strong> peuvent charger des antigènes exogènes sur des molécules de <strong>classe I</strong> (au lieu de classe II). Crucial pour initier les réponses T CD8⁺ cytotoxiques contre des virus qui n'infectent pas directement les DC, ou contre des <strong>cellules tumorales</strong>."
+  },
+  {
+    q: "Quelles sont les deux fonctions du FcRn ?",
+    a: "1) <strong>Transfert transplacentaire des IgG</strong> → immunité passive du nouveau-né (3-6 mois). 2) <strong>Protection des IgG contre le catabolisme</strong> par recyclage → demi-vie exceptionnelle de <strong>21 jours</strong>. Structurellement apparenté au HLA-I (associé à la β2-microglobuline)."
+  },
+  {
+    q: "Quelle est la probabilité que deux frères/sœurs soient HLA-identiques et pourquoi ?",
+    a: "<strong>25% (1/4)</strong>. Le HLA est transmis en bloc comme un <strong>haplotype</strong> (un par parent). Chaque enfant hérite d'un haplotype paternel + un maternel. Dans une fratrie, il existe 4 combinaisons possibles. C'est pourquoi on cherche d'abord un donneur dans la fratrie pour les greffes de CSH."
+  }
+];
+
+// ===== QUIZ RENDERING =====
+const quizGrid = document.getElementById('quizGrid');
+let score = 0;
+
+quizData.forEach((item, i) => {
+  const card = document.createElement('div');
+  card.className = 'quiz-card';
+  card.innerHTML = `
+    <div class="quiz-question" onclick="toggleQuiz(this)">
+      <div class="quiz-num">${i + 1}</div>
+      <div class="quiz-q-text">${item.q}</div>
+      <div class="quiz-reveal-btn">Révéler</div>
+    </div>
+    <div class="quiz-answer">
+      <div class="quiz-answer-inner">
+        <p>${item.a}</p>
+        <div class="quiz-buttons">
+          <button class="quiz-btn correct-btn" onclick="event.stopPropagation(); markQuiz(this, true)">✓ Je savais</button>
+          <button class="quiz-btn wrong-btn" onclick="event.stopPropagation(); markQuiz(this, false)">✗ À revoir</button>
+        </div>
+      </div>
+    </div>
+  `;
+  quizGrid.appendChild(card);
+});
+
+function toggleQuiz(el) {
+  el.closest('.quiz-card').classList.toggle('open');
+}
+
+function markQuiz(btn, correct) {
+  const card = btn.closest('.quiz-card');
+  if (card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  card.classList.add(correct ? 'correct' : 'wrong');
+  card.classList.remove('open');
+  if (correct) score++;
+  document.getElementById('scoreDisplay').textContent = score;
+}
+
+// ===== SECTION TOGGLE =====
+function toggleSection(btn) {
+  btn.closest('.section-card').classList.toggle('open');
+}
+
+// ===== SCROLL OBSERVER FOR CARDS =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.section-card').forEach(card => observer.observe(card));
+
+// ===== PROGRESS BAR =====
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('navProgress').style.width = progress + '%';
+
+  // Active nav link
+  const sections = ['part1', 'part2', 'part3', 'quiz'];
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 200) current = id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// ===== SEARCH =====
+const searchIndex = [];
+
+document.querySelectorAll('.section-card').forEach(card => {
+  const title = card.querySelector('h3')?.textContent || '';
+  const content = card.querySelector('.section-content')?.textContent || '';
+  const section = card.dataset.section;
+  searchIndex.push({ title, content, section, element: card });
+});
+
+function toggleSearch() {
+  const overlay = document.getElementById('searchOverlay');
+  overlay.classList.toggle('active');
+  if (overlay.classList.contains('active')) {
+    document.getElementById('searchInput').focus();
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    toggleSearch();
+  }
+  if (e.key === 'Escape') {
+    document.getElementById('searchOverlay').classList.remove('active');
+  }
+});
+
+document.getElementById('searchOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('searchOverlay')) toggleSearch();
+});
+
+function performSearch(query) {
+  const results = document.getElementById('searchResults');
+  if (!query.trim()) {
+    results.innerHTML = '<div class="search-hint">Tapez pour rechercher dans tout le cours</div>';
+    return;
+  }
+
+  const q = query.toLowerCase();
+  const matches = searchIndex.filter(item =>
+    item.title.toLowerCase().includes(q) || item.content.toLowerCase().includes(q)
+  );
+
+  if (matches.length === 0) {
+    results.innerHTML = '<div class="search-hint">Aucun résultat trouvé</div>';
+    return;
+  }
+
+  results.innerHTML = matches.map(m => {
+    const idx = m.content.toLowerCase().indexOf(q);
+    let context = '';
+    if (idx >= 0) {
+      const start = Math.max(0, idx - 40);
+      const end = Math.min(m.content.length, idx + q.length + 60);
+      context = (start > 0 ? '…' : '') +
+        m.content.substring(start, idx) +
+        '<mark>' + m.content.substring(idx, idx + q.length) + '</mark>' +
+        m.content.substring(idx + q.length, end) +
+        (end < m.content.length ? '…' : '');
+    }
+    return `<div class="search-result-item" onclick="jumpToSection('${m.section}')">
+      <div class="sr-title">${m.title}</div>
+      ${context ? `<div class="sr-context">${context}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function jumpToSection(section) {
+  const card = document.querySelector(`[data-section="${section}"]`);
+  if (card) {
+    card.classList.add('open', 'visible');
+    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    toggleSearch();
+  }
+}
+</script>
+</body>
+</html>
