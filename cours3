@@ -1,0 +1,1212 @@
+---
+
+## 2. Page HTML du cours — Structure des Immunoglobulines & TCR
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas d'Immunologie — Structure des Immunoglobulines & TCR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #1a2035;
+  --bg-card-hover: #1f2847;
+  --text-primary: #e8edf5;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-teal: #14b8a6;
+  --accent-gold: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-purple: #a78bfa;
+  --accent-green: #22c55e;
+  --border-subtle: rgba(148,163,184,0.1);
+  --border-accent: rgba(59,130,246,0.3);
+  --glow-blue: 0 0 30px rgba(59,130,246,0.15);
+  --glow-cyan: 0 0 30px rgba(6,182,212,0.15);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Fira Sans', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.75;
+  font-size: 16px;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+::selection { background: rgba(59,130,246,0.3); color: #fff; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 3px; }
+
+/* NAV */
+.main-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,14,23,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--text-muted); font-weight: 400; font-size: 0.85rem; margin-left: 8px; }
+.nav-links { display: flex; gap: 4px; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 0.8rem; font-weight: 500; padding: 6px 14px;
+  border-radius: 20px; transition: var(--transition);
+  letter-spacing: 0.3px; text-transform: uppercase;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--accent-cyan); background: rgba(6,182,212,0.1); }
+.nav-progress {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-teal));
+  transition: width 0.15s ease; width: 0%;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 100px 24px 60px;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(6,182,212,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(59,130,246,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(167,139,250,0.04) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(148,163,184,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148,163,184,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; z-index: 1; max-width: 900px; text-align: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.2);
+  border-radius: 30px; padding: 6px 20px;
+  font-size: 0.75rem; font-weight: 600; color: var(--accent-cyan);
+  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 32px;
+  animation: fadeInUp 0.8s ease both;
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700; line-height: 1.1; color: #fff;
+  margin-bottom: 24px; animation: fadeInUp 0.8s 0.1s ease both;
+}
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-subtitle {
+  font-size: 1.15rem; color: var(--text-secondary);
+  max-width: 650px; margin: 0 auto 40px;
+  animation: fadeInUp 0.8s 0.2s ease both;
+}
+.hero-items {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  animation: fadeInUp 0.8s 0.3s ease both;
+}
+.hero-items span {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: 8px 16px;
+  font-size: 0.78rem; color: var(--text-secondary); font-weight: 500;
+}
+.hero-items span strong { color: var(--accent-gold); }
+.hero-scroll { margin-top: 50px; animation: fadeInUp 0.8s 0.5s ease both; }
+.hero-scroll a {
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: var(--transition);
+}
+.hero-scroll a:hover { color: var(--accent-cyan); }
+.hero-scroll .arrow {
+  width: 24px; height: 40px; border: 2px solid var(--text-muted);
+  border-radius: 12px; position: relative; transition: var(--transition);
+}
+.hero-scroll a:hover .arrow { border-color: var(--accent-cyan); }
+.hero-scroll .arrow::after {
+  content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 8px; border-radius: 2px;
+  background: var(--text-muted); animation: scroll-indicator 2s infinite;
+}
+@keyframes scroll-indicator {
+  0% { top: 8px; opacity: 1; }
+  100% { top: 22px; opacity: 0; }
+}
+
+/* CONTENT */
+.content-wrap { max-width: 1000px; margin: 0 auto; padding: 0 24px 100px; }
+.part-header { padding: 80px 0 40px; position: relative; }
+.part-number {
+  font-family: var(--font-display); font-size: 6rem; font-weight: 700;
+  color: rgba(59,130,246,0.07); position: absolute; top: 40px; left: -20px;
+  line-height: 1; user-select: none;
+}
+.part-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; color: #fff; line-height: 1.2; position: relative;
+}
+.part-header h2::after {
+  content: ''; display: block; width: 60px; height: 3px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+  margin-top: 16px; border-radius: 2px;
+}
+.part-header .part-desc { color: var(--text-secondary); font-size: 1.05rem; margin-top: 16px; max-width: 700px; }
+
+/* SECTION CARDS */
+.section-card {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); margin-bottom: 24px; overflow: hidden;
+  transition: var(--transition); opacity: 0; transform: translateY(20px);
+}
+.section-card.visible { opacity: 1; transform: translateY(0); }
+.section-card:hover { border-color: var(--border-accent); box-shadow: var(--glow-blue); }
+.section-toggle {
+  width: 100%; background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 28px; text-align: left; transition: var(--transition);
+}
+.section-toggle:hover { background: rgba(59,130,246,0.03); }
+.section-toggle h3 {
+  font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;
+  color: var(--text-primary); display: flex; align-items: center; gap: 14px;
+}
+.section-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink: 0;
+}
+.section-chevron {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(148,163,184,0.08);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); flex-shrink: 0;
+  color: var(--text-muted); font-size: 0.9rem;
+}
+.section-card.open .section-chevron {
+  transform: rotate(180deg); background: rgba(6,182,212,0.15); color: var(--accent-cyan);
+}
+.section-body { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.section-card.open .section-body { max-height: 12000px; }
+.section-content { padding: 0 28px 28px; border-top: 1px solid var(--border-subtle); }
+.section-content p { margin: 16px 0; color: var(--text-secondary); font-weight: 300; line-height: 1.85; }
+.section-content strong { color: var(--text-primary); font-weight: 600; }
+.section-content h4 { font-family: var(--font-display); font-size: 1.15rem; color: #fff; margin: 24px 0 12px; }
+
+/* DEF GRID */
+.def-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+.def-box {
+  background: rgba(6,182,212,0.04); border: 1px solid rgba(6,182,212,0.12);
+  border-radius: var(--radius-sm); padding: 20px; transition: var(--transition);
+}
+.def-box:hover { border-color: rgba(6,182,212,0.3); background: rgba(6,182,212,0.07); }
+.def-box .def-term { font-weight: 700; color: var(--accent-cyan); font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.def-box .def-text { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.7; }
+
+/* TABLE */
+.comparison-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  margin: 24px 0; font-size: 0.88rem; border-radius: var(--radius);
+  overflow: hidden; border: 1px solid var(--border-subtle);
+}
+.comparison-table thead th {
+  background: rgba(59,130,246,0.08); color: var(--accent-blue);
+  font-weight: 600; padding: 14px 18px; text-align: left;
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.comparison-table tbody td {
+  padding: 12px 18px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary); vertical-align: top;
+}
+.comparison-table tbody tr:last-child td { border-bottom: none; }
+.comparison-table tbody tr:hover td { background: rgba(59,130,246,0.03); }
+.comparison-table tbody td:first-child { font-weight: 600; color: var(--text-primary); }
+
+/* EDN BOX */
+.edn-box {
+  background: linear-gradient(135deg, rgba(244,63,94,0.06), rgba(244,63,94,0.02));
+  border: 1px solid rgba(244,63,94,0.2); border-left: 4px solid var(--accent-rose);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px; margin: 24px 0;
+}
+.edn-box .edn-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-rose); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.edn-box p { color: var(--text-secondary) !important; font-size: 0.92rem; margin: 0 !important; line-height: 1.7; }
+.edn-box strong { color: #fda4af !important; }
+
+/* CONCEPT BOX */
+.concept-box {
+  background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(6,182,212,0.04));
+  border: 1px solid rgba(59,130,246,0.2); border-left: 4px solid var(--accent-blue);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px; margin: 24px 0;
+}
+.concept-box .concept-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-blue); margin-bottom: 10px; }
+.concept-box p { color: var(--text-secondary) !important; font-size: 0.92rem; margin: 0 !important; line-height: 1.7; }
+.concept-box strong { color: #93c5fd !important; }
+
+/* CLINICAL BOX */
+.clinical-box {
+  background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(34,197,94,0.02));
+  border: 1px solid rgba(34,197,94,0.2); border-left: 4px solid var(--accent-green);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px; margin: 24px 0;
+}
+.clinical-box .clinical-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-green); margin-bottom: 10px; }
+.clinical-box p, .clinical-box li { color: var(--text-secondary) !important; font-size: 0.92rem; line-height: 1.7; }
+.clinical-box strong { color: #86efac !important; }
+
+/* MNEMO BOX */
+.mnemo-box {
+  background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02));
+  border: 1px solid rgba(245,158,11,0.2); border-left: 4px solid var(--accent-gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 24px; margin: 20px 0; font-size: 0.88rem; color: var(--text-secondary);
+}
+.mnemo-box .mnemo-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); margin-bottom: 6px; }
+.mnemo-box strong { color: #fcd34d; }
+
+/* DIAGRAM */
+.diagram-container {
+  background: var(--bg-secondary); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); padding: 32px; margin: 28px 0;
+  text-align: center; position: relative; overflow: hidden;
+}
+.diagram-container::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(6,182,212,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(59,130,246,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.diagram-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; position: relative; }
+.diagram-svg { width: 100%; max-width: 700px; margin: 0 auto; display: block; }
+
+/* HLA INTERACTIVE CARDS */
+.hla-interactive { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 28px 0; }
+.hla-card {
+  background: var(--bg-secondary); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); padding: 28px; cursor: pointer;
+  transition: var(--transition); position: relative; overflow: hidden;
+}
+.hla-card::after {
+  content: 'Cliquer pour détails'; position: absolute; bottom: 12px; right: 16px;
+  font-size: 0.68rem; color: var(--text-muted); opacity: 0; transition: var(--transition);
+}
+.hla-card:hover::after { opacity: 1; }
+.hla-card.class1 { border-color: rgba(59,130,246,0.2); }
+.hla-card.class1:hover { border-color: rgba(59,130,246,0.5); box-shadow: var(--glow-blue); }
+.hla-card.class2 { border-color: rgba(167,139,250,0.2); }
+.hla-card.class2:hover { border-color: rgba(167,139,250,0.5); box-shadow: 0 0 30px rgba(167,139,250,0.15); }
+.hla-card .hla-class-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.hla-card.class1 .hla-class-tag { color: var(--accent-blue); }
+.hla-card.class2 .hla-class-tag { color: var(--accent-purple); }
+.hla-card h4 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+.hla-detail { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem; color: var(--text-secondary); }
+.hla-detail:last-child { border-bottom: none; }
+.hla-detail .label { color: var(--text-muted); min-width: 100px; font-weight: 500; }
+.hla-detail .value { font-weight: 600; color: var(--text-primary); }
+.hla-expanded { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; margin-top: 0; }
+.hla-card.expanded .hla-expanded { max-height: 500px; margin-top: 16px; }
+.hla-expanded p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; padding-top: 16px; border-top: 1px solid var(--border-subtle); }
+
+/* PATHWAY */
+.pathway-container { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 28px 0; }
+.pathway { background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 24px; }
+.pathway .pathway-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.pathway.cyto .pathway-tag { color: var(--accent-blue); }
+.pathway.endo .pathway-tag { color: var(--accent-purple); }
+.pathway h4 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 20px; }
+.step { display: flex; align-items: flex-start; gap: 14px; padding: 10px 0; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+.pathway.cyto .step-num { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+.pathway.endo .step-num { background: rgba(167,139,250,0.15); color: var(--accent-purple); }
+.step-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+.step-text strong { color: var(--text-primary); }
+.step-arrow { text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 4px 0; margin-left: 7px; }
+
+/* FORMULA */
+.formula {
+  font-family: var(--font-mono); background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.15); border-radius: var(--radius-sm);
+  padding: 16px 20px; margin: 16px 0; font-size: 0.88rem; color: var(--accent-cyan); overflow-x: auto;
+}
+
+/* QUIZ */
+.quiz-section { padding: 80px 0; }
+.quiz-section h2 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; color: #fff; text-align: center; margin-bottom: 12px; }
+.quiz-subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 40px; font-size: 1rem; }
+.quiz-score { text-align: center; margin-bottom: 32px; font-size: 0.9rem; color: var(--text-muted); }
+.quiz-score .score-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--accent-cyan); }
+.quiz-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.quiz-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius); overflow: hidden; transition: var(--transition); }
+.quiz-question { padding: 20px 24px; cursor: pointer; display: flex; align-items: center; gap: 16px; transition: var(--transition); }
+.quiz-question:hover { background: rgba(59,130,246,0.03); }
+.quiz-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(6,182,212,0.1); color: var(--accent-cyan); font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: var(--transition); }
+.quiz-card.correct .quiz-num { background: rgba(34,197,94,0.2); color: var(--accent-green); }
+.quiz-card.wrong .quiz-num { background: rgba(244,63,94,0.2); color: var(--accent-rose); }
+.quiz-q-text { flex: 1; font-size: 0.95rem; font-weight: 500; color: var(--text-primary); }
+.quiz-reveal-btn { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); flex-shrink: 0; transition: var(--transition); }
+.quiz-question:hover .quiz-reveal-btn { color: var(--accent-cyan); }
+.quiz-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.quiz-card.open .quiz-answer { max-height: 400px; }
+.quiz-answer-inner { padding: 0 24px 20px; border-top: 1px solid var(--border-subtle); padding-top: 16px; }
+.quiz-answer-inner p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; }
+.quiz-answer-inner strong { color: var(--accent-cyan); }
+.quiz-buttons { display: flex; gap: 8px; margin-top: 12px; }
+.quiz-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border-subtle); background: none; cursor: pointer; font-size: 0.78rem; font-weight: 600; transition: var(--transition); font-family: var(--font-body); }
+.quiz-btn.correct-btn { color: var(--accent-green); border-color: rgba(34,197,94,0.3); }
+.quiz-btn.correct-btn:hover { background: rgba(34,197,94,0.15); }
+.quiz-btn.wrong-btn { color: var(--accent-rose); border-color: rgba(244,63,94,0.3); }
+.quiz-btn.wrong-btn:hover { background: rgba(244,63,94,0.15); }
+
+/* FOOTER */
+.site-footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 0.8rem; }
+.site-footer a { color: var(--accent-cyan); text-decoration: none; }
+
+/* SEARCH */
+.search-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(10,14,23,0.9); backdrop-filter: blur(10px); display: none; align-items: flex-start; justify-content: center; padding-top: 15vh; }
+.search-overlay.active { display: flex; }
+.search-box { background: var(--bg-card); border: 1px solid var(--border-accent); border-radius: var(--radius); width: 90%; max-width: 600px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.search-input { width: 100%; padding: 20px 24px; background: none; border: none; color: var(--text-primary); font-size: 1.1rem; font-family: var(--font-body); outline: none; }
+.search-input::placeholder { color: var(--text-muted); }
+.search-results { max-height: 50vh; overflow-y: auto; border-top: 1px solid var(--border-subtle); }
+.search-result-item { padding: 14px 24px; cursor: pointer; border-bottom: 1px solid var(--border-subtle); transition: var(--transition); }
+.search-result-item:hover { background: rgba(59,130,246,0.05); }
+.search-result-item .sr-title { font-weight: 600; color: var(--text-primary); font-size: 0.9rem; }
+.search-result-item .sr-context { color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; }
+.search-result-item .sr-context mark { background: rgba(6,182,212,0.3); color: var(--accent-cyan); border-radius: 2px; padding: 0 3px; }
+.search-hint { padding: 16px 24px; font-size: 0.8rem; color: var(--text-muted); text-align: center; }
+.nav-search-btn { background: none; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.78rem; font-family: var(--font-body); display: flex; align-items: center; gap: 6px; transition: var(--transition); }
+.nav-search-btn:hover { border-color: var(--border-accent); color: var(--accent-cyan); }
+.nav-search-btn kbd { background: rgba(148,163,184,0.1); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-family: var(--font-mono); }
+
+/* UTILS */
+.highlight { color: var(--accent-cyan); }
+.highlight-blue { color: var(--accent-blue); }
+.highlight-gold { color: var(--accent-gold); }
+.highlight-rose { color: var(--accent-rose); }
+.highlight-purple { color: var(--accent-purple); }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hla-interactive, .pathway-container { grid-template-columns: 1fr; }
+  .def-grid { grid-template-columns: 1fr; }
+  .part-number { font-size: 4rem; }
+  .section-toggle { padding: 18px 20px; }
+  .section-content { padding: 0 20px 20px; }
+  .hero { padding: 80px 20px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Atlas Immuno <span>EDN 2026</span></div>
+    <div class="nav-links">
+      <a href="#part1">Histoire & Ig</a>
+      <a href="#part2">Fab / Fc</a>
+      <a href="#part3">Domaines</a>
+      <a href="#part4">Interaction Ag</a>
+      <a href="#part5">Classes & TCR</a>
+      <a href="#quiz">Quiz</a>
+    </div>
+    <button class="nav-search-btn" onclick="toggleSearch()">🔍 Rechercher <kbd>⌘K</kbd></button>
+  </div>
+  <div class="nav-progress" id="navProgress"></div>
+</nav>
+
+<!-- ===== SEARCH ===== -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un concept, une molécule…" oninput="performSearch(this.value)">
+    <div class="search-results" id="searchResults">
+      <div class="search-hint">Tapez pour rechercher dans tout le cours</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Cours interactif — Immunologie structurale</div>
+    <h1>Structure des <em>Immunoglobulines</em><br>& du TCR</h1>
+    <p class="hero-subtitle">
+      Des expériences historiques de digestion enzymatique à la structure 3D des domaines Ig — Fab, Fc, CDR, affinité, avidité, classes d'Ig et TCR.
+    </p>
+    <div class="hero-items">
+      <span><strong>IgG1</strong> — Archétype</span>
+      <span><strong>Fab / Fc</strong> — Fragments fonctionnels</span>
+      <span><strong>CDR</strong> — Boucles hypervariables</span>
+      <span><strong>Affinité & Avidité</strong></span>
+      <span><strong>IgM → IgG</strong> — Commutation</span>
+      <span><strong>TCR αβ / γδ</strong></span>
+    </div>
+    <div class="hero-scroll">
+      <a href="#part1">Commencer le cours<div class="arrow"></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="content-wrap">
+
+<!-- ══════════════════════════════════════
+     PARTIE 1 — HISTOIRE & INTRODUCTION AUX Ig
+     ══════════════════════════════════════ -->
+<div class="part-header" id="part1">
+  <div class="part-number">01</div>
+  <h2>Introduction aux immunoglobulines</h2>
+  <p class="part-desc">Des gamma-globulines à l'IgG1 — comment la biochimie a révélé la nature moléculaire des anticorps.</p>
+</div>
+
+<!-- 1.1 Contexte historique -->
+<div class="section-card" data-section="histoire">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(6,182,212,0.1);color:var(--accent-cyan)">📖</span>1.1 — Contexte historique : des sérums aux immunoglobulines</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Pendant la <strong>Seconde Guerre mondiale</strong>, Edwin Cohn met au point une technique de fractionnement des protéines sériques. Il isole des fractions contenant les « <strong>immune globulins</strong> » — d'où le nom <strong>immunoglobulines</strong>.</p>
+    <p>À l'<strong>électrophorèse des protéines sériques</strong> (EPS), les immunoglobulines migrent dans la zone des <strong>bêta et surtout des gamma-globulines</strong> (après albumine, α1, α2, β).</p>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Pourquoi « IgG » ?</div>
+      <p>L'immunoglobuline la plus étudiée correspondait au pic <strong>gamma</strong> à l'EPS → elle a été nommée <strong>IgG</strong> (G = gamma-globulines). Ce sont les <strong>plus abondantes du sérum</strong> dans toutes les espèces.</p>
+    </div>
+
+    <h4>Classes et sous-classes</h4>
+    <p>On distingue des <strong>classes</strong> d'immunoglobulines (IgG, IgA, IgM, IgD, IgE) et des <strong>sous-classes</strong>. Pour les IgG : <strong>IgG1, IgG2, IgG3, IgG4</strong>. L'IgG1 est l'archétype sur lequel se base l'essentiel du cours — et c'est aussi le scaffold de la plupart des <strong>anticorps monoclonaux thérapeutiques</strong>.</p>
+
+    <div class="clinical-box">
+      <div class="clinical-label">🏥 Pertinence clinique — Anticorps monoclonaux</div>
+      <p>La majorité des anticorps monoclonaux thérapeutiques (anti-TNF, anti-PD1, anti-CD20…) sont des <strong>IgG1 humanisées ou humaines</strong>. Comprendre la structure de l'IgG1, c'est comprendre le médicament.</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PARTIE 2 — DIGESTION ENZYMATIQUE / FAB & FC
+     ══════════════════════════════════════ -->
+<div class="part-header" id="part2">
+  <div class="part-number">02</div>
+  <h2>Digestion enzymatique & fragments Fab / Fc</h2>
+  <p class="part-desc">Papaïne, pepsine — deux enzymes qui ont révélé l'architecture bifonctionnelle de l'anticorps.</p>
+</div>
+
+<!-- 2.1 Papaïne & Pepsine -->
+<div class="section-card" data-section="enzymes">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(59,130,246,0.1);color:var(--accent-blue)">✂</span>2.1 — Papaïne et Pepsine : les premières « chirurgies moléculaires »</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Avant même de connaître la structure des anticorps, deux protéases ont été utilisées pour les « purifier ». On a découvert que chacune fragmentait l'IgG de manière différente — révélant ainsi sa structure.</p>
+
+    <div class="hla-interactive">
+      <div class="hla-card class1" onclick="this.classList.toggle('expanded')">
+        <div class="hla-class-tag">Papaïne — 3 syllabes → 3 fragments</div>
+        <h4>2 Fab + 1 Fc</h4>
+        <div class="hla-detail"><span class="label">Coupure</span><span class="value">Au-dessus des ponts S-S inter-chaînes</span></div>
+        <div class="hla-detail"><span class="label">Résultat</span><span class="value">2× Fab identiques + 1× Fc intact</span></div>
+        <div class="hla-detail"><span class="label">Fab</span><span class="value">Conserve la liaison à l'antigène</span></div>
+        <div class="hla-detail"><span class="label">Fc</span><span class="value">Cristallisable (constant)</span></div>
+        <div class="hla-expanded">
+          <p>La papaïne coupe juste au-dessus de la région charnière, <strong>séparant les deux bras</strong> (Fab) du tronc (Fc). Les 2 Fab sont identiques car les deux chaînes lourdes et les deux chaînes légères sont identiques entre elles. Le Fc reste en un seul bloc.</p>
+        </div>
+      </div>
+
+      <div class="hla-card class2" onclick="this.classList.toggle('expanded')">
+        <div class="hla-class-tag">Pepsine — 2 syllabes → 2 fragments</div>
+        <h4>F(ab')₂ + pFc'</h4>
+        <div class="hla-detail"><span class="label">Coupure</span><span class="value">En dessous des ponts S-S inter-chaînes</span></div>
+        <div class="hla-detail"><span class="label">Résultat</span><span class="value">1× F(ab')₂ + fragments pFc' dégradés</span></div>
+        <div class="hla-detail"><span class="label">F(ab')₂</span><span class="value">Les 2 Fab restent liés (bivalent)</span></div>
+        <div class="hla-detail"><span class="label">Fc</span><span class="value">Complètement dégradé</span></div>
+        <div class="hla-expanded">
+          <p>La pepsine coupe <strong>en dessous</strong> des ponts disulfures inter-chaînes lourdes. Les deux Fab restent donc reliés par les ponts S-S → on obtient un <strong>F(ab')₂ bivalent</strong>. Le Fc est dégradé en petits peptides (pFc').</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mnemo-box">
+      <div class="mnemo-label">🧠 Mnémotechnique</div>
+      <strong>Pa-pa-ïne</strong> = 3 syllabes → <strong>3 fragments</strong> (2 Fab + 1 Fc)<br>
+      <strong>Pep-sine</strong> = 2 syllabes → <strong>2 fragments</strong> (1 F(ab')₂ + pFc' dégradé)
+    </div>
+
+    <h4>Signification des noms</h4>
+    <div class="def-grid">
+      <div class="def-box">
+        <div class="def-term">🎯 Fab = Fragment Antigen Binding</div>
+        <div class="def-text">La partie de l'anticorps qui <strong>se lie à l'antigène</strong>. Chaque IgG en possède 2 → l'anticorps est <strong>bivalent</strong>.</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">💎 Fc = Fragment cristallisable</div>
+        <div class="def-text">Fc ne veut <strong>PAS</strong> dire « Fragment Constant ». Il est cristallisable car <strong>identique pour tous les anticorps d'une même classe</strong> → protéine pure et homogène → cristallise. Le Fab, lui, varie d'un anticorps à l'autre → ne cristallise pas.</div>
+      </div>
+    </div>
+
+    <div class="edn-box">
+      <div class="edn-label">⚠ Piège EDN</div>
+      <p><strong>Fc ≠ Fragment Constant</strong>. Certes le Fc ne contient que des domaines constants (CH2, CH3), mais il y a aussi des domaines constants dans le Fab (CH1 et CL). Fc = <strong>cristallisable</strong>.</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- 2.2 Chaînes lourdes et légères -->
+<div class="section-card" data-section="chaines">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(20,184,166,0.1);color:var(--accent-teal)">🔗</span>2.2 — Chaînes lourdes (H) et chaînes légères (L)</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Par <strong>réduction des ponts disulfures</strong>, on sépare les 4 chaînes constituant l'IgG :</p>
+
+    <table class="comparison-table">
+      <thead><tr><th>Chaîne</th><th>Nombre</th><th>Masse</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>Chaîne lourde (H)</td><td>2 (identiques)</td><td>≈ 50 kDa chacune</td><td>γ (pour IgG)</td></tr>
+        <tr><td>Chaîne légère (L)</td><td>2 (identiques)</td><td>≈ 25 kDa chacune</td><td>κ <strong>ou</strong> λ</td></tr>
+        <tr><td><strong>IgG totale</strong></td><td>2H + 2L</td><td><strong>≈ 150 kDa</strong></td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Ponts disulfures :</strong> 2 ponts S-S inter-chaînes lourdes (dans la charnière pour IgG1) + 1 pont S-S entre chaîne lourde et chaîne légère de chaque côté. Des variations existent entre IgG1, G2, G3, G4.</p>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Deux types de chaînes légères</div>
+      <p>Chaque anticorps possède soit deux chaînes <strong>κ (kappa)</strong>, soit deux chaînes <strong>λ (lambda)</strong> — <strong>jamais un mélange</strong>. Ratio normal ≈ 2/3 κ, 1/3 λ. Un ratio anormal = argument de <strong>clonalité</strong> (lymphome, myélome).</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PARTIE 3 — DOMAINES IG, CDR, STRUCTURE
+     ══════════════════════════════════════ -->
+<div class="part-header" id="part3">
+  <div class="part-number">03</div>
+  <h2>Architecture moléculaire : domaines, CDR & paratope</h2>
+  <p class="part-desc">Du myélome à la cristallographie — comment on a percé les secrets structuraux des immunoglobulines.</p>
+</div>
+
+<!-- 3.1 Le domaine Ig -->
+<div class="section-card" data-section="domaine-ig">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(167,139,250,0.1);color:var(--accent-purple)">🏗</span>3.1 — Le domaine immunoglobuline : brique élémentaire</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>L'étude des chaînes légères issues de <strong>patients atteints de myélome</strong> (un plasmocyte malin sécrétant un excès de chaînes légères urinaires) a permis les premières séquences et structures cristallographiques.</p>
+
+    <div class="def-grid">
+      <div class="def-box">
+        <div class="def-term">🧱 Le domaine Ig</div>
+        <div class="def-text">Unité structurale de <strong>≈ 110 acides aminés</strong> (≈ 12,5 kDa) organisée en <strong>double feuillet β</strong> antiparallèle formant un petit « tonneau ». Structure extrêmement stable. Chaque domaine = <strong>1 exon</strong>.</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">📐 Pas d'hélice α</div>
+        <div class="def-text">La structure est <strong>uniquement en feuillets bêta</strong> — deux feuillets β superposés, reliés par un pont disulfure intra-domaine. Aspect globulaire, d'où le nom « domaine immunoglobuline ».</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">🌍 Superfamille Ig</div>
+        <div class="def-text">Le domaine Ig a été découvert dans les anticorps mais il existe dans <strong>de très nombreuses protéines</strong> (TCR, CMH, CD4, CD8, ICAM…). La nature a décliné cette brique stable en multiples protéines.</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">🧬 1 domaine = 1 exon</div>
+        <div class="def-text">L'immunoglobuline est codée par une succession d'exons, chacun apportant un domaine Ig. Organisation <strong>modulaire</strong> du gène reflétant la structure en « collier de perles ».</div>
+      </div>
+    </div>
+
+    <h4>Composition en domaines</h4>
+    <table class="comparison-table">
+      <thead><tr><th>Chaîne</th><th>Nombre de domaines</th><th>Nomenclature</th></tr></thead>
+      <tbody>
+        <tr><td>Chaîne légère</td><td>2</td><td><strong>VL</strong> — <strong>CL</strong> (Cκ ou Cλ)</td></tr>
+        <tr><td>Chaîne lourde γ (IgG)</td><td>4 + charnière</td><td><strong>VH</strong> — <strong>CH1</strong> — charnière — <strong>CH2</strong> — <strong>CH3</strong></td></tr>
+        <tr><td>Chaîne lourde μ (IgM)</td><td>5 (pas de charnière)</td><td>VH — CH1 — <strong>CH2</strong> — CH3 — CH4</td></tr>
+      </tbody>
+    </table>
+
+    <div class="clinical-box">
+      <div class="clinical-label">🏥 Pertinence clinique — Myélome</div>
+      <p>Le <strong>myélome multiple</strong> : prolifération clonale d'un plasmocyte sécrétant une Ig monoclonale → pic monoclonal à l'EPS. L'excès de <strong>chaînes légères libres</strong> (protéine de Bence Jones) se retrouve dans les urines. C'est grâce à ces chaînes légères monoclonales qu'on a pu séquencer et cristalliser les premiers domaines Ig.</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- 3.2 Domaines V et C / Assemblage -->
+<div class="section-card" data-section="v-et-c">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(245,158,11,0.1);color:var(--accent-gold)">🔀</span>3.2 — Domaines Variable (V) et Constant (C) — Assemblage</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>En alignant les séquences de nombreux anticorps différents, on distingue :</p>
+
+    <div class="hla-interactive">
+      <div class="hla-card class1" onclick="this.classList.toggle('expanded')">
+        <div class="hla-class-tag">Domaines Variables</div>
+        <h4>VH & VL</h4>
+        <div class="hla-detail"><span class="label">Séquence</span><span class="value">Varie d'un anticorps à l'autre</span></div>
+        <div class="hla-detail"><span class="label">Position</span><span class="value">Extrémité distale (N-terminal)</span></div>
+        <div class="hla-detail"><span class="label">Fonction</span><span class="value">Reconnaissance de l'antigène</span></div>
+        <div class="hla-detail"><span class="label">Assemblage</span><span class="value">VH + VL = Fv (fragment variable)</span></div>
+        <div class="hla-expanded">
+          <p>L'association <strong>VH + VL</strong> par des liaisons hydrophobes forme une entité appelée <strong>Fv</strong> (fragment variable) — la plus petite unité de reconnaissance de l'antigène. En biotechnologie, on peut fusionner VH et VL en une seule chaîne : le <strong>scFv</strong> (single-chain Fv). Le VH contribue <strong>un peu plus</strong> que le VL à la liaison.</p>
+        </div>
+      </div>
+
+      <div class="hla-card class2" onclick="this.classList.toggle('expanded')">
+        <div class="hla-class-tag">Domaines Constants</div>
+        <h4>CH1, CH2, CH3 & CL</h4>
+        <div class="hla-detail"><span class="label">Séquence</span><span class="value">Identique pour tous les Ac d'un isotype</span></div>
+        <div class="hla-detail"><span class="label">CL + CH1</span><span class="value">Stabilisent l'association VH-VL</span></div>
+        <div class="hla-detail"><span class="label">CH2 + CH3</span><span class="value">Constituent le Fc → fonctions effectrices</span></div>
+        <div class="hla-detail"><span class="label">CH2</span><span class="value">Porte le N-glycane (entre les 2 CH2)</span></div>
+        <div class="hla-expanded">
+          <p>Les domaines CH1/CL sont « très fusionnels » : liaisons hydrophobes abondantes qui <strong>solidifient l'association VH-VL</strong>. Sans eux, le VH ne colle pas toujours bien au VL (problème des scFv). Les domaines CH3 sont aussi très fusionnels entre eux. Le <strong>N-glycane bi-antenné</strong> entre les deux CH2 les écarte l'un de l'autre — rôle structural essentiel.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Le N-glycane interne du CH2</div>
+      <p>Fait unique : les sucres sont <strong>à l'intérieur</strong> de l'Ig, entre les deux CH2, et non à l'extérieur comme dans la plupart des glycoprotéines. Leur rôle : <strong>écarter les CH2</strong> pour maintenir le Fc en conformation ouverte. Si on retire les sucres, les CH2 s'affaissent l'un sur l'autre → perte de fonctions effectrices.</p>
+    </div>
+
+    <h4>La région charnière</h4>
+    <p>Entre le Fab et le Fc de l'IgG : une zone <strong>flexible</strong> (peptide de liaison, pas un domaine Ig). C'est là que se trouvent les <strong>ponts disulfures inter-chaînes lourdes</strong>. Elle confère au Fab une <strong>mobilité considérable</strong> dans un cône d'espace.</p>
+
+    <div class="edn-box">
+      <div class="edn-label">⚠ Piège EDN — Mobilité de l'IgG</div>
+      <p>L'IgG n'est <strong>jamais en Y</strong> de façon statique ! Chaque Fab bouge indépendamment dans un large cône. Le Fc est plus rigide. La forme la plus fréquente serait plutôt un <strong>T</strong>. On ne connaît que <strong>2 structures d'IgG entières</strong> (cristallisation très difficile).</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- 3.3 CDR et paratope -->
+<div class="section-card" data-section="cdr">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(244,63,94,0.1);color:var(--accent-rose)">🎯</span>3.3 — CDR, paratope & interaction avec l'antigène</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Au pôle externe de l'association VH-VL (face orientée vers l'antigène), on trouve <strong>6 boucles</strong> qui dépassent de la structure en feuillets β :</p>
+
+    <div class="diagram-container">
+      <div class="diagram-title">Vue « face à l'antigène » du paratope</div>
+      <svg viewBox="0 0 400 280" class="diagram-svg">
+        <!-- VH -->
+        <ellipse cx="200" cy="140" rx="180" ry="120" fill="none" stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+        <line x1="200" y1="20" x2="200" y2="260" stroke="rgba(148,163,184,0.1)" stroke-dasharray="4"/>
+        <text x="120" y="255" fill="#64748b" font-size="11" font-family="Fira Sans">VL</text>
+        <text x="260" y="255" fill="#64748b" font-size="11" font-family="Fira Sans">VH</text>
+        <!-- CDR1 -->
+        <ellipse cx="80" cy="100" rx="35" ry="18" fill="rgba(59,130,246,0.12)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="62" y="105" fill="#3b82f6" font-size="11" font-weight="600" font-family="Fira Sans">CDR1</text>
+        <ellipse cx="320" cy="100" rx="35" ry="18" fill="rgba(59,130,246,0.12)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="302" y="105" fill="#3b82f6" font-size="11" font-weight="600" font-family="Fira Sans">CDR1</text>
+        <!-- CDR2 -->
+        <ellipse cx="120" cy="160" rx="35" ry="18" fill="rgba(167,139,250,0.12)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="102" y="165" fill="#a78bfa" font-size="11" font-weight="600" font-family="Fira Sans">CDR2</text>
+        <ellipse cx="280" cy="160" rx="35" ry="18" fill="rgba(167,139,250,0.12)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="262" y="165" fill="#a78bfa" font-size="11" font-weight="600" font-family="Fira Sans">CDR2</text>
+        <!-- CDR3 — les plus importants -->
+        <ellipse cx="170" cy="130" rx="40" ry="22" fill="rgba(244,63,94,0.15)" stroke="#f43f5e" stroke-width="2"/>
+        <text x="148" y="135" fill="#f43f5e" font-size="12" font-weight="700" font-family="Fira Sans">CDR3</text>
+        <ellipse cx="230" cy="130" rx="40" ry="22" fill="rgba(244,63,94,0.15)" stroke="#f43f5e" stroke-width="2"/>
+        <text x="208" y="135" fill="#f43f5e" font-size="12" font-weight="700" font-family="Fira Sans">CDR3</text>
+        <!-- Labels -->
+        <text x="140" y="30" fill="#f43f5e" font-size="10" font-weight="600" font-family="Fira Sans">★ CDR3 = les plus hypervariables</text>
+      </svg>
+    </div>
+
+    <table class="comparison-table">
+      <thead><tr><th>Boucle</th><th>Position</th><th>Importance</th><th>Autre nom</th></tr></thead>
+      <tbody>
+        <tr><td>CDR1 (×2)</td><td>Périphérique</td><td>Accessoire</td><td>Région hypervariable 1</td></tr>
+        <tr><td>CDR2 (×2)</td><td>Intermédiaire</td><td>Modérée</td><td>Région hypervariable 2</td></tr>
+        <tr><td><strong>CDR3 (×2)</strong></td><td><strong>Centrale</strong></td><td><strong>Majeure +++</strong></td><td>Région hypervariable 3</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>CDR</strong> = <em>Complementarity Determining Regions</em>. Les brins β entre les CDR = <strong>charpentes</strong> (<em>framework regions</em>). Le CDR3 du VH est le plus variable car issu de la <strong>jonction V-D-J</strong>.</p>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Stéréospécificité : la clé est dans la longueur des boucles</div>
+      <p>La complémentarité anticorps-antigène n'est pas seulement chimique (nature des acides aminés) mais aussi <strong>stérique</strong>. Si l'antigène a un creux → le CDR3 sera une boucle longue (plus d'acides aminés). Si l'antigène a une bosse → boucle CDR3 courte. On fait <strong>varier à la fois la composition ET le nombre d'acides aminés</strong> dans les boucles.</p>
+    </div>
+
+    <h4>Épitope et Paratope</h4>
+    <div class="def-grid">
+      <div class="def-box">
+        <div class="def-term">🎯 Épitope</div>
+        <div class="def-text">Zone de l'<strong>antigène</strong> reconnue par l'anticorps. Un antigène porte <strong>plusieurs épitopes</strong> différents. Même pour un épitope donné, plusieurs anticorps différents (réponse <strong>polyclonale</strong>) peuvent s'y lier.</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">🔑 Paratope</div>
+        <div class="def-text">Zone de l'<strong>anticorps</strong> (face externe VH-VL) au contact de l'antigène. Formé par les <strong>6 CDR</strong>. VH et VL contribuent tous deux, le VH un peu plus.</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PARTIE 4 — INTERACTION Ag-Ac, AFFINITÉ, AVIDITÉ
+     ══════════════════════════════════════ -->
+<div class="part-header" id="part4">
+  <div class="part-number">04</div>
+  <h2>L'interaction antigène-anticorps : affinité & avidité</h2>
+  <p class="part-desc">Liaisons non-covalentes, affinité, constantes d'association — et pourquoi l'anticorps a deux bras.</p>
+</div>
+
+<!-- 4.1 Liaison non-covalente -->
+<div class="section-card" data-section="liaison">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(34,197,94,0.1);color:var(--accent-green)">⚡</span>4.1 — Nature de la liaison anticorps-antigène</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>La liaison anticorps-antigène n'est <strong>JAMAIS covalente</strong>. C'est un ensemble de <strong>liaisons non-covalentes</strong> qui nécessitent une <strong>proximité atomique</strong> étroite entre paratope et épitope :</p>
+
+    <div class="def-grid">
+      <div class="def-box">
+        <div class="def-term">💧 Liaisons hydrogène</div>
+        <div class="def-text">Entre donneurs et accepteurs de protons.</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">🌊 Interactions hydrophobes</div>
+        <div class="def-text">Exclusion de l'eau entre surfaces apolaires.</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">⚡ Liaisons ioniques (électrostatiques)</div>
+        <div class="def-text">Entre charges opposées (NH₃⁺ — COO⁻).</div>
+      </div>
+      <div class="def-box">
+        <div class="def-term">✨ Forces de Van der Waals</div>
+        <div class="def-text">Dipôles induits, très courte portée.</div>
+      </div>
+    </div>
+
+    <p>Aucune n'est « la plus importante » — <strong>ça dépend de l'antigène</strong>. Ce qui compte, c'est la <strong>complémentarité chimique ET stérique</strong> entre paratope et épitope.</p>
+
+    <div class="formula">
+      Liaison Ag-Ac : JAMAIS covalente<br>
+      4 types de liaisons non-covalentes : H-bond, hydrophobe, ionique, Van der Waals<br>
+      Complémentarité = stérique + chimique
+    </div>
+  </div></div>
+</div>
+
+<!-- 4.2 Affinité et Avidité -->
+<div class="section-card" data-section="affinite">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(6,182,212,0.1);color:var(--accent-cyan)">🔗</span>4.2 — Affinité, avidité et valence</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <h4>Affinité</h4>
+    <p>L'interaction est réversible → il existe une <strong>constante d'association (Ka-on)</strong> et une <strong>constante de dissociation (Ka-off)</strong>, déterminant un <strong>Kd</strong> (constante de dissociation à l'équilibre).</p>
+
+    <div class="formula">
+      Ka-on / Ka-off → Kd (constante d'affinité)<br>
+      Haute affinité : Kd ≈ <strong>nanomolaire</strong> (10⁻⁹ M) voire <strong>picomolaire</strong> (10⁻¹² M)<br>
+      Plus le Kd est petit, meilleure est l'affinité<br>
+      Les anticorps de meilleure affinité ont surtout un <strong>Ka-off petit</strong> (se dissocient peu)
+    </div>
+
+    <h4>Avidité : la coopération entre les bras</h4>
+    <p>Un anticorps se dissocie <strong>toujours</strong> (Ka-off ≠ 0). Mais si l'anticorps fixe l'antigène par <strong>ses deux bras</strong>, quand un bras lâche, l'autre retient → le bras libre retrouve immédiatement un autre épitope.</p>
+
+    <p>L'<strong>avidité</strong> = coopération entre les sites de liaison. Elle dépend de la <strong>valence</strong> (nombre de paratopes engagés) :</p>
+
+    <table class="comparison-table">
+      <thead><tr><th>Immunoglobuline</th><th>Forme</th><th>Valence</th><th>Avidité</th></tr></thead>
+      <tbody>
+        <tr><td>IgG</td><td>Monomère</td><td><strong>2</strong></td><td>Modérée</td></tr>
+        <tr><td>IgA dimérique</td><td>Dimère (+ chaîne J)</td><td><strong>4</strong></td><td>Élevée</td></tr>
+        <tr><td>IgM pentamère</td><td>Pentamère (+ chaîne J)</td><td><strong>10</strong></td><td>Très élevée +++</td></tr>
+        <tr><td>IgM hexamère</td><td>Hexamère</td><td><strong>12</strong></td><td>Maximale</td></tr>
+      </tbody>
+    </table>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Pourquoi commencer par des IgM ?</div>
+      <p>Les premiers anticorps produits ont une <strong>affinité faible</strong> (répertoire naïf). L'IgM pentamérique compense par une <strong>avidité colossale</strong> (10 bras !). Se fixe en « parapluie » sur la surface microbienne. Quand l'affinité s'améliore (mutations somatiques), on pourra « descendre » à une IgG bivalente suffisante.</p>
+    </div>
+
+    <div class="mnemo-box">
+      <div class="mnemo-label">🧠 À retenir — Grimpeur</div>
+      Analogie : un grimpeur avec <strong>deux bras</strong> peut lâcher une main (un bras se dissocie) sans tomber. Avec <strong>un seul bras</strong>, dès qu'il lâche → il tombe. L'IgM avec 10 bras est un grimpeur invincible !
+    </div>
+  </div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PARTIE 5 — CLASSES D'Ig & TCR
+     ══════════════════════════════════════ -->
+<div class="part-header" id="part5">
+  <div class="part-number">05</div>
+  <h2>Classes d'immunoglobulines & le TCR</h2>
+  <p class="part-desc">Commutation de classe, IgM→IgG, polymérisation, et le T-Cell Receptor — même principe, autre protéine.</p>
+</div>
+
+<!-- 5.1 Organisation génique & commutation -->
+<div class="section-card" data-section="commutation">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(59,130,246,0.1);color:var(--accent-blue)">🧬</span>5.1 — Organisation des gènes de chaîne lourde & commutation de classe</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Les gènes codant les domaines constants de chaîne lourde sont <strong>tous alignés sur le chromosome 14</strong>, en aval de l'exon VDJ réarrangé :</p>
+
+    <div class="formula">
+      5' — [VDJ] — <span style="color:var(--accent-cyan)">Cμ</span> — <span style="color:var(--accent-cyan)">Cδ</span> — <span style="color:var(--accent-gold)">Cγ3</span> — <span style="color:var(--accent-gold)">Cγ1</span> — <span style="color:var(--text-muted)">(ψε)</span> — <span style="color:var(--accent-teal)">Cα1</span> — <span style="color:var(--accent-gold)">Cγ2</span> — <span style="color:var(--accent-gold)">Cγ4</span> — <span style="color:var(--accent-rose)">Cε</span> — <span style="color:var(--accent-teal)">Cα2</span> — 3'
+    </div>
+
+    <p>Le <strong>lymphocyte B naïf</strong> transcrit d'abord <strong>VDJ + Cμ</strong> → IgM (BCR), et par épissage alternatif <strong>VDJ + Cδ</strong> → IgD (BCR). Un B naïf exprime donc simultanément des BCR <strong>IgM et IgD</strong>.</p>
+
+    <p>La <strong>commutation de classe</strong> (class switch) = substitution des domaines constants. Le VH (<strong>même spécificité antigénique</strong>) s'associe avec un autre gène CH → changement de classe (IgM → IgG, IgA, IgE).</p>
+
+    <div class="edn-box">
+      <div class="edn-label">⚠ Piège EDN — Ce qui change et ce qui ne change pas</div>
+      <p>Lors de la commutation : on ne change <strong>JAMAIS le VH</strong>, on ne change <strong>JAMAIS la chaîne légère</strong>. Seuls les <strong>domaines constants de chaîne lourde</strong> sont substitués. La spécificité antigénique est <strong>conservée</strong>. Ce sont les <strong>fonctions effectrices (Fc)</strong> qui changent.</p>
+    </div>
+
+    <h4>Récapitulatif des classes</h4>
+    <table class="comparison-table">
+      <thead><tr><th>Classe</th><th>Gène CH</th><th>Domaines CH</th><th>Forme sécrétée</th><th>Valence</th></tr></thead>
+      <tbody>
+        <tr><td>IgM</td><td>μ (mu)</td><td>5 (CH1-CH2-CH3-CH4)</td><td>Pentamère ou hexamère</td><td>10 ou 12</td></tr>
+        <tr><td>IgD</td><td>δ (delta)</td><td>3 + charnière</td><td>Monomère</td><td>2</td></tr>
+        <tr><td>IgG1-4</td><td>γ1-4</td><td>3 + charnière</td><td>Monomère</td><td>2</td></tr>
+        <tr><td>IgA1-2</td><td>α1-2</td><td>3 + charnière</td><td>Monomère <strong>ou dimère</strong></td><td>2 ou 4</td></tr>
+        <tr><td>IgE</td><td>ε (epsilon)</td><td>5 (CH1-CH2-CH3-CH4)</td><td>Monomère</td><td>2</td></tr>
+      </tbody>
+    </table>
+
+    <div class="mnemo-box">
+      <div class="mnemo-label">🧠 À retenir</div>
+      <strong>IgM</strong> = M = Macro → <strong>pentamère/hexamère</strong>, jamais de monomère soluble (monomère = BCR uniquement).<br>
+      <strong>IgM et IgE</strong> ont <strong>5 domaines CH</strong> (CH2 à la place de la charnière → moins flexibles).<br>
+      <strong>IgA</strong> = seule Ig à pouvoir <strong>dimériser</strong> (avec chaîne J).<br>
+      Tout BCR est toujours <strong>monomérique</strong>.
+    </div>
+  </div></div>
+</div>
+
+<!-- 5.2 Maturation d'affinité -->
+<div class="section-card" data-section="maturation">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(34,197,94,0.1);color:var(--accent-green)">📈</span>5.2 — Maturation d'affinité (mutations somatiques)</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Après la rencontre avec l'antigène, des <strong>mutations ponctuelles aléatoires</strong> (hypermutations somatiques) sont introduites dans les régions variables, principalement dans les <strong>CDR</strong> mais aussi dans les <strong>charpentes</strong> (framework).</p>
+
+    <p>Mutations dans les CDR → changent directement le contact paratope-épitope.<br>
+    Mutations dans les charpentes → peuvent modifier l'<strong>orientation des CDR</strong> → améliorer indirectement la liaison.</p>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Sélection darwinienne des anticorps</div>
+      <p>Les mutations arrivent <strong>au hasard</strong>. On ne garde que celles qui <strong>améliorent l'affinité</strong>. Les clones ayant perdu en affinité sont éliminés. C'est une véritable <strong>sélection darwinienne à l'échelle cellulaire</strong>, dans les centres germinatifs des ganglions.</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- 5.3 Le TCR -->
+<div class="section-card" data-section="tcr">
+  <button class="section-toggle" onclick="toggleSection(this)">
+    <h3><span class="section-icon" style="background:rgba(167,139,250,0.1);color:var(--accent-purple)">🧪</span>5.3 — Le TCR : même architecture, autre destin</h3>
+    <span class="section-chevron">▼</span>
+  </button>
+  <div class="section-body"><div class="section-content">
+    <p>Le TCR utilise le <strong>même principe structural</strong> que les Ig (domaines Ig, feuillets β, CDR) mais avec des gènes différents, sur des chromosomes différents.</p>
+
+    <table class="comparison-table">
+      <thead><tr><th>Caractéristique</th><th>BCR (IgG)</th><th>TCR (αβ)</th></tr></thead>
+      <tbody>
+        <tr><td>Chaînes</td><td>2H + 2L (hétérotétramère)</td><td>α + β (hétérodimère)</td></tr>
+        <tr><td>Transmembranaire</td><td>Chaîne lourde seule</td><td><strong>Les DEUX chaînes</strong></td></tr>
+        <tr><td>Taille par chaîne</td><td>H: 50 kDa / L: 25 kDa</td><td>≈ 25 kDa chacune (taille d'une chaîne L)</td></tr>
+        <tr><td>Domaines par chaîne</td><td>H: 4 / L: 2</td><td><strong>2</strong> chacune (V + C)</td></tr>
+        <tr><td>Valence</td><td>Bivalent (2 paratopes)</td><td><strong>Monovalent</strong> (1 paratope)</td></tr>
+        <tr><td>Forme sécrétée</td><td>Oui (anticorps)</td><td><strong>Non, jamais</strong></td></tr>
+        <tr><td>Antigène reconnu</td><td>Natif (3D)</td><td><strong>CMH + peptide</strong></td></tr>
+        <tr><td>Mutations somatiques</td><td>Oui (maturation d'affinité)</td><td><strong>Non</strong></td></tr>
+        <tr><td>Types</td><td>IgG, IgM, IgA, IgD, IgE</td><td><strong>TCR αβ (90%)</strong> ou TCR γδ (10%)</td></tr>
+        <tr><td>Gènes</td><td>Chr 14 (H), 2 (κ), 22 (λ)</td><td><strong>4 chromosomes</strong> différents</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Pas de maturation d'affinité pour le TCR</h4>
+    <p>L'affinité TCR/CMH-peptide est <strong>intrinsèquement faible</strong>. Ce n'est pas un problème : un lymphocyte T porte <strong>de nombreux TCR identiques</strong> → avidité collective → formation d'une <strong>synapse immunologique</strong> entre CPA et lymphocyte T.</p>
+
+    <div class="concept-box">
+      <div class="concept-label">💡 Pourquoi pas de mutations somatiques du TCR ?</div>
+      <p>La maturation d'affinité est nécessaire pour les Ig car un anticorps soluble doit <strong>neutraliser efficacement</strong> une toxine ou un pathogène à distance. Le TCR, lui, agit en <strong>contact cellulaire direct</strong> → l'avidité de la synapse suffit.</p>
+    </div>
+
+    <div class="edn-box">
+      <div class="edn-label">⚠ Piège EDN</div>
+      <p>Pour les IgG, seule la <strong>chaîne lourde est transmembranaire</strong> (la chaîne légère est attachée par liaisons non-covalentes). Pour le TCR, <strong>les deux chaînes (α et β) sont transmembranaires</strong>.</p>
+    </div>
+  </div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     QUIZ
+     ══════════════════════════════════════ -->
+<div class="quiz-section" id="quiz">
+  <h2>Auto-évaluation EDN</h2>
+  <p class="quiz-subtitle">20 questions-clés — Clique pour révéler la réponse, puis évalue-toi</p>
+  <div class="quiz-score">Score : <span class="score-num" id="scoreDisplay">0</span> / <span id="totalQ">20</span></div>
+  <div class="quiz-grid" id="quizGrid"></div>
+</div>
+
+</div><!-- end content-wrap -->
+
+<footer class="site-footer">
+  <p>Atlas d'Immunologie — Préparation EDN 2026<br>
+  Cours : Structure des Immunoglobulines & TCR<br>
+  Créé avec <a href="https://claude.ai" target="_blank">Claude</a></p>
+</footer>
+
+<script>
+const quizData = [
+  {
+    q: "Pourquoi les IgG sont-elles appelées « G » ?",
+    a: "Parce qu'elles migrent dans la zone des <strong>gamma-globulines</strong> à l'électrophorèse des protéines sériques (EPS). Ce sont les immunoglobulines les plus abondantes du sérum."
+  },
+  {
+    q: "La papaïne génère combien de fragments ? Lesquels ?",
+    a: "<strong>3 fragments</strong> : 2 Fab (identiques) + 1 Fc. Mnémo : pa-pa-ïne = 3 syllabes = 3 fragments. Elle coupe <strong>au-dessus</strong> des ponts S-S inter-chaînes."
+  },
+  {
+    q: "La pepsine génère combien de fragments ? Lesquels ?",
+    a: "<strong>2 fragments</strong> : 1 F(ab')₂ (les 2 Fab restent liés) + des pFc' dégradés. Mnémo : pep-sine = 2 syllabes = 2 fragments. Elle coupe <strong>en dessous</strong> des ponts S-S."
+  },
+  {
+    q: "Que signifie Fc ? Pourquoi cristallise-t-il ?",
+    a: "Fc = Fragment <strong>cristallisable</strong> (PAS « Fragment Constant »). Il cristallise parce qu'il est <strong>identique</strong> pour tous les anticorps d'une même classe → protéine pure et homogène."
+  },
+  {
+    q: "Quelle est la masse d'une IgG entière ? D'une chaîne lourde ? D'une chaîne légère ?",
+    a: "IgG ≈ <strong>150 kDa</strong>. Chaîne lourde ≈ <strong>50 kDa</strong>. Chaîne légère ≈ <strong>25 kDa</strong>. Calcul : 2×50 + 2×25 = 150 kDa."
+  },
+  {
+    q: "Combien d'acides aminés dans un domaine immunoglobuline ? Quelle structure secondaire ?",
+    a: "≈ <strong>110 acides aminés</strong> (≈ 12,5 kDa). Structure en <strong>double feuillet β</strong> antiparallèle (jamais d'hélice α). Forme un « petit tonneau » globulaire. Un domaine = <strong>un exon</strong>."
+  },
+  {
+    q: "Combien de domaines possèdent la chaîne lourde γ (IgG) et la chaîne légère ?",
+    a: "Chaîne lourde γ : <strong>4 domaines</strong> (VH, CH1, CH2, CH3) + une région charnière. Chaîne légère : <strong>2 domaines</strong> (VL, CL)."
+  },
+  {
+    q: "Quel est le rôle du N-glycane bi-antenné dans le CH2 ?",
+    a: "Il <strong>écarte les deux domaines CH2</strong> l'un de l'autre (sucres situés à l'<strong>intérieur</strong> de la molécule, fait unique). Si on retire les sucres → les CH2 s'affaissent et se collent → perte des fonctions effectrices du Fc."
+  },
+  {
+    q: "Qu'est-ce que le Fv ? Le scFv ?",
+    a: "Le <strong>Fv</strong> = association VH + VL, c'est la plus petite unité de reconnaissance de l'Ag. Le <strong>scFv</strong> (single-chain Fv) = VH et VL fusionnés en une seule chaîne peptidique (biotechnologie)."
+  },
+  {
+    q: "Combien de CDR porte un anticorps ? Lequel est le plus important ?",
+    a: "<strong>6 CDR</strong> au total (3 du VH + 3 du VL). Le <strong>CDR3</strong> (central, au cœur du paratope) est le plus important et le plus hypervariable, car codé à la jonction V-D-J."
+  },
+  {
+    q: "La liaison anticorps-antigène est-elle covalente ?",
+    a: "<strong>JAMAIS</strong> covalente. Toujours non-covalente : 4 types de liaisons — <strong>hydrogène, hydrophobe, ionique/électrostatique, Van der Waals</strong>. Aucune n'est systématiquement dominante."
+  },
+  {
+    q: "Qu'est-ce qui distingue l'affinité de l'avidité ?",
+    a: "<strong>Affinité</strong> = force de la liaison d'UN paratope avec UN épitope (mesurée par le Kd). <strong>Avidité</strong> = force globale résultant de la coopération entre TOUS les paratopes (dépend de la valence). Ex : IgM pentamère a une affinité faible mais une avidité énorme."
+  },
+  {
+    q: "Quelle est la valence d'une IgG ? D'une IgM pentamérique ? D'une IgA dimérique ?",
+    a: "IgG = <strong>2</strong>. IgM pentamère = <strong>10</strong>. IgM hexamère = <strong>12</strong>. IgA dimère = <strong>4</strong>."
+  },
+  {
+    q: "Un lymphocyte B naïf exprime quel(s) BCR à sa surface ?",
+    a: "BCR <strong>IgM</strong> et BCR <strong>IgD</strong> simultanément, par épissage alternatif du même exon VDJ avec les gènes Cμ ou Cδ. Le VH est toujours le même."
+  },
+  {
+    q: "Lors de la commutation de classe, qu'est-ce qui change et qu'est-ce qui ne change pas ?",
+    a: "<strong>Ne change JAMAIS</strong> : VH, VL, chaîne légère → même spécificité antigénique. <strong>Change</strong> : les domaines constants de chaîne lourde (CH1, CH2, CH3…) → change les fonctions effectrices (Fc)."
+  },
+  {
+    q: "Pourquoi l'IgM est-elle la première Ig sécrétée lors d'une réponse immunitaire ?",
+    a: "Le gène <strong>Cμ est le premier</strong> en aval de VDJ sur le chromosome 14 → premier transcrit. L'affinité initiale est faible, mais l'IgM compense par sa <strong>polymérisation</strong> (pentamère/hexamère → avidité colossale)."
+  },
+  {
+    q: "Existe-t-il des IgM monomériques solubles ?",
+    a: "<strong>Non, jamais</strong>. Les IgM solubles sont toujours des pentamères ou hexamères. Les monomères d'IgM n'existent qu'en tant que <strong>BCR membranaire</strong>."
+  },
+  {
+    q: "IgM et IgE ont combien de domaines CH ? Quelle conséquence structurale ?",
+    a: "<strong>5 domaines CH</strong> (un CH2 supplémentaire remplace la charnière). Conséquence : <strong>perte de flexibilité</strong> des Fab par rapport aux IgG."
+  },
+  {
+    q: "Combien de chaînes du TCR sont transmembranaires ? Et pour les IgG ?",
+    a: "TCR : <strong>les 2 chaînes</strong> (α et β) sont transmembranaires. IgG : seule la <strong>chaîne lourde</strong> est transmembranaire (la chaîne légère ne l'est pas)."
+  },
+  {
+    q: "Pourquoi le TCR n'a-t-il pas de maturation d'affinité (pas de mutations somatiques) ?",
+    a: "L'affinité du TCR est faible mais suffisante : le lymphocyte T porte de <strong>nombreux TCR identiques</strong> → formation d'une <strong>synapse immunologique</strong> avec forte avidité collective. L'anticorps, lui, doit <strong>neutraliser à distance</strong> (toxines, virus) → besoin de forte affinité → mutations somatiques indispensables."
+  }
+];
+
+// QUIZ RENDER
+const quizGrid = document.getElementById('quizGrid');
+let score = 0;
+quizData.forEach((item, i) => {
+  const card = document.createElement('div');
+  card.className = 'quiz-card';
+  card.innerHTML = `
+    <div class="quiz-question" onclick="toggleQuiz(this)">
+      <div class="quiz-num">${i + 1}</div>
+      <div class="quiz-q-text">${item.q}</div>
+      <div class="quiz-reveal-btn">Révéler</div>
+    </div>
+    <div class="quiz-answer">
+      <div class="quiz-answer-inner">
+        <p>${item.a}</p>
+        <div class="quiz-buttons">
+          <button class="quiz-btn correct-btn" onclick="event.stopPropagation(); markQuiz(this, true)">✓ Je savais</button>
+          <button class="quiz-btn wrong-btn" onclick="event.stopPropagation(); markQuiz(this, false)">✗ À revoir</button>
+        </div>
+      </div>
+    </div>`;
+  quizGrid.appendChild(card);
+});
+
+function toggleQuiz(el) { el.closest('.quiz-card').classList.toggle('open'); }
+function markQuiz(btn, correct) {
+  const card = btn.closest('.quiz-card');
+  if (card.classList.contains('correct') || card.classList.contains('wrong')) return;
+  card.classList.add(correct ? 'correct' : 'wrong');
+  card.classList.remove('open');
+  if (correct) score++;
+  document.getElementById('scoreDisplay').textContent = score;
+}
+
+function toggleSection(btn) { btn.closest('.section-card').classList.toggle('open'); }
+
+// SCROLL OBSERVER
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.section-card').forEach(card => observer.observe(card));
+
+// PROGRESS BAR
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('navProgress').style.width = (scrollTop / docHeight) * 100 + '%';
+  const sections = ['part1','part2','part3','part4','part5','quiz'];
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 200) current = id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// SEARCH
+const searchIndex = [];
+document.querySelectorAll('.section-card').forEach(card => {
+  const title = card.querySelector('h3')?.textContent || '';
+  const content = card.querySelector('.section-content')?.textContent || '';
+  searchIndex.push({ title, content, section: card.dataset.section, element: card });
+});
+
+function toggleSearch() {
+  const overlay = document.getElementById('searchOverlay');
+  overlay.classList.toggle('active');
+  if (overlay.classList.contains('active')) document.getElementById('searchInput').focus();
+}
+
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); toggleSearch(); }
+  if (e.key === 'Escape') document.getElementById('searchOverlay').classList.remove('active');
+});
+
+document.getElementById('searchOverlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('searchOverlay')) toggleSearch();
+});
+
+function performSearch(query) {
+  const results = document.getElementById('searchResults');
+  if (!query.trim()) { results.innerHTML = '<div class="search-hint">Tapez pour rechercher dans tout le cours</div>'; return; }
+  const q = query.toLowerCase();
+  const matches = searchIndex.filter(item => item.title.toLowerCase().includes(q) || item.content.toLowerCase().includes(q));
+  if (!matches.length) { results.innerHTML = '<div class="search-hint">Aucun résultat trouvé</div>'; return; }
+  results.innerHTML = matches.map(m => {
+    const idx = m.content.toLowerCase().indexOf(q);
+    let context = '';
+    if (idx >= 0) {
+      const start = Math.max(0, idx - 40);
+      const end = Math.min(m.content.length, idx + q.length + 60);
+      context = (start > 0 ? '…' : '') + m.content.substring(start, idx) + '<mark>' + m.content.substring(idx, idx + q.length) + '</mark>' + m.content.substring(idx + q.length, end) + (end < m.content.length ? '…' : '');
+    }
+    return `<div class="search-result-item" onclick="jumpToSection('${m.section}')"><div class="sr-title">${m.title}</div>${context ? `<div class="sr-context">${context}</div>` : ''}</div>`;
+  }).join('');
+}
+
+function jumpToSection(section) {
+  const card = document.querySelector(`[data-section="${section}"]`);
+  if (card) { card.classList.add('open', 'visible'); card.scrollIntoView({ behavior: 'smooth', block: 'start' }); toggleSearch(); }
+}
+</script>
+</body>
+</html>
