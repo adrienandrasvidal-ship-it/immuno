@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hernies Pariétales — Cours Complet L3</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0e1a;--bg2:#111827;--card:#1a2235;--card-h:#1f2a40;--red:#e63946;--blue:#457b9d;--blue-l:#a8dadc;--gold:#e9c46a;--green:#2a9d8f;--orange:#f4a261;--purple:#7c3aed;--txt:#f1faee;--txt2:#a8b2c1;--muted:#6b7280;--border:rgba(255,255,255,0.06);--r:16px;--rs:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;font-size:17px;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,14,26,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:800;font-size:1.2rem;color:var(--red)}
+.nav-logo span{color:var(--muted);font-weight:400;font-size:.8rem;margin-left:8px}
+.nav-links{display:flex;gap:.25rem;list-style:none;overflow-x:auto;max-width:72%}
+.nav-links a{color:var(--txt2);text-decoration:none;font-size:.75rem;font-weight:500;padding:6px 10px;border-radius:6px;transition:all .2s;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}
+.nav-links a:hover{color:var(--txt);background:rgba(230,57,70,.12)}
+.progress-bar{position:fixed;top:64px;left:0;height:3px;background:linear-gradient(90deg,var(--red),var(--orange));z-index:1001;transition:width .1s}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:6rem 2rem 4rem}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 80%,rgba(230,57,70,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 80% 20%,rgba(69,123,157,.1) 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{text-align:center;max-width:900px;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.25);padding:8px 20px;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:2px;margin-bottom:2rem;animation:fadeInDown .8s ease}
+.hero-badge::before{content:'';width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:900;line-height:1.05;margin-bottom:1.5rem;animation:fadeInUp 1s ease .2s both}
+.hero h1 .hl{background:linear-gradient(135deg,var(--red),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.15rem;color:var(--txt2);max-width:600px;margin:0 auto 2.5rem;animation:fadeInUp 1s ease .4s both}
+.hero-meta{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;animation:fadeInUp 1s ease .6s both}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:3rem;position:relative}
+.section-number{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(230,57,70,.08);position:absolute;top:-2rem;left:-1rem;line-height:1;pointer-events:none}
+.section-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--red);margin-bottom:.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.15}
+.section-divider{width:60px;height:3px;background:linear-gradient(90deg,var(--red),transparent);margin-top:1rem;border-radius:2px}
+
+.content-text{font-size:1.05rem;color:var(--txt2);line-height:1.85;max-width:850px}
+.content-text p{margin-bottom:1.2rem}
+.content-text strong{color:var(--txt);font-weight:600}
+
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;margin:1.5rem 0;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:2px}
+.info-card.red::before{background:var(--red)}.info-card.blue::before{background:var(--blue)}.info-card.green::before{background:var(--green)}.info-card.gold::before{background:var(--gold)}.info-card.orange::before{background:var(--orange)}.info-card.purple::before{background:var(--purple)}
+.info-card h4{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:10px}
+.info-card p,.info-card li{color:var(--txt2);font-size:.95rem;line-height:1.7}
+.info-card ul{list-style:none;padding-left:0}
+.info-card ul li{padding:4px 0 4px 20px;position:relative}
+.info-card ul li::before{content:'→';position:absolute;left:0;color:var(--red);font-weight:700}
+
+.key-point{background:linear-gradient(135deg,rgba(230,57,70,.08),rgba(230,57,70,.02));border:1px solid rgba(230,57,70,.2);border-radius:var(--r);padding:1.5rem 2rem;margin:1.5rem 0;display:flex;gap:1rem;align-items:flex-start}
+.key-point-icon{font-size:1.5rem;line-height:1;flex-shrink:0}
+.key-point p{font-weight:500;color:var(--txt);font-size:.95rem}
+
+.alert{padding:1.2rem 1.5rem;border-radius:var(--rs);margin:1.5rem 0;display:flex;gap:12px;align-items:flex-start}
+.alert.warning{background:rgba(233,196,106,.08);border:1px solid rgba(233,196,106,.25)}
+.alert.danger{background:rgba(230,57,70,.08);border:1px solid rgba(230,57,70,.25)}
+.alert.info{background:rgba(69,123,157,.08);border:1px solid rgba(69,123,157,.25)}
+.alert-icon{font-size:1.3rem;flex-shrink:0}
+.alert p{font-size:.92rem;color:var(--txt2)}
+.alert strong{color:var(--txt)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2rem 0}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2rem 0}
+@media(max-width:900px){.two-col,.three-col{grid-template-columns:1fr}.nav-links{display:none}.stat-grid{grid-template-columns:repeat(2,1fr)}}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;margin:2rem 0}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;text-align:center;transition:all .3s}
+.stat-card:hover{border-color:rgba(230,57,70,.3);transform:translateY(-3px)}
+.stat-value{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--red),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.stat-label{font-size:.78rem;color:var(--muted);margin-top:.5rem;text-transform:uppercase;letter-spacing:1px}
+
+.comparison-table{width:100%;border-collapse:separate;border-spacing:0;margin:2rem 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.comparison-table th{background:rgba(230,57,70,.1);padding:14px 16px;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:1px;text-align:left;color:var(--red);border-bottom:1px solid var(--border)}
+.comparison-table td{padding:12px 16px;font-size:.9rem;color:var(--txt2);border-bottom:1px solid var(--border);background:var(--card)}
+.comparison-table tr:last-child td{border-bottom:none}
+.comparison-table tr:hover td{background:var(--card-h)}
+
+.flowchart{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin:2rem 0;padding:1rem}
+.flow-step{background:var(--card);border:1px solid var(--border);padding:12px 20px;border-radius:var(--rs);font-size:.9rem;font-weight:600;text-align:center;min-width:120px;transition:all .3s}
+.flow-step:hover{border-color:var(--red);transform:scale(1.05)}
+.flow-arrow{font-size:1.5rem;color:var(--red);padding:0 8px;font-weight:700}
+.flow-step.danger{background:rgba(230,57,70,.15);border-color:rgba(230,57,70,.4);color:var(--red)}
+
+.anatomy-container{position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:2rem;margin:2rem 0;overflow:hidden}
+.anatomy-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;text-align:center}
+.anatomy-svg-wrapper{display:flex;justify-content:center;align-items:center;min-height:300px}
+.anatomy-svg-wrapper svg{max-width:100%;height:auto}
+.anatomy-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem;margin-top:1.5rem}
+.legend-item{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--txt2);padding:8px 12px;background:rgba(255,255,255,.02);border-radius:8px;border:1px solid var(--border);transition:all .2s}
+.legend-item:hover{border-color:rgba(230,57,70,.3);background:rgba(230,57,70,.05)}
+.legend-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+.toc-section{padding:4rem 2rem;max-width:1200px;margin:0 auto}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.toc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;text-decoration:none;color:var(--txt);transition:all .3s;cursor:pointer}
+.toc-card:hover{background:var(--card-h);border-color:rgba(230,57,70,.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.toc-num{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:var(--red);opacity:.7;line-height:1;min-width:40px}
+.toc-card h3{font-size:1rem;font-weight:600;margin-bottom:4px}
+.toc-card p{font-size:.8rem;color:var(--muted);line-height:1.4}
+
+.dx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem;margin:2rem 0}
+.dx-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;transition:all .3s}
+.dx-card:hover{border-color:rgba(230,57,70,.3);transform:translateY(-2px)}
+.dx-card h5{font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.dx-card p,.dx-card li{color:var(--txt2);font-size:.88rem;line-height:1.6}
+.dx-card ul{list-style:none;padding:0}
+.dx-card ul li{padding:3px 0 3px 16px;position:relative}
+.dx-card ul li::before{content:'•';position:absolute;left:0;color:var(--red)}
+
+.surg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin:2rem 0}
+.surg-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s}
+.surg-card:hover{border-color:rgba(230,57,70,.3);transform:translateY(-3px);box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.surg-card-header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.surg-card-header h4{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700}
+.surg-card-body{padding:1.5rem}
+.surg-card-body .pros,.surg-card-body .cons{margin-bottom:1rem}
+.label-pros{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin-bottom:.3rem}
+.label-cons{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:.3rem}
+.surg-card-body li{color:var(--txt2);font-size:.88rem;padding:3px 0 3px 16px;position:relative;list-style:none}
+.surg-card-body .pros li::before{content:'+';position:absolute;left:0;color:var(--green);font-weight:700}
+.surg-card-body .cons li::before{content:'−';position:absolute;left:0;color:var(--red);font-weight:700}
+
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.tag.red{background:rgba(230,57,70,.15);color:var(--red)}.tag.blue{background:rgba(69,123,157,.15);color:var(--blue-l)}.tag.green{background:rgba(42,157,143,.15);color:var(--green)}.tag.gold{background:rgba(233,196,106,.15);color:var(--gold)}
+
+.mnemonic{font-family:'JetBrains Mono',monospace;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);padding:1.5rem 2rem;border-radius:var(--rs);margin:1.5rem 0}
+.mnemonic-title{font-family:'Source Sans 3',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin-bottom:.75rem}
+.mnemonic p{font-size:.9rem;line-height:2;color:var(--txt2)}
+.mnemonic .hl{color:var(--purple);font-weight:700}
+
+.clinical-case{background:linear-gradient(135deg,rgba(69,123,157,.08),rgba(69,123,157,.02));border:1px solid rgba(69,123,157,.25);border-radius:var(--r);padding:2rem;margin:2rem 0}
+.clinical-case-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap}
+.clinical-case-header h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--blue-l)}
+.badge{background:rgba(69,123,157,.2);color:var(--blue-l);padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:3rem auto;max-width:1200px}
+
+footer{text-align:center;padding:4rem 2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+.footer-logo{font-family:'Playfair Display',serif;font-weight:800;font-size:1.1rem;color:var(--red);margin-bottom:.5rem}
+
+.back-to-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;background:var(--red);border:none;border-radius:50%;color:white;font-size:1.2rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:100;transition:all .3s;box-shadow:0 4px 20px rgba(230,57,70,.4)}
+.back-to-top:hover{transform:translateY(-3px)}
+.back-to-top.visible{display:flex}
+
+@media(max-width:768px){.flowchart{flex-direction:column}.flow-arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<nav id="navbar"><div class="nav-inner">
+<div class="nav-logo">Hernies Pariétales <span>L3 Médecine</span></div>
+<ul class="nav-links">
+<li><a href="#intro">Cas Clinique</a></li>
+<li><a href="#anatomie">Anatomie</a></li>
+<li><a href="#pathogenie">Pathogénie</a></li>
+<li><a href="#clinique">Clinique</a></li>
+<li><a href="#types">Types</a></li>
+<li><a href="#diff">Diff. Dx</a></li>
+<li><a href="#complications">Complications</a></li>
+<li><a href="#traitement">Traitement</a></li>
+<li><a href="#autres">Autres</a></li>
+<li><a href="#resume">Résumé</a></li>
+</ul>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+<div class="hero-bg"></div><div class="hero-grid"></div>
+<div class="hero-content">
+<div class="hero-badge">Chirurgie Digestive — L3</div>
+<h1>Hernies<br><span class="hl">Pariétales</span></h1>
+<p class="hero-sub">Cours complet — Anatomie, physiopathologie, diagnostic clinique, complications et prise en charge chirurgicale des hernies de la paroi abdominale.</p>
+<div class="hero-meta">
+<div class="hero-meta-item">👨‍⚕️ Pr M. Ouaïssi / Dr L. Courtot</div>
+<div class="hero-meta-item">🏥 CHU Trousseau — Tours</div>
+<div class="hero-meta-item">📖 Chirurgie Digestive & Colorectale</div>
+</div>
+</div>
+</header>
+
+<!-- TOC -->
+<div class="toc-section reveal">
+<div class="section-header"><div class="section-label">Sommaire</div><h2 class="section-title">Plan du cours</h2><div class="section-divider"></div></div>
+<div class="toc-grid">
+<a class="toc-card" href="#intro"><div class="toc-num">01</div><div><h3>Cas clinique introductif</h3><p>Homme de 54 ans, déménageur</p></div></a>
+<a class="toc-card" href="#anatomie"><div class="toc-num">02</div><div><h3>Rappels anatomiques</h3><p>Région inguinale, orifices, fascia</p></div></a>
+<a class="toc-card" href="#pathogenie"><div class="toc-num">03</div><div><h3>Pathogénie</h3><p>Facteurs anatomiques, dynamiques, métaboliques</p></div></a>
+<a class="toc-card" href="#clinique"><div class="toc-num">04</div><div><h3>Examen clinique</h3><p>Hernie non compliquée, modalités d'examen</p></div></a>
+<a class="toc-card" href="#types"><div class="toc-num">05</div><div><h3>Classification</h3><p>Directe, indirecte, évolution topographique</p></div></a>
+<a class="toc-card" href="#diff"><div class="toc-num">06</div><div><h3>Diagnostic différentiel</h3><p>Crurale, kyste du cordon, hydrocèle…</p></div></a>
+<a class="toc-card" href="#complications"><div class="toc-num">07</div><div><h3>Complications</h3><p>Étranglement herniaire, urgence</p></div></a>
+<a class="toc-card" href="#traitement"><div class="toc-num">08</div><div><h3>Traitement chirurgical</h3><p>Raphies, prothèses, cœlioscopie</p></div></a>
+<a class="toc-card" href="#autres"><div class="toc-num">09</div><div><h3>Autres hernies</h3><p>Ombilicale, éventration, hiatale</p></div></a>
+</div>
+</div>
+<div class="sep"></div>
+
+<!-- SECTION 1: CAS CLINIQUE -->
+<section id="intro">
+<div class="section-header reveal"><div class="section-number">01</div><div class="section-label">Cas clinique</div><h2 class="section-title">Cas clinique introductif</h2><div class="section-divider"></div></div>
+<div class="clinical-case reveal">
+<div class="clinical-case-header"><h4>🩺 Homme, 54 ans — Déménageur</h4><span class="badge">Dossier transversal</span></div>
+<p>Un homme de <strong>54 ans, déménageur</strong>, consulte pour une <strong>gêne de l'aine droite</strong> associée à une tuméfaction intermittente de la région inguinale apparue progressivement depuis plusieurs mois. La tuméfaction est devenue symptomatique avec des <strong>douleurs à type de brûlure irradiant vers le scrotum droit</strong>, complétées par une gêne douloureuse à type de <strong>pesanteur</strong>.</p><br>
+<p><strong>Antécédents :</strong> Dilatation des bronches (drainage de posture quotidien), constipation intermittente, diabète non insulino-requérant, HTA. Il y a 2 mois : épisode de vomissements avec acutisation des douleurs inguinales (résolutif spontanément).</p><br>
+<p><strong>Traitement :</strong> Normacol®, Lansoyl® (laxatifs), Glucophage® (antidiabétique), Hytacand® (antihypertenseur).</p><br>
+<p><strong>Examen :</strong> Taille 162 cm, poids 108 kg → <strong>IMC > 40 (obésité morbide)</strong>. Tuméfaction de l'aine droite et de la partie haute du scrotum → suspicion de hernie inguinale.</p>
+</div>
+<div class="key-point reveal"><div class="key-point-icon">💡</div><div><p>Ce cas clinique sert de fil conducteur pour aborder toute la pathologie herniaire inguinale : examen clinique, facteurs favorisants, classification anatomique, complications et traitement.</p></div></div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 2: ANATOMIE -->
+<section id="anatomie">
+<div class="section-header reveal"><div class="section-number">02</div><div class="section-label">Anatomie</div><h2 class="section-title">Rappels anatomiques — Région inguinale</h2><div class="section-divider"></div></div>
+<div class="content-text reveal">
+<p>La paroi abdominale antéro-inférieure présente une <strong>zone de faiblesse naturelle</strong> : le canal inguinal. La compréhension de cette anatomie est fondamentale pour le diagnostic et le traitement des hernies.</p>
+</div>
+
+<!-- SVG ANATOMIE -->
+<div class="anatomy-container reveal">
+<div class="anatomy-title">Schéma anatomique — Région inguinale (vue antérieure)</div>
+<div class="anatomy-svg-wrapper">
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="800" height="480" fill="#141c2e" rx="8"/>
+<!-- Muscle transverse -->
+<path d="M80 60 Q200 40 350 80 Q420 100 450 140 L450 200 Q420 170 350 150 Q200 120 80 140 Z" fill="#b03a3a" opacity="0.5" stroke="#e63946" stroke-width="1.5"/>
+<text x="150" y="100" fill="#f1faee" font-weight="600" font-size="12" font-family="Source Sans 3,sans-serif">Muscle transverse</text>
+<!-- Oblique interne -->
+<path d="M70 130 Q200 110 360 150 Q440 175 470 220 L470 280 Q440 250 360 230 Q200 195 70 210 Z" fill="#a04030" opacity="0.45" stroke="#e07050" stroke-width="1"/>
+<text x="130" y="180" fill="#f4a261" font-weight="600" font-size="12" font-family="Source Sans 3,sans-serif">M. oblique interne</text>
+<!-- Fascia transversalis -->
+<rect x="380" y="120" width="150" height="160" rx="8" fill="#f39c12" opacity="0.15" stroke="#f39c12" stroke-width="2" stroke-dasharray="6,4"/>
+<text x="395" y="148" fill="#f39c12" font-weight="700" font-size="12" font-family="Source Sans 3,sans-serif">FASCIA TRANSVERSALIS</text>
+<text x="405" y="165" fill="#f39c12" font-size="10" font-family="Source Sans 3,sans-serif">(zone de faiblesse)</text>
+<!-- Grand droit -->
+<path d="M540 40 L620 40 L620 350 L540 350 Z" fill="#c0392b" opacity="0.35" stroke="#e63946" stroke-width="1.5"/>
+<text x="548" y="200" fill="#f1faee" font-weight="600" font-size="11" font-family="Source Sans 3,sans-serif">Grand droit</text>
+<!-- Vx épigastriques -->
+<line x1="530" y1="100" x2="530" y2="320" stroke="#3498db" stroke-width="3" opacity="0.8"/>
+<line x1="525" y1="100" x2="525" y2="320" stroke="#e74c3c" stroke-width="2" opacity="0.6"/>
+<text x="545" y="108" fill="#a8dadc" font-weight="600" font-size="11" font-family="Source Sans 3,sans-serif">Vx épigastriques inf.</text>
+<!-- Orifice inguinal profond -->
+<ellipse cx="330" cy="210" rx="35" ry="25" fill="none" stroke="#e63946" stroke-width="2.5" stroke-dasharray="5,3"/>
+<circle cx="330" cy="210" r="5" fill="#e63946" opacity="0.6"/>
+<line x1="295" y1="195" x2="180" y2="135" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="95" y="130" fill="#e63946" font-weight="700" font-size="12" font-family="Source Sans 3,sans-serif">Orifice inguinal profond</text>
+<!-- Cordon spermatique -->
+<path d="M330 235 Q340 280 350 330 Q355 370 360 430" stroke="#2ecc71" stroke-width="4" fill="none" opacity="0.7"/>
+<text x="370" y="365" fill="#2ecc71" font-weight="600" font-size="12" font-family="Source Sans 3,sans-serif">Cordon spermatique</text>
+<!-- Arcade crurale -->
+<path d="M120 340 Q300 380 530 330" stroke="#e9c46a" stroke-width="3.5" fill="none"/>
+<text x="240" y="410" fill="#e9c46a" font-weight="700" font-size="14" font-family="Source Sans 3,sans-serif">ARCADE CRURALE (Lig. de Poupart)</text>
+<!-- Ligne de Malgaigne -->
+<line x1="100" y1="355" x2="560" y2="335" stroke="#f1faee" stroke-width="1" stroke-dasharray="8,4" opacity="0.3"/>
+<text x="570" y="342" fill="#f1faee" font-size="10" opacity="0.4" font-family="Source Sans 3,sans-serif">Ligne de Malgaigne</text>
+<!-- Orifice inguinal superficiel -->
+<ellipse cx="460" cy="300" rx="25" ry="18" fill="none" stroke="#a8dadc" stroke-width="2"/>
+<line x1="485" y1="300" x2="600" y2="280" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="605" y="278" fill="#a8dadc" font-weight="600" font-size="11" font-family="Source Sans 3,sans-serif">Orifice inguinal superficiel</text>
+<!-- Ligament Cooper -->
+<path d="M350 440 Q420 432 490 425" stroke="#9b59b6" stroke-width="2" fill="none"/>
+<text x="350" y="460" fill="#9b59b6" font-weight="500" font-size="10" font-family="Source Sans 3,sans-serif">Ligament pectiné (Cooper)</text>
+<!-- Flèches hernie indirecte / directe -->
+<text x="200" y="260" fill="#e63946" font-weight="700" font-size="13" font-family="Source Sans 3,sans-serif">H. INDIRECTE ↗</text>
+<text x="200" y="278" fill="#e63946" font-size="10" font-family="Source Sans 3,sans-serif">(en dehors des vx épig.)</text>
+<text x="550" y="230" fill="#a8dadc" font-weight="700" font-size="13" font-family="Source Sans 3,sans-serif">← H. DIRECTE</text>
+<text x="555" y="248" fill="#a8dadc" font-size="10" font-family="Source Sans 3,sans-serif">(en dedans des vx épig.)</text>
+</svg>
+</div>
+<div class="anatomy-legend">
+<div class="legend-item"><div class="legend-dot" style="background:#b03a3a"></div>Muscle transverse</div>
+<div class="legend-item"><div class="legend-dot" style="background:#a04030"></div>Muscle oblique interne</div>
+<div class="legend-item"><div class="legend-dot" style="background:#c0392b"></div>Muscle grand droit</div>
+<div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div>Fascia transversalis</div>
+<div class="legend-item"><div class="legend-dot" style="background:#3498db"></div>Vx épigastriques inférieurs</div>
+<div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>Cordon spermatique</div>
+<div class="legend-item"><div class="legend-dot" style="background:#e9c46a"></div>Arcade crurale (lig. inguinal)</div>
+<div class="legend-item"><div class="legend-dot" style="background:#e63946"></div>Orifice inguinal profond</div>
+<div class="legend-item"><div class="legend-dot" style="background:#a8dadc"></div>Orifice inguinal superficiel</div>
+<div class="legend-item"><div class="legend-dot" style="background:#9b59b6"></div>Ligament pectiné (Cooper)</div>
+</div>
+</div>
+
+<div class="info-card blue reveal">
+<h4>🔬 Structures clés de la région inguinale</h4>
+<ul>
+<li><strong>Muscle transverse</strong> — arche musculaire supérieure du canal inguinal</li>
+<li><strong>Orifice inguinal profond</strong> — entrée postérieure du canal, latéral aux vx épigastriques</li>
+<li><strong>Cordon spermatique</strong> — canal déférent, artère testiculaire, plexus pampiniforme</li>
+<li><strong>Arcade crurale</strong> (lig. inguinal de Poupart) — de l'EIAS au tubercule pubien</li>
+<li><strong>Vaisseaux épigastriques inférieurs</strong> — repère fondamental séparant hernie directe/indirecte</li>
+<li><strong>Fascia transversalis</strong> — zone de faiblesse pariétale majeure, siège des hernies directes</li>
+<li><strong>Ligament pectiné (Cooper)</strong> — point d'ancrage chirurgical sur la branche supérieure du pubis</li>
+<li><strong>Faux inguinale (tendon conjoint)</strong> — insertion conjointe oblique interne + transverse</li>
+<li><strong>Ligament lacunaire (Gimbernat)</strong> — expansion médiale du lig. inguinal</li>
+</ul>
+</div>
+
+<div class="key-point reveal"><div class="key-point-icon">⚡</div><div><p><strong>Repère essentiel :</strong> Les vaisseaux épigastriques inférieurs constituent LE repère pour distinguer hernie indirecte (en <em>dehors</em>) de hernie directe (en <em>dedans</em>). Ce repère n'est visible qu'en peropératoire ou en imagerie.</p></div></div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 3: PATHOGENIE -->
+<section id="pathogenie">
+<div class="section-header reveal"><div class="section-number">03</div><div class="section-label">Physiopathologie</div><h2 class="section-title">Pathogénie des hernies inguinales</h2><div class="section-divider"></div></div>
+<div class="content-text reveal"><p>La survenue d'une hernie inguinale résulte de l'interaction entre des <strong>facteurs anatomiques prédisposants</strong>, des <strong>facteurs dynamiques</strong> augmentant la pression intra-abdominale et des <strong>facteurs métaboliques</strong> altérant la qualité des tissus.</p></div>
+
+<div class="three-col reveal">
+<div class="info-card red">
+<h4>🦴 Facteurs anatomiques</h4>
+<ul>
+<li><strong>Variations anatomiques individuelles</strong> de la zone faible inguinale</li>
+<li>Surface augmentée si insertion éloignée de l'arche de l'oblique interne/transverse</li>
+<li><strong>Âge</strong> : altération progressive des tissus</li>
+<li>CPV persistant ≠ hernie (20% des adultes à l'autopsie)</li>
+</ul>
+</div>
+<div class="info-card orange">
+<h4>⬆️ Facteurs dynamiques</h4>
+<p style="margin-bottom:8px"><strong>= ↑ Pression abdominale</strong></p>
+<ul>
+<li><strong>Digestif :</strong> constipation chronique</li>
+<li><strong>Pneumo :</strong> BPCO, emphysème, asthme, toux chronique</li>
+<li><strong>Urologique :</strong> dysurie prostatique</li>
+<li><strong>Divers :</strong> efforts physiques lourds, ascite, grossesse, obésité</li>
+</ul>
+</div>
+<div class="info-card purple">
+<h4>🧬 Facteurs métaboliques</h4>
+<ul>
+<li><strong>Dénutrition</strong> — altération du tissu conjonctif</li>
+<li><strong>Maladies du collagène</strong> — fragilité tissulaire (Ehlers-Danlos, Marfan…)</li>
+</ul>
+</div>
+</div>
+
+<div class="alert warning reveal"><div class="alert-icon">⚠️</div><div><p><strong>Cas clinique :</strong> Chez notre patient → métier de <strong>déménageur</strong>, <strong>dilatation des bronches</strong> (toux), <strong>obésité morbide</strong> (IMC > 40), <strong>constipation chronique</strong>.</p></div></div>
+
+<div class="stat-grid reveal">
+<div class="stat-card"><div class="stat-value">36‰</div><div class="stat-label">Incidence ♂</div></div>
+<div class="stat-card"><div class="stat-value">60%</div><div class="stat-label">Homme actif</div></div>
+<div class="stat-card"><div class="stat-value">100k</div><div class="stat-label">Opérations/an France</div></div>
+<div class="stat-card"><div class="stat-value">50-69</div><div class="stat-label">Âge moyen (ans)</div></div>
+<div class="stat-card"><div class="stat-value">5-10%</div><div class="stat-label">Taux de récidive</div></div>
+<div class="stat-card"><div class="stat-value">90%</div><div class="stat-label">Douleur à 10 ans</div></div>
+</div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 4: CLINIQUE -->
+<section id="clinique">
+<div class="section-header reveal"><div class="section-number">04</div><div class="section-label">Sémiologie</div><h2 class="section-title">Examen clinique</h2><div class="section-divider"></div></div>
+<div class="content-text reveal"><p>Le diagnostic est <strong>exclusivement clinique</strong>. Aucun examen complémentaire d'imagerie n'est nécessaire en routine. <strong>Pas d'indication d'échographie diagnostique</strong> (mais découverte possible fortuitement sur TDM).</p></div>
+
+<div class="info-card red reveal">
+<h4>🔍 Modalités de l'examen</h4>
+<ul>
+<li><strong>Debout</strong> → effort de toux (met en évidence l'impulsivité et l'expansibilité)</li>
+<li><strong>Couché</strong> → évalue la réductibilité</li>
+</ul>
+</div>
+
+<div class="key-point reveal"><div class="key-point-icon">📌</div><div><p><strong>Repère fondamental :</strong> Le collet de la hernie inguinale siège <strong>au-dessus de la ligne de Malgaigne</strong> (EIAS → tubercule pubien = projection cutanée de l'arcade crurale). Hernie crurale = collet <strong>sous</strong> la ligne de Malgaigne.</p></div></div>
+
+<div class="info-card green reveal">
+<h4>✅ 5 caractères d'une hernie NON compliquée</h4>
+<ul>
+<li><strong>Réductibilité</strong> — contenu réintégrable par pression manuelle</li>
+<li><strong>Indolence</strong> — non douloureuse (ou gêne/pesanteur modérée)</li>
+<li><strong>Impulsivité à la toux</strong> — augmente de volume lors de l'effort de toux</li>
+<li><strong>Expansibilité</strong> — augmentation de volume à l'effort</li>
+<li><strong>Reproductibilité à l'effort</strong> — réapparaît systématiquement</li>
+</ul>
+</div>
+
+<div class="mnemonic reveal">
+<div class="mnemonic-title">🧠 Moyen mnémotechnique — Hernie non compliquée</div>
+<p><span class="hl">R</span>éductible — <span class="hl">I</span>ndolore — <span class="hl">I</span>mpulsive — <span class="hl">E</span>xpansible — <span class="hl">R</span>eproductible → <strong class="hl">R.I.I.E.R.</strong></p>
+</div>
+
+<div class="info-card blue reveal">
+<h4>🏥 Circonstances de découverte</h4>
+<ul>
+<li><strong>Fortuite</strong> — examen systématique</li>
+<li><strong>Gêne, tuméfaction</strong> — motif le plus fréquent</li>
+<li><strong>Complications</strong> — étranglement herniaire révélateur</li>
+</ul>
+</div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 5: TYPES -->
+<section id="types">
+<div class="section-header reveal"><div class="section-number">05</div><div class="section-label">Classification</div><h2 class="section-title">Types anatomiques & évolution topographique</h2><div class="section-divider"></div></div>
+
+<div class="two-col reveal">
+<div class="info-card red">
+<h4>↗️ Hernie INDIRECTE (oblique externe)</h4>
+<ul>
+<li>Traverse l'orifice inguinal profond</li>
+<li>Passe <strong>en dehors des vx épigastriques</strong></li>
+<li>Suit le trajet du canal inguinal</li>
+<li>Peut descendre dans le scrotum (inguino-scrotale)</li>
+<li>Plus fréquente chez le sujet jeune</li>
+<li>Liée souvent à la persistance du CPV</li>
+</ul>
+</div>
+<div class="info-card blue">
+<h4>➡️ Hernie DIRECTE</h4>
+<ul>
+<li>Fait saillie à travers le <strong>fascia transversalis</strong></li>
+<li>Passe <strong>en dedans des vx épigastriques</strong></li>
+<li>Tuméfaction inguino-pubienne</li>
+<li>Ne descend habituellement pas dans le scrotum</li>
+<li>Plus fréquente chez le sujet âgé</li>
+<li>Liée à la faiblesse de la paroi postérieure</li>
+</ul>
+</div>
+</div>
+
+<!-- SVG EVOLUTION TOPOGRAPHIQUE -->
+<div class="anatomy-container reveal">
+<div class="anatomy-title">Évolution topographique de la hernie inguinale</div>
+<div class="anatomy-svg-wrapper">
+<svg viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="800" height="250" fill="#141c2e" rx="8"/>
+<!-- 5 stades -->
+<g>
+<rect x="15" y="15" width="135" height="220" rx="10" fill="rgba(230,57,70,0.06)" stroke="rgba(230,57,70,0.2)" stroke-width="1"/>
+<text x="82" y="42" text-anchor="middle" fill="#e63946" font-weight="700" font-size="10" font-family="Source Sans 3">STADE 1</text>
+<text x="82" y="60" text-anchor="middle" fill="#f1faee" font-weight="700" font-size="13" font-family="Playfair Display,serif">Pointe</text>
+<text x="82" y="76" text-anchor="middle" fill="#f1faee" font-size="10">de hernie</text>
+<ellipse cx="82" cy="130" rx="15" ry="12" fill="rgba(230,57,70,0.3)" stroke="#e63946" stroke-width="1.5"/>
+<line x1="50" y1="170" x2="115" y2="170" stroke="#e9c46a" stroke-width="2"/>
+<text x="82" y="200" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">Engagée dans</text>
+<text x="82" y="212" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">l'orifice profond</text>
+</g>
+<text x="158" y="130" fill="var(--red)" font-size="18" font-weight="700">→</text>
+<g>
+<rect x="170" y="15" width="135" height="220" rx="10" fill="rgba(244,162,97,0.06)" stroke="rgba(244,162,97,0.2)" stroke-width="1"/>
+<text x="237" y="42" text-anchor="middle" fill="#f4a261" font-weight="700" font-size="10" font-family="Source Sans 3">STADE 2</text>
+<text x="237" y="60" text-anchor="middle" fill="#f1faee" font-weight="700" font-size="13" font-family="Playfair Display,serif">Interstitielle</text>
+<ellipse cx="237" cy="130" rx="25" ry="18" fill="rgba(244,162,97,0.3)" stroke="#f4a261" stroke-width="1.5"/>
+<line x1="205" y1="170" x2="270" y2="170" stroke="#e9c46a" stroke-width="2"/>
+<text x="237" y="200" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">Dans le canal</text>
+<text x="237" y="212" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">inguinal</text>
+</g>
+<text x="313" y="130" fill="#f4a261" font-size="18" font-weight="700">→</text>
+<g>
+<rect x="325" y="15" width="135" height="220" rx="10" fill="rgba(69,123,157,0.06)" stroke="rgba(69,123,157,0.2)" stroke-width="1"/>
+<text x="392" y="42" text-anchor="middle" fill="#a8dadc" font-weight="700" font-size="10" font-family="Source Sans 3">STADE 3</text>
+<text x="392" y="60" text-anchor="middle" fill="#f1faee" font-weight="700" font-size="12" font-family="Playfair Display,serif">Inguino-pubienne</text>
+<ellipse cx="392" cy="135" rx="35" ry="25" fill="rgba(69,123,157,0.3)" stroke="#457b9d" stroke-width="1.5"/>
+<line x1="360" y1="170" x2="425" y2="170" stroke="#e9c46a" stroke-width="2"/>
+<text x="392" y="200" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">Franchit l'orifice</text>
+<text x="392" y="212" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">superficiel</text>
+</g>
+<text x="468" y="130" fill="#457b9d" font-size="18" font-weight="700">→</text>
+<g>
+<rect x="480" y="15" width="135" height="220" rx="10" fill="rgba(42,157,143,0.06)" stroke="rgba(42,157,143,0.2)" stroke-width="1"/>
+<text x="547" y="42" text-anchor="middle" fill="#2a9d8f" font-weight="700" font-size="10" font-family="Source Sans 3">STADE 4</text>
+<text x="547" y="60" text-anchor="middle" fill="#f1faee" font-weight="700" font-size="13" font-family="Playfair Display,serif">Funiculaire</text>
+<ellipse cx="547" cy="140" rx="30" ry="35" fill="rgba(42,157,143,0.3)" stroke="#2a9d8f" stroke-width="1.5"/>
+<line x1="515" y1="170" x2="580" y2="170" stroke="#e9c46a" stroke-width="2"/>
+<text x="547" y="200" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">Le long du</text>
+<text x="547" y="212" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">cordon</text>
+</g>
+<text x="623" y="130" fill="#2a9d8f" font-size="18" font-weight="700">→</text>
+<g>
+<rect x="635" y="15" width="150" height="220" rx="10" fill="rgba(124,58,237,0.06)" stroke="rgba(124,58,237,0.2)" stroke-width="1"/>
+<text x="710" y="42" text-anchor="middle" fill="#7c3aed" font-weight="700" font-size="10" font-family="Source Sans 3">STADE 5</text>
+<text x="710" y="60" text-anchor="middle" fill="#f1faee" font-weight="700" font-size="12" font-family="Playfair Display,serif">Inguino-scrotale</text>
+<ellipse cx="710" cy="145" rx="35" ry="45" fill="rgba(124,58,237,0.3)" stroke="#7c3aed" stroke-width="1.5"/>
+<line x1="675" y1="170" x2="745" y2="170" stroke="#e9c46a" stroke-width="2"/>
+<text x="710" y="205" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">Atteint le</text>
+<text x="710" y="217" text-anchor="middle" fill-opacity="0.4" font-size="9" fill="#f1faee">scrotum</text>
+</g>
+</svg>
+</div>
+</div>
+
+<div class="info-card gold reveal">
+<h4>🔄 Hernie par glissement — Particularité</h4>
+<p>La hernie par glissement comporte dans le sac herniaire un <strong>accolement péritonéal</strong> (organe partiellement rétropéritonéal = partie de la paroi du sac, ex : cæcum, sigmoïde). Cet accolement rend <strong>difficile la réduction du sac</strong> et expose à un risque de lésion viscérale lors de la chirurgie.</p>
+</div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 6: DIFF DX -->
+<section id="diff">
+<div class="section-header reveal"><div class="section-number">06</div><div class="section-label">Diagnostic</div><h2 class="section-title">Diagnostic différentiel</h2><div class="section-divider"></div></div>
+
+<div class="dx-grid reveal">
+<div class="dx-card"><h5><span style="color:var(--red)">●</span> Hernie crurale</h5><ul><li>Collet <strong>sous la ligne de Malgaigne</strong></li><li>Prédominance féminine</li><li>Risque élevé d'étranglement</li><li>Tuméfaction racine de la cuisse</li></ul></div>
+<div class="dx-card"><h5><span style="color:var(--blue)">●</span> Kyste du cordon</h5><ul><li>Tuméfaction <strong>permanente</strong></li><li>Liquidienne, <strong>transilluminable</strong></li><li>Bien limitée, <strong>irréductible</strong>, mobile</li><li>Laisse libre l'orifice inguinal superficiel</li></ul></div>
+<div class="dx-card"><h5><span style="color:var(--green)">●</span> Hydrocèle</h5><ul><li>Épanchement <strong>péri-testiculaire</strong></li><li><strong>Transilluminable</strong></li><li>Irréductible</li><li>Augmentation progressive de volume</li></ul></div>
+<div class="dx-card"><h5><span style="color:var(--purple)">●</span> Varicocèle</h5><ul><li>Masse <strong>molle</strong>, « sac de vers »</li><li><strong>Non impulsive</strong> à la toux</li><li><strong>Non réductible</strong></li><li>Prédominance gauche</li></ul></div>
+<div class="dx-card"><h5><span style="color:var(--gold)">●</span> Ectopie testiculaire</h5><ul><li>Testicule en position anormale</li><li>Bourse vide homolatérale</li><li>Masse inguinale fixe</li></ul></div>
+<div class="dx-card"><h5><span style="color:var(--orange)">●</span> Autres</h5><ul><li><strong>Lipome</strong> — masse molle, indolore, bien limitée</li><li><strong>Adénopathie</strong> — ferme, non impulsive, possiblement inflammatoire</li></ul></div>
+</div>
+
+<table class="comparison-table reveal">
+<thead><tr><th>Caractéristique</th><th>H. inguinale</th><th>H. crurale</th><th>Kyste du cordon</th><th>Hydrocèle</th></tr></thead>
+<tbody>
+<tr><td><strong>Position / Malgaigne</strong></td><td>Au-dessus ✓</td><td>En dessous ✓</td><td>Variable</td><td>Scrotale</td></tr>
+<tr><td><strong>Réductible</strong></td><td>Oui</td><td>Parfois</td><td>Non</td><td>Non</td></tr>
+<tr><td><strong>Impulsive toux</strong></td><td>Oui</td><td>Parfois</td><td>Non</td><td>Non</td></tr>
+<tr><td><strong>Transilluminable</strong></td><td>Non</td><td>Non</td><td>Oui</td><td>Oui</td></tr>
+<tr><td><strong>Orifice inguinal</strong></td><td>Occupé</td><td>Libre</td><td>Libre</td><td>Libre</td></tr>
+</tbody>
+</table>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 7: COMPLICATIONS -->
+<section id="complications">
+<div class="section-header reveal"><div class="section-number">07</div><div class="section-label">Urgence chirurgicale</div><h2 class="section-title">Complications — Étranglement herniaire</h2><div class="section-divider"></div></div>
+
+<div class="alert danger reveal"><div class="alert-icon">🚨</div><div><p><strong>URGENCE CHIRURGICALE ABSOLUE :</strong> L'étranglement herniaire est la complication majeure. La hernie devient <strong>non réductible, non impulsive</strong> à la toux et <strong>douloureuse</strong> (max. au collet). Engage le pronostic vital.</p></div></div>
+
+<div class="info-card red reveal">
+<h4>⛔ Signes de l'étranglement</h4>
+<ul>
+<li>Hernie <strong>non réductible</strong></li>
+<li>Hernie <strong>non impulsive</strong> à la toux</li>
+<li><strong>Douloureuse</strong>, douleur max. au collet</li>
+<li><strong>Syndrome occlusif</strong> associé (vomissements, arrêt matières/gaz, météorisme)</li>
+</ul>
+</div>
+
+<div class="content-text reveal"><p>Séquence physiopathologique de l'anse étranglée :</p></div>
+<div class="flowchart reveal">
+<div class="flow-step">Congestion veineuse</div><div class="flow-arrow">→</div>
+<div class="flow-step">Ischémie artérielle</div><div class="flow-arrow">→</div>
+<div class="flow-step danger">Gangrène</div><div class="flow-arrow">→</div>
+<div class="flow-step danger">Nécrose</div><div class="flow-arrow">→</div>
+<div class="flow-step danger">Perforation</div>
+</div>
+
+<div class="two-col reveal">
+<div class="stat-card"><div class="stat-value">1-5%</div><div class="stat-label">des interventions = étranglement</div></div>
+<div class="stat-card"><div class="stat-value">8,6%</div><div class="stat-label">risque étranglement à 5 ans</div></div>
+</div>
+
+<div class="info-card blue reveal">
+<h4>🔧 Principes de PEC de l'étranglement</h4>
+<ul>
+<li><strong>Incision inguinale</strong> : exploration, bilan lésionnel</li>
+<li><strong>Section du collet herniaire</strong> : levée de la striction</li>
+<li><strong>Vérification viabilité</strong> de l'anse</li>
+<li><strong>Réintégration</strong> si viable / <strong>Résection</strong> si nécrose</li>
+<li><strong>Réfection pariétale</strong></li>
+<li><strong>Réa associée :</strong> VVP, bilan pré-op, à jeun, SNG, antalgiques</li>
+</ul>
+</div>
+
+<div class="alert warning reveal"><div class="alert-icon">⚠️</div><div><p><strong>Réflexe devant tout syndrome occlusif :</strong> palper systématiquement <strong>tous les orifices herniaires</strong> (inguinaux, cruraux, ombilical). TDM si doute diagnostique.</p></div></div>
+
+<div class="info-card orange reveal">
+<h4>📈 Mortalité de l'étranglement</h4>
+<p>Mortalité opératoire globale : <strong>1/1000 à 1/10 000</strong>. Mais en cas d'étranglement herniaire, la mortalité peut atteindre <strong>jusqu'à 9%</strong>, surtout chez les patients > 75 ans avec comorbidités.</p>
+</div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 8: TRAITEMENT -->
+<section id="traitement">
+<div class="section-header reveal"><div class="section-number">08</div><div class="section-label">Thérapeutique</div><h2 class="section-title">Traitement chirurgical des hernies de l'aine</h2><div class="section-divider"></div></div>
+
+<div class="content-text reveal"><p>Le traitement des hernies inguinales est <strong>exclusivement chirurgical</strong>. Il n'existe aucun traitement médical curatif. La stratégie dépend du caractère compliqué ou non.</p></div>
+
+<div class="two-col reveal">
+<div class="info-card green">
+<h4>📋 Hernie NON compliquée</h4>
+<ul>
+<li>Tt chirurgical de toute hernie <strong>symptomatique</strong></li>
+<li>Traiter les <strong>facteurs favorisants</strong></li>
+<li>Chirurgie <strong>programmée</strong> (Cs anesthésie, bilan pré-op)</li>
+<li>Indication relative si asymptomatique (bénéfices/risques)</li>
+</ul>
+</div>
+<div class="info-card red">
+<h4>🚑 Hernie compliquée (étranglée)</h4>
+<ul>
+<li>Tt chirurgical <strong>EN URGENCE</strong></li>
+<li>VVP, bilan pré-op, à jeun, SNG, antalgiques</li>
+<li>Avis chirurgical + appel anesthésiste</li>
+<li>Nécessaire et prudente si hernie engouée</li>
+</ul>
+</div>
+</div>
+
+<h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin:2.5rem 0 1rem;font-weight:700" class="reveal">Les 3 grandes familles de techniques</h3>
+
+<div class="surg-grid reveal">
+<div class="surg-card">
+<div class="surg-card-header"><h4>Herniorraphies</h4><span class="tag gold">Shouldice / Mac Vay</span></div>
+<div class="surg-card-body">
+<p style="font-size:.88rem;color:var(--txt2);margin-bottom:1rem">Réparation par suture directe des tissus</p>
+<div class="pros"><div class="label-pros">Avantages</div><ul><li>Peu coûteuse</li><li>Sous anesthésie locale / locorégionale</li><li>Pas de matériel étranger</li></ul></div>
+<div class="cons"><div class="label-cons">Inconvénients</div><ul><li>Douloureuse post-op</li><li>Arrêt de travail plusieurs semaines</li><li>Risque de récidive par déchirure tissulaire</li></ul></div>
+</div>
+</div>
+
+<div class="surg-card">
+<div class="surg-card-header"><h4>Prothèse voie ouverte</h4><span class="tag red">Lichtenstein ★</span></div>
+<div class="surg-card-body">
+<p style="font-size:.88rem;color:var(--txt2);margin-bottom:1rem">Pose de plaque prothétique — Technique de référence</p>
+<div class="pros"><div class="label-pros">Avantages</div><ul><li>Obturation sans tension</li><li>Anesthésie locale / locorégionale</li><li>↓ douleur post-op, ↓ déchirure tissulaire</li><li>Ambulatoire, reprise rapide (&lt;10j)</li></ul></div>
+<div class="cons"><div class="label-cons">Inconvénients</div><ul><li>Risque de suppuration (faible)</li><li>Corps étranger</li></ul></div>
+</div>
+</div>
+
+<div class="surg-card">
+<div class="surg-card-header"><h4>Cœlioscopie</h4><span class="tag blue">TAPP / TEP</span></div>
+<div class="surg-card-body">
+<p style="font-size:.88rem;color:var(--txt2);margin-bottom:1rem">Trans-abdomino-prépéritonéale ou totalement extra-péritonéale</p>
+<div class="pros"><div class="label-pros">Avantages</div><ul><li>Peu de douleurs post-op</li><li>Reprise rapide d'activité</li><li>Intérêt pour hernies bilatérales/récidivées</li></ul></div>
+<div class="cons"><div class="label-cons">Inconvénients</div><ul><li>Anesthésie générale obligatoire</li><li>Risque d'accident de trocarts</li><li>TAPP : adhérences viscérales</li><li>Difficultés techniques → séromes, hématomes</li></ul></div>
+</div>
+</div>
+</div>
+
+<div class="alert info reveal"><div class="alert-icon">📖</div><div><p><strong>SFCD :</strong> Données insuffisantes pour recommander la cœlioscopie en 1ère intention (HI unilatérale), sauf centres experts. La <strong>voie inguinale avec prothèse (Lichtenstein)</strong> reste la plus recommandée.</p></div></div>
+
+<h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin:2.5rem 0 1rem;font-weight:700" class="reveal">Complications chirurgicales</h3>
+
+<div class="three-col reveal">
+<div class="info-card orange"><h4>⚡ Per-opératoires</h4><ul><li>Plaies viscérales/vasculaires (0,06-0,1% cœlio)</li><li>Lésions vx du cordon/déférent</li><li>Hémorragies</li></ul></div>
+<div class="info-card red"><h4>📅 Post-opératoires</h4><ul><li>Hématomes, séromes</li><li>Infections post-op (1,6-1,8%)</li></ul></div>
+<div class="info-card purple"><h4>🔁 Chroniques</h4><ul><li>Atrophie testiculaire (0,6-0,8%)</li><li>Douleurs chroniques (22-30% à 1 an)</li><li>Récidives (5-10%)</li></ul></div>
+</div>
+
+<div class="info-card green reveal">
+<h4>📊 Mortalité & résultats</h4>
+<ul>
+<li>Mortalité élective : <strong>0,2 ‰</strong> (&lt;60 ans) — <strong>5 ‰</strong> (>60 ans)</li>
+<li>Mortalité urgence étranglement : jusqu'à <strong>9%</strong></li>
+<li>Taux de récidive : <strong>3-8%</strong> — plus après raphie qu'après plaque</li>
+<li><strong>Impossible de prédire</strong> la complication d'une hernie</li>
+</ul>
+</div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION 9: AUTRES HERNIES -->
+<section id="autres">
+<div class="section-header reveal"><div class="section-number">09</div><div class="section-label">Compléments</div><h2 class="section-title">Autres hernies pariétales & hernies hiatales</h2><div class="section-divider"></div></div>
+
+<div class="info-card blue reveal">
+<h4>⭕ Hernie ombilicale</h4>
+<ul>
+<li><strong>Terrain :</strong> femme, obèse, cirrhotique ascitique, dialyse péritonéale</li>
+<li><strong>Diagnostic :</strong> facile chez le maigre, difficile chez l'obèse</li>
+<li><strong>Complications :</strong> étranglement, souffrance cutanée</li>
+<li><strong>Traitement :</strong> dissection du sac, réintégration, résection si souffrance, raphie ou prothèse</li>
+</ul>
+</div>
+
+<div class="alert danger reveal"><div class="alert-icon">🚩</div><div><p><strong>Cirrhotique :</strong> Hernie ombilicale lors de ponction d'ascite → <strong>pansement compressif</strong> impératif pour prévenir rupture cutanée et éviscération.</p></div></div>
+
+<div class="info-card orange reveal">
+<h4>✂️ Éventration</h4>
+<p>Complication pariétale <strong>ACQUISE</strong> après chirurgie. Issue des viscères recouverts par le péritoine et la peau par un orifice incisionnel.</p>
+<ul>
+<li>Chirurgie programmée ou urgence si étranglement</li>
+<li><strong>Éviscération couverte :</strong> viscères non recouverts par le péritoine, mais recouverts par la peau</li>
+<li><strong>Éviscération non couverte :</strong> viscères extériorisés sans couverture → <strong>urgence chirurgicale absolue</strong></li>
+</ul>
+</div>
+
+<h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin:2.5rem 0 1rem;font-weight:700" class="reveal">Hernies hiatales</h3>
+
+<!-- SVG HH -->
+<div class="anatomy-container reveal">
+<div class="anatomy-title">Hernie hiatale — Glissement vs. Roulement</div>
+<div class="anatomy-svg-wrapper">
+<svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="800" height="320" fill="#141c2e" rx="8"/>
+<!-- GLISSEMENT -->
+<rect x="20" y="10" width="370" height="300" rx="12" fill="rgba(42,157,143,0.05)" stroke="rgba(42,157,143,0.2)" stroke-width="1"/>
+<text x="205" y="40" text-anchor="middle" fill="#2a9d8f" font-family="Playfair Display,serif" font-weight="700" font-size="18">HH par glissement</text>
+<text x="205" y="58" text-anchor="middle" fill="#2a9d8f" font-size="10" font-family="Source Sans 3">(Type I — 85% des cas)</text>
+<!-- Diaphragme -->
+<path d="M70 170 Q205 145 340 170" stroke="#e9c46a" stroke-width="3" fill="none"/>
+<text x="85" y="165" fill="#e9c46a" font-size="10" font-family="Source Sans 3" font-weight="600">Diaphragme</text>
+<!-- Oesophage -->
+<line x1="205" y1="75" x2="205" y2="160" stroke="#a8dadc" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+<!-- Cardia migré -->
+<ellipse cx="205" cy="130" rx="40" ry="28" fill="rgba(230,57,70,0.2)" stroke="#e63946" stroke-width="1.5"/>
+<text x="205" y="127" text-anchor="middle" fill="#f1faee" font-size="11" font-weight="600">Cardia migré ↑</text>
+<!-- Estomac -->
+<ellipse cx="205" cy="240" rx="65" ry="45" fill="rgba(230,57,70,0.08)" stroke="#e63946" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="205" y="243" text-anchor="middle" fill="#e63946" font-size="11">Estomac</text>
+<text x="205" y="290" text-anchor="middle" fill="#2a9d8f" font-size="10" font-weight="600">→ Favorise le RGO</text>
+
+<!-- ROULEMENT -->
+<rect x="410" y="10" width="370" height="300" rx="12" fill="rgba(124,58,237,0.05)" stroke="rgba(124,58,237,0.2)" stroke-width="1"/>
+<text x="595" y="40" text-anchor="middle" fill="#7c3aed" font-family="Playfair Display,serif" font-weight="700" font-size="18">HH par roulement</text>
+<text x="595" y="58" text-anchor="middle" fill="#7c3aed" font-size="10" font-family="Source Sans 3">(Type II — 15% des cas)</text>
+<!-- Diaphragme -->
+<path d="M460 170 Q595 145 730 170" stroke="#e9c46a" stroke-width="3" fill="none"/>
+<!-- Oesophage -->
+<line x1="565" y1="75" x2="565" y2="190" stroke="#a8dadc" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+<!-- Cardia en place -->
+<circle cx="565" cy="185" r="8" fill="#2a9d8f" opacity="0.8"/>
+<text x="580" y="190" fill="#2a9d8f" font-size="9" font-weight="600">Cardia en place ✓</text>
+<!-- Grosse tubérosité herniée -->
+<ellipse cx="650" cy="125" rx="50" ry="35" fill="rgba(124,58,237,0.25)" stroke="#7c3aed" stroke-width="2"/>
+<text x="650" y="122" text-anchor="middle" fill="#f1faee" font-size="10" font-weight="600">Grosse</text>
+<text x="650" y="136" text-anchor="middle" fill="#f1faee" font-size="10" font-weight="600">tubérosité ↑</text>
+<!-- Estomac -->
+<ellipse cx="595" cy="245" rx="65" ry="40" fill="rgba(124,58,237,0.08)" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="595" y="248" text-anchor="middle" fill="#7c3aed" font-size="11">Estomac</text>
+<text x="595" y="290" text-anchor="middle" fill="#7c3aed" font-size="10" font-weight="600">→ Risque volvulus gastrique</text>
+</svg>
+</div>
+</div>
+
+<div class="two-col reveal">
+<div class="info-card green">
+<h4>↕️ HH par glissement (Type I)</h4>
+<ul>
+<li><strong>85% des cas</strong></li>
+<li>Ascension du cardia à travers le hiatus œsophagien</li>
+<li>Favorise le <strong>reflux gastro-œsophagien (RGO)</strong></li>
+<li>Traitement médical (IPP) en première intention</li>
+</ul>
+</div>
+<div class="info-card purple">
+<h4>🔄 HH par roulement (Type II)</h4>
+<ul>
+<li><strong>15% des cas</strong></li>
+<li>Cardia reste en place</li>
+<li>Grosse tubérosité gastrique migre dans le thorax</li>
+<li>Risque de <strong>volvulus gastrique</strong>, malaises post-prandiaux</li>
+<li>Douleur rétrosternale après les repas</li>
+</ul>
+</div>
+</div>
+
+<div class="info-card gold reveal">
+<h4>🔪 Chirurgie des hernies hiatales</h4>
+<ul>
+<li><strong>Indications :</strong> HH par roulement symptomatique et opérable, RGO avec IPP-dépendance, échec du tt médical sur reflux documenté (rare)</li>
+<li><strong>Technique :</strong> Fundoplicature (Nissen) = valve anti-reflux de 360°. Réfection du système anti-reflux par cœlioscopie</li>
+<li><strong>Exploration pré-op indispensable :</strong> Manométrie œsophagienne (éliminer trouble moteur sévère, achalasie atypique), pH-métrie</li>
+<li><strong>Risques :</strong> migration de la valve, hémorragie, lésion des organes voisins (œsophage, estomac, rate), lésion des nerfs pneumogastriques → gastroparésie</li>
+<li><strong>Complication post-op fréquente :</strong> dysphagie (valve trop serrée → dilatation endoscopique possible)</li>
+</ul>
+</div>
+</section>
+<div class="sep"></div>
+
+<!-- SECTION RESUME -->
+<section id="resume">
+<div class="section-header reveal"><div class="section-number">★</div><div class="section-label">Synthèse</div><h2 class="section-title">Messages clés à retenir</h2><div class="section-divider"></div></div>
+
+<div class="stat-grid reveal">
+<div class="stat-card"><div class="stat-value" style="font-size:2rem">📊</div><div class="stat-label">Pathologie fréquente</div></div>
+<div class="stat-card"><div class="stat-value" style="font-size:2rem">🔍</div><div class="stat-label">Diagnostic CLINIQUE</div></div>
+<div class="stat-card"><div class="stat-value" style="font-size:2rem">🔪</div><div class="stat-label">Tt chirurgical</div></div>
+<div class="stat-card"><div class="stat-value" style="font-size:2rem">🚨</div><div class="stat-label">Urgence si étranglement</div></div>
+</div>
+
+<div class="info-card red reveal" style="border:2px solid rgba(230,57,70,0.3)">
+<h4>🎯 Messages clés — Hernies</h4>
+<ul>
+<li><strong>Pathologie fréquente</strong> — 100 000 interventions/an en France</li>
+<li><strong>Diagnostic clinique</strong> — pas d'imagerie en routine, examen debout + couché</li>
+<li>Distinguer hernie/éventration <strong>compliquée vs. non compliquée</strong></li>
+<li><strong>Traitement chirurgical :</strong> programmé si symptomatique (raphie/prothèse), EN URGENCE si compliquée (vérifier vitalité viscérale + traiter la paroi)</li>
+<li><strong>Devant un syndrome occlusif :</strong> palper systématiquement les orifices herniaires, TDM si doute</li>
+<li><strong>Traiter les facteurs de risque associés</strong> (constipation, toux chronique, obésité…)</li>
+<li><strong>HO du cirrhotique :</strong> pansement compressif lors de ponction d'ascite</li>
+</ul>
+</div>
+
+<div class="key-point reveal"><div class="key-point-icon">🧠</div><div><p><strong>En résumé :</strong> Les hernies pariétales sont une pathologie chirurgicale fréquente dont le diagnostic est essentiellement clinique. L'étranglement herniaire est la complication majeure (urgence). Le traitement est chirurgical : prothèse par voie inguinale (Lichtenstein) en 1ère intention pour les hernies inguinales unilatérales non compliquées. Ne jamais oublier de rechercher et traiter les facteurs favorisants.</p></div></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-logo">Hernies Pariétales — L3 Médecine</div>
+<p>Pr Mehdi Ouaïssi / Dr Lise Courtot — CHU Trousseau, Tours<br>
+Service de Chirurgie Digestive et Colorectale</p>
+<p style="margin-top:1rem;font-size:.75rem">Cours mis en forme à partir des diapositives originales</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 60);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Progress bar
+const progressBar = document.getElementById('progressBar');
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    progressBar.style.width = progress + '%';
+    
+    if (scrollTop > 600) {
+        backToTop.classList.add('visible');
+    } else {
+        backToTop.classList.remove('visible');
+    }
+    
+    // Nav shadow
+    const nav = document.getElementById('navbar');
+    if (scrollTop > 10) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+});
+
+// Smooth scroll for toc
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+</script>
+</body>
+</html>
